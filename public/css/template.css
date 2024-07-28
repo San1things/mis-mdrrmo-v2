@@ -1,0 +1,60 @@
+
+
+.container-xl h1 {
+    font-size: 5.0rem;
+    line-height: 1.5;
+}
+.container-xl p {
+    font-size: 2.0rem;
+    line-height: 1.5;
+}
+.container-xl a {
+    font-size: 2.0rem;
+}
+
+.card-title {
+    font-size: 8.0rem;
+    font-weight: 700;
+}
+
+.card-text {
+    font-size: 1.5rem;
+    color: var(--site-color-text-main);
+}
+
+.card-body{
+    background: radial-gradient(circle at 0.7% 1%, rgb(215, 248, 247) 0%, rgb(102, 188, 239) 100.2%);
+}
+
+.btn-primary{
+    background-color: rgb(102, 188, 239);
+    border: none;
+}
+
+/* PAGINATION CSS */
+
+.pagination {
+    font-size: 1rem;
+    font-weight: 500; /* Adjust this value to make the text larger */
+}
+
+.pagination .page-item .page-link {
+    padding: 10px 20px; /* Adjust padding to make the buttons larger */
+    margin: 10px 2px; /* Adjust margin between buttons */
+}
+
+.pagination .page-item.active .page-link {
+    padding: 10px 20px;
+    background-color: rgb(102, 188, 239); /* Active page background color */
+    border-color: #e9ecef; /* Active page border color */
+    color: white; /* Active page text color */
+    font-size: 2.0rem;
+}
+
+.pagination .page-link {
+    color: black; /* Default link color */
+}
+
+.pagination .page-link:hover {
+    background-color: #e9ecef; /* Hover background color */
+}

@@ -1,0 +1,35 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.header {
+    margin-bottom: 50px;
+}
+
+img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+
+.header .logo-1, .header .logo-2 {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 auto;
+}
+
+.header .company-name {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width: calc(100% - 220px);
+    margin: 0 100px;
+}
+
+.table th, .table td {
+    text-align: center;
+    font-size: 12px;
+    border: #000 1px solid;
+}
+
+
