@@ -62,10 +62,10 @@
                     <thead class="table-dark">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col-4">Item Name</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col-4" style="width: 50rem">Item Name</th>
+                            <th scope="col-4"style="width: 20rem">Category</th>
+                            <th scope="col-1"style="width: 10rem">Quantity</th>
+                            <th scope="col-1"style="width: 10rem">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
