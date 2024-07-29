@@ -20,7 +20,7 @@
         </div>
 
         <div class="users-table">
-            <h1>All items()</h1>
+            <h1>All items({{ $itemsCount }})</h1>
             <nav class="navbar navbar-expand-lg bg-body-tertiary p-3">
                 <div class="container-xl">
                     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -61,11 +61,11 @@
                 <table class="table table table-light table-hover mt-5 align-middle">
                     <thead class="table-dark">
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col-4" style="width: 50rem">Item Name</th>
-                            <th scope="col-4"style="width: 20rem">Category</th>
-                            <th scope="col-1"style="width: 10rem">Quantity</th>
-                            <th scope="col-1"style="width: 10rem">Actions</th>
+                            <th scope="col" style="width: 10r%">#</th>
+                            <th scope="col-4" style="width: 50%">Item Name</th>
+                            <th scope="col-4"style="width: 20%">Category</th>
+                            <th scope="col-1"style="width: 10%">Quantity</th>
+                            <th scope="col-1"style="width: 10%">Actions</th>
                         </tr>
                     </thead>
                     <tbody>

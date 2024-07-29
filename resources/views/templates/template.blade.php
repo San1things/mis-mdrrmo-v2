@@ -108,7 +108,6 @@
         <div class="main p-3 justify-content-center">
 
             @yield('content')
-            @yield('modals')
         </div>
     </div>
 

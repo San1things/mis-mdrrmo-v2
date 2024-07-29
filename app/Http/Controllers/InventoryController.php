@@ -13,6 +13,7 @@ class InventoryController extends Controller
         $qstring = [];
         $items = DB::table('tbl_items');
 
+        $data['itemsCount'] = DB::table('tbl_items')->count();
         $data['tbl_items'] = $items->get()->toArray();
 
         return view('inventory', $data);

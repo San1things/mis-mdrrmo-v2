@@ -211,6 +211,10 @@
                         <div class="dot-spinner__dot"></div>
                         <div class="dot-spinner__dot"></div>
                     </div>
+                    <div class="success-alert my-0" style="display: none;">
+                        <i class="bi bi-check-circle"></i>
+                        <p class="success-alert-text">SAVED SUCCESFULLY!</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -240,10 +244,18 @@
                 e.preventDefault();
                 $("#userUpdateModal").modal('hide');
                 $("#loadingModal").modal('show');
+
+                setTimeout(function() {
+                    console.log('Hiding spinner and showing success alert');
+                    $('.dot-spinner').css("display", "none")
+                    $('.success-alert').css("display", "block")
+                    $('.modal-content').css("background", "linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147))")
+                }, 1500);
                 setTimeout(function() {
                     $("#loadingModal").modal('hide');
                     $('#modalForm').submit();
-                }, 1500);
+                }, 3000);
+
             })
         })
     </script>
