@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_inventory', function (Blueprint $table){
-            $table->bigIncrements('id');
-            
-            $table->timestamps();
-
-        });
+        // Schema::create('tbl_inventory', function (Blueprint $table){
+        //     $table->bigIncrements('id');
+        //     $table->string('inventory_name');
+        //     $table->string('inventory_category');
+        //     $table->string('inventory_quantity');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_inventory');
+        // Schema::dropIfExists('tbl_inventory');
     }
 };

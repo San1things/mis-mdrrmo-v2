@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Management Information System</title>
+    <link type="image/x-icon" href="{{ asset('mddrmo_favicon.ico') }}" rel="icon">
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link
@@ -17,6 +18,7 @@
         integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
     <link href="{{ asset('css/template.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/modalloader.css') }}" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -58,7 +60,26 @@
                         </li>
                     </ul>
                 </li>
-                {{-- <li class="sidebar-item">
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#">
+                        <i class="bi bi-person-fill"></i>
+                        <span>Test</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#">
+                        <i class="bi bi-person-fill"></i>
+                        <span>Test</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a class="sidebar-link" href="#" href="#" style="color: black">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+            {{-- <li class="sidebar-item">
                     <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
                         data-bs-target="#collapsemulti" href="#" aria-expanded="false"
                         aria-controls="collapsemulti">
@@ -83,28 +104,11 @@
                         </li>
                     </ul>
                 </li> --}}
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
-                        <i class="bi bi-person-fill"></i>
-                        <span>Test</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
-                        <i class="bi bi-person-fill"></i>
-                        <span>Test</span>
-                    </a>
-                </li>
-            </ul>
-            <div class="sidebar-footer">
-                <a class="sidebar-link" href="#" href="#" style="color: black">
-                    <i class="bi bi-box-arrow-left"></i>
-                    <span>Log Out</span>
-                </a>
-            </div>
         </aside>
         <div class="main p-3 justify-content-center">
+
             @yield('content')
+            @yield('modals')
         </div>
     </div>
 
@@ -113,6 +117,9 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+
+    @stack('scripts')
+
     <script>
         let hamBurger = document.querySelector(".toggle-btn");
 
@@ -120,7 +127,6 @@
             document.querySelector("#sidebar").classList.toggle("expand");
         });
     </script>
-    @stack('scripts')
 </body>
 
 </html>

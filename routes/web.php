@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -8,13 +9,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('users');
 // });
 
-Route::get('/generate-pdf', [PDFController::class, 'generatePdf'])->name('generate-pdf');
+Route::get('/generate-user-pdf', [PDFController::class, 'generateUserPdf'])->name('generate-user-pdf');
 
-Route::get('/', [UsersController::class, 'index'])->name('homepage');
+Route::get('/', [UsersController::class, 'index'])->name('adminhomepage');
 
-Route::get('/inventory', function() {
-    return view('inventory');
-});
+Route::get('/inventory', [InventoryController::class, 'index'])->name('admininventory');
 
 Route::post('/updateuser', [UsersController::class, 'userUpdate'])->name('updateuser');
 

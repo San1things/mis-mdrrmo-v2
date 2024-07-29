@@ -8,7 +8,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PDFController extends Controller
 {
-    public function generatePdf(Request $request)
+    public function generateUserPdf(Request $request)
     {
         $data = [];
 
