@@ -46,31 +46,31 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link" href="#">
+                        <i class="bi bi-megaphone-fill"></i>
+                        <span>Announcements</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#">
+                        <i class="bi bi-person-fill"></i>
+                        <span>Test</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
                         data-bs-target="#collapsetest" href="#" aria-expanded="true" aria-controls="collapsetest">
-                        <i class="bi bi-person-fill"></i>
-                        <span>Collapse Test</span>
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Settings</span>
                     </a>
                     <ul class="sidebar-dropdown list-unstyled collapse" id="collapsetest" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Test</a>
+                            <a class="sidebar-link" href="#">Categories</a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="#">Test</a>
                         </li>
                     </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
-                        <i class="bi bi-person-fill"></i>
-                        <span>Test</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
-                        <i class="bi bi-person-fill"></i>
-                        <span>Test</span>
-                    </a>
                 </li>
             </ul>
             <div class="sidebar-footer">

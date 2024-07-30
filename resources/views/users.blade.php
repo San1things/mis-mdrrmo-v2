@@ -11,7 +11,8 @@
                     <i class="bi bi-file-earmark-arrow-down-fill"></i>
                     <span>Export</span>
                 </a>
-                <a class="btn btn-primary px-4 py-2" href="#"">
+                <a class="btn btn-primary px-4 py-2 adduser-btn" data-bs-toggle="modal" data-bs-target="#userAddUpdateModal"
+                    href="#">
                     <i class="bi bi-person-fill-add"></i>
                     <span>Add</span>
                 </a>
@@ -117,13 +118,15 @@
                                 <td>
                                     <a class="btn btn-primary updateuser-btn" data-id="{{ $user->id }}"
                                         data-firstname="{{ $user->firstname }}" data-bs-toggle="modal"
-                                        data-bs-target="#userUpdateModal" data-lastname="{{ $user->lastname }}"
+                                        data-bs-target="#userAddUpdateModal" data-lastname="{{ $user->lastname }}"
                                         data-email="{{ $user->email }}" data-usertype="{{ $user->usertype }}"
                                         data-username="{{ $user->username }}" data-password="{{ $user->password }}"
                                         data-gender="{{ $user->gender }}" data-birthday="{{ $user->bday }}"
                                         data-contact="{{ $user->contact }}" data-team="{{ $user->team }}"
                                         href="#"><i class="bi bi-pencil-square"></i></a>
-                                    <a class="btn btn-danger delete-btn"><i class="bi bi-trash3-fill"></i></a>
+                                    <a class="btn btn-danger deleteuser-btn" data-id="{{ $user->id }}"
+                                        data-bs-toggle="modal" data-bs-target="#userDeleteModal"><i
+                                            class="bi bi-trash3-fill"></i></a>
                                 </td>
                             </tr>
                         @empty
@@ -138,14 +141,15 @@
         </div>
     </div>
 
-    <div class="modal fade" id="userUpdateModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
+    <div class="modal fade" id="userAddUpdateModal" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="modalTitle">Update User</h1>
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
-                <form id="modalForm" action="/adduser" method="post">
+                <form id="modalForm" action="" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="form-floating mb-3">
@@ -196,6 +200,27 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="userDeleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
+                </div>
+                <form id="modalForm" action="" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <h2>Are you sure you want to delete user?</h2>
+                        <div class="form-floating mb-3">
+                            <input class="form-control fs-4" id="userid" name="userid" type="hidden">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger fs-3 btn-delete" type="submit">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="loadingModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -211,9 +236,32 @@
                         <div class="dot-spinner__dot"></div>
                         <div class="dot-spinner__dot"></div>
                     </div>
-                    <div class="success-alert my-0" style="display: none;">
+                    <div class="success-alert my-5 mx-5" style="display: none;">
                         <i class="bi bi-check-circle"></i>
                         <p class="success-alert-text">SAVED SUCCESFULLY!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loadingModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-body d-flex justify-content-center my-5">
+                    <div class="dot-spinner">
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                    </div>
+                    <div class="success-alert my-5 mx-5" style="display: none;">
+                        <i class="bi bi-check-circle"></i>
+                        <p class="delete-alert-text">DELETED SUCCESFULLY!</p>
                     </div>
                 </div>
             </div>
@@ -224,6 +272,22 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+
+            $('.adduser-btn').on('click', function() {
+                $('#firstname').val('')
+                $('#lastname').val('')
+                $('#email').val('')
+                $('#usertype').val('')
+                $('#username').val('')
+                $('#password').val('')
+                $('#gender').val('')
+                $('#birthday').val('')
+                $('#contact').val('')
+                $('#team').val('')
+                $('#modalTitle').text('ADD USER')
+                $('#modalForm').attr('action', '/adduser')
+            })
+
             $('.updateuser-btn').on('click', function() {
                 let id = $(this).data('id');
                 $('#firstname').val($(this).data('firstname'))
@@ -236,26 +300,48 @@
                 $('#birthday').val($(this).data('birthday'))
                 $('#contact').val($(this).data('contact'))
                 $('#team').val($(this).data('team'))
-                $('#modalTitle').text('UPDATE')
+                $('#modalTitle').text('UPDATE USER')
                 $('#modalForm').attr('action', '/updateuser?id=' + id)
+            })
+
+            $('.deleteuser-btn').on('click', function() {
+                let id = $(this).data('id');
+                $('#userid').val(id)
+                $('#modalForm').attr('action', '/deleteuser?id=' + id)
             })
 
             $('.btn-save').on('click', function(e) {
                 e.preventDefault();
-                $("#userUpdateModal").modal('hide');
+                $("#userAddUpdateModal").modal('hide');
                 $("#loadingModal").modal('show');
 
                 setTimeout(function() {
-                    console.log('Hiding spinner and showing success alert');
                     $('.dot-spinner').css("display", "none")
                     $('.success-alert').css("display", "block")
-                    $('.modal-content').css("background", "linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147))")
+                    $('.modal-content').css("background",
+                        "linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147))")
                 }, 1500);
                 setTimeout(function() {
                     $("#loadingModal").modal('hide');
                     $('#modalForm').submit();
                 }, 3000);
+            })
+            $('.btn-delete').on('click', function(e) {
+                e.preventDefault();
+                $("#userDeleteModal").modal('hide');
+                $("#loadingModal").modal('show');
 
+                setTimeout(function() {
+                    $('.dot-spinner').css("display", "none")
+                    $('.success-alert').css("display", "block")
+                    $('.modal-content').css("background",
+                        "linear-gradient(to right, linear-gradient(111.3deg, rgb(252, 56, 56) 11.7%, rgb(237, 13, 81) 81.7%))"
+                    )
+                }, 1500);
+                setTimeout(function() {
+                    $("#loadingModal").modal('hide');
+                    $('#modalForm').submit();
+                }, 3000);
             })
         })
     </script>

@@ -25,10 +25,10 @@ class UsersController extends Controller
 
         if (!empty($query['usertype'])) {
             $qstring['usertype'] = $query['usertype'];
-            if($query['usertype'] == 'other'){
+            if ($query['usertype'] == 'other') {
                 $users->whereNotIn('usertype', ['admin', 'staff']);
-            } else{
-                $users->where('usertype',$query['usertype']);
+            } else {
+                $users->where('usertype', $query['usertype']);
             }
         }
 
@@ -41,8 +41,8 @@ class UsersController extends Controller
                     ->orWhere('lastname', 'like', "%$name%");
             } else {
                 $users->where('firstname', 'like', "%$name%")
-                ->orWhere('lastname', 'like', "%$name%")
-                ->where('usertype', $query['usertype']);
+                    ->orWhere('lastname', 'like', "%$name%")
+                    ->where('usertype', $query['usertype']);
             }
         };
 
@@ -73,7 +73,26 @@ class UsersController extends Controller
         return view('users', $data);
     }
 
-
+    public function userAdd(Request $request)
+    {
+        $input = $request->input();
+        DB::table('tbl_users')
+            ->insert([
+                'firstname' => $input['firstname'],
+                'lastname' => $input['lastname'],
+                'email' => $input['email'],
+                'usertype' => $input['usertype'],
+                'username' => $input['username'],
+                'password' => $input['password'],
+                'gender' => $input['gender'],
+                'bday' => $input['birthday'],
+                'contact' => $input['contact'],
+                'team' => $input['team'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+        return redirect('/');
+    }
 
     public function userUpdate(Request $request)
     {
@@ -92,6 +111,13 @@ class UsersController extends Controller
                 'team' => $input['team'],
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
+        return redirect('/');
+    }
+
+    public function userDelete(Request $request)
+    {
+        $input = $request->input();
+        DB::table('tbl_users')->where('id', $input['id'])->delete();
         return redirect('/');
     }
 }
