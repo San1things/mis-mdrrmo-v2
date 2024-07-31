@@ -1,7 +1,7 @@
 @extends('templates.template')
 @section('content')
     <div class="container-xl mt-3">
-        <div class="users-header d-flex align-items-center mb-3">
+        <div class="admin-header d-flex align-items-center mb-3">
             <div class="header-title p-2 flex-grow-1">
                 <h1>Users</h1>
                 <p>All the person handling the system.</p>
@@ -22,31 +22,31 @@
             <div class="row row-cols-1 row-cols-lg-3 gy-3">
                 <div class="col">
                     <div class="card text-bg-light mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $adminCount }}</h5>
-                            <p class="card-text">Admins.</p>
+                        <div class="card-body users-card-body">
+                            <h1 class="card-title users-card-title">{{ $adminCount }}</h1>
+                            <p class="card-text users-card-text">Admins.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card text-bg-light mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $staffCount }}</h5>
-                            <p class="card-text">Staffs.</p>
+                        <div class="card-body users-card-body">
+                            <h1 class="card-title users-card-title">{{ $staffCount }}</h1>
+                            <p class="card-text users-card-text">Staffs.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card text-bg-light mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $otherCount }}</h5>
-                            <p class="card-text">Others.</p>
+                        <div class="card-body users-card-body">
+                            <h1 class="card-title users-card-title">{{ $otherCount }}</h1>
+                            <p class="card-text users-card-text">Others.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="users-table">
+        <div class="admin-content">
             <h1>All users({{ $allCount }})</h1>
             <nav class="navbar navbar-expand-lg bg-body-tertiary pb-3">
                 <div class="container-xl">
@@ -103,7 +103,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($tbl_users as $user)
+                        @forelse ($users as $user)
                             <tr>
                                 <td>{{ $user->firstname }}</td>
                                 <td>{{ $user->lastname }}</td>
@@ -136,7 +136,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                {{ $tbl_users->links('pagination::bootstrap-5') }}
+                {{ $users->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
@@ -146,7 +146,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalTitle">Update User</h1>
+                    <h1 class="modal-title fs-5" id="modalTitle"></h1>
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
                 <form id="modalForm" action="" method="post">
@@ -208,8 +208,8 @@
                 </div>
                 <form id="modalForm" action="" method="post">
                     @csrf
-                    <div class="modal-body">
-                        <h2>Are you sure you want to delete user?</h2>
+                    <div class="modal-body ms-2">
+                        <h2>Are you sure you want to delete this user?</h2>
                         <div class="form-floating mb-3">
                             <input class="form-control fs-4" id="userid" name="userid" type="hidden">
                         </div>
@@ -245,28 +245,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="loadingModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-body d-flex justify-content-center my-5">
-                    <div class="dot-spinner">
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                    </div>
-                    <div class="success-alert my-5 mx-5" style="display: none;">
-                        <i class="bi bi-check-circle"></i>
-                        <p class="delete-alert-text">DELETED SUCCESFULLY!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @push('scripts')
@@ -284,6 +262,7 @@
                 $('#birthday').val('')
                 $('#contact').val('')
                 $('#team').val('')
+                $('.btn-save').text('ADD')
                 $('#modalTitle').text('ADD USER')
                 $('#modalForm').attr('action', '/adduser')
             })
@@ -300,6 +279,7 @@
                 $('#birthday').val($(this).data('birthday'))
                 $('#contact').val($(this).data('contact'))
                 $('#team').val($(this).data('team'))
+                $('.btn-save').text('UPDATE')
                 $('#modalTitle').text('UPDATE USER')
                 $('#modalForm').attr('action', '/updateuser?id=' + id)
             })
@@ -314,6 +294,7 @@
                 e.preventDefault();
                 $("#userAddUpdateModal").modal('hide');
                 $("#loadingModal").modal('show');
+                $('.success-alert-text').text('SAVED SUCCESFULLY')
 
                 setTimeout(function() {
                     $('.dot-spinner').css("display", "none")
@@ -324,24 +305,24 @@
                 setTimeout(function() {
                     $("#loadingModal").modal('hide');
                     $('#modalForm').submit();
-                }, 3000);
+                }, 2500);
             })
             $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 $("#userDeleteModal").modal('hide');
                 $("#loadingModal").modal('show');
+                $('.success-alert-text').text('DELETED SUCCESFULLY')
 
                 setTimeout(function() {
                     $('.dot-spinner').css("display", "none")
                     $('.success-alert').css("display", "block")
                     $('.modal-content').css("background",
-                        "linear-gradient(to right, linear-gradient(111.3deg, rgb(252, 56, 56) 11.7%, rgb(237, 13, 81) 81.7%))"
-                    )
+                        "linear-gradient(102.2deg, rgb(250, 45, 66) 9.6%, rgb(245, 104, 104) 96.1%)")
                 }, 1500);
                 setTimeout(function() {
                     $("#loadingModal").modal('hide');
                     $('#modalForm').submit();
-                }, 3000);
+                }, 2500);
             })
         })
     </script>

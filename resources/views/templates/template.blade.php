@@ -65,7 +65,7 @@
                     </a>
                     <ul class="sidebar-dropdown list-unstyled collapse" id="collapsetest" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Categories</a>
+                            <a class="sidebar-link" href="/categories">Categories</a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="#">Test</a>

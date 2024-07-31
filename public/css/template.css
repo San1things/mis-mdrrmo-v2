@@ -1,32 +1,71 @@
-
-
 .container-xl h1 {
     font-size: 5.0rem;
     line-height: 1.5;
 }
+
+.container-xl h2 {
+    font-size: 4.0rem;
+    line-height: 1.5;
+}
+
+.container-xl h3 {
+    font-size: 3.75rem;
+    line-height: 1.5;
+}
+
+.container-xl h4 {
+    font-size: 3.25rem;
+    line-height: 1.5;
+}
+
+.container-xl h5 {
+    font-size: 3.0rem;
+    line-height: 1.5;
+}
+
+.container-xl h6 {
+    font-size: 2.5rem;
+    line-height: 1.5;
+}
+
 .container-xl p {
     font-size: 2.0rem;
     line-height: 1.5;
 }
+
 .container-xl a {
     font-size: 2.0rem;
 }
 
-.card-title {
+.container-xl .users-card-title {
+    font-size: 8.0rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.container-xl .users-card-text {
+    font-size: 1.75rem;
+    color: var(--site-color-text-main);
+}
+
+.container-xl .users-card-body {
+    background: radial-gradient(circle at 0.7% 1%, rgb(215, 248, 247) 0%, rgb(102, 188, 239) 100.2%);
+}
+
+.categories-card-title {
     font-size: 8.0rem;
     font-weight: 700;
 }
 
-.card-text {
+.categories-card-text {
     font-size: 1.5rem;
-    color: var(--site-color-text-main);
 }
 
-.card-body{
-    background: radial-gradient(circle at 0.7% 1%, rgb(215, 248, 247) 0%, rgb(102, 188, 239) 100.2%);
+.categories-card-body {
+    background: linear-gradient(to top, #dfe9f3 0%, white 100%);
 }
 
-.btn-primary{
+.btn-primary {
     background-color: rgb(102, 188, 239);
     border: none;
 }
@@ -35,26 +74,34 @@
 
 .pagination {
     font-size: 1rem;
-    font-weight: 500; /* Adjust this value to make the text larger */
+    font-weight: 500;
+    /* Adjust this value to make the text larger */
 }
 
 .pagination .page-item .page-link {
-    padding: 10px 20px; /* Adjust padding to make the buttons larger */
-    margin: 10px 2px; /* Adjust margin between buttons */
+    padding: 10px 20px;
+    /* Adjust padding to make the buttons larger */
+    margin: 10px 2px;
+    /* Adjust margin between buttons */
 }
 
 .pagination .page-item.active .page-link {
     padding: 10px 20px;
-    background-color: rgb(102, 188, 239); /* Active page background color */
-    border-color: #e9ecef; /* Active page border color */
-    color: white; /* Active page text color */
+    background-color: rgb(102, 188, 239);
+    /* Active page background color */
+    border-color: #e9ecef;
+    /* Active page border color */
+    color: white;
+    /* Active page text color */
     font-size: 2.0rem;
 }
 
 .pagination .page-link {
-    color: black; /* Default link color */
+    color: black;
+    /* Default link color */
 }
 
 .pagination .page-link:hover {
-    background-color: #e9ecef; /* Hover background color */
+    background-color: #e9ecef;
+    /* Hover background color */
 }

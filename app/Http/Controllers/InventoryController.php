@@ -12,10 +12,29 @@ class InventoryController extends Controller
         $data = [];
         $qstring = [];
         $items = DB::table('tbl_items');
+        $categories = DB::table('tbl_categories');
 
         $data['itemsCount'] = DB::table('tbl_items')->count();
-        $data['tbl_items'] = $items->get()->toArray();
+        $data['items'] = $items->get()->toArray();
+        $data['categories'] = $categories->get()->toArray();
 
-        return view('inventory', $data);
+        return view('admin.inventory', $data);
+    }
+
+    public function itemAdd(Request $request){
+        $input = request()->input();
+
+        $ctgnm = DB::table('tbl_categories')->where('id', $input['itemcategory'])->first();
+        DB::table('tbl_items')
+        ->insert([
+            'category_id' => $input['itemcategory'],
+            'item_name' => $input['itemname'],
+            'item_description' => $input['itemdescription'],
+            'item_category' => $ctgnm->category_name,
+            'item_quantity' => $input['itemquantity'],
+            'expired_at' => $input['itemexpired']
+        ]);
+
+        return redirect('/inventory');
     }
 }

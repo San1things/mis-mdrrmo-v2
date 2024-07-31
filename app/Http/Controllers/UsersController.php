@@ -68,9 +68,9 @@ class UsersController extends Controller
         // $dataoffset = ($page * $this->default_lpp) - $this->default_lpp;
         // $users->offset($dataoffset)->limit($this->default_lpp);
 
-        $data['tbl_users'] = $users->orderBy('updated_at', 'desc')->paginate(5)->appends($request->all());
+        $data['users'] = $users->orderBy('updated_at', 'desc')->paginate(5)->appends($request->all());
         $data['qstring'] = $qstring;
-        return view('users', $data);
+        return view('admin.users', $data);
     }
 
     public function userAdd(Request $request)

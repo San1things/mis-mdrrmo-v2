@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('item_description');
             $table->string('item_category');
             $table->integer('item_quantity');
-            $table->date('expired_at');
+            $table->date('expired_at')->nullable();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('tbl_categories')->onDelete('cascade');
