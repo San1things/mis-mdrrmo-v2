@@ -15,9 +15,30 @@ class InventoryController extends Controller
         $items = DB::table('tbl_items');
         $categories = DB::table('tbl_categories');
 
+        $query = request()->query();
+        $qstring['category'] = '';
+        $qstring['searchItem'] = '';
+
+        if(!empty($query['category'])){
+            $qstring['category'] = $query['category'];
+            $items->where('item_category', $query['category']);
+        }
+
+        if(!empty($query['searchItem'])){
+            $qstring['searchItem'] = $query['searchItem'];
+            $name = $query['searchItem'];
+            if(empty($query['category'])){
+                $items->where('item_name', 'like', "%$name%");
+            } else {
+                $items->where('item_name', 'like', "%$name%")
+                ->where('item_category', $query['category']);
+            }
+        }
+
         $data['itemsCount'] = DB::table('tbl_items')->count();
         $data['items'] = $items->get()->toArray();
         $data['categories'] = $categories->get()->toArray();
+        $data['qstring'] = $qstring;
 
         return view('admin.inventory', $data);
     }

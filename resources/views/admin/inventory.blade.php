@@ -32,28 +32,33 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item border">
-                                <a class="nav-link" href="?usertype=&searchUser=" aria-current="page">View
+                                <a class="{{ request('category') === null ? 'nav-link active' : 'nav-link' }}"
+                                    href="?category=&searchItem=" aria-current="page">View
                                     All</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="nav-link" href="?usertype=admin&searchUser=">PPE</a>
+                                <a class="{{ request('category') === 'ppe' ? 'nav-link active' : 'nav-link ' }}"
+                                    href="?category=ppe&searchItem=">PPE</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="nav-link" href="?usertype=staff&searchUser=">Disaster Response</a>
+                                <a class="{{ request('category') === 'supplies' ? 'nav-link active' : 'nav-link' }}"
+                                    href="?category=supplies&searchItem=">Disaster Supplies</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="nav-link" href="?usertype=staff&searchUser=">Supplies</a>
+                                <a class="{{ request('category') === 'vehicles' ? 'nav-link active' : 'nav-link' }}"
+                                    href="?category=vehicles&searchItem=">Vehicles</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="nav-link" href="?usertype=other&searchUser=">Medicine</a>
+                                <a class="{{ request('category') === 'medicines' ? 'nav-link active' : 'nav-link' }}"
+                                    href="?category=medicines&searchItem=">Medicines</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="get">
-                            <input name="usertype" type="hidden" value="">
-                            <input class="form-control me-3 fs-4" name="searchUser" type="search" value=""
+                            <input name="category" type="hidden" value="{{ $qstring['category'] }}">
+                            <input class="form-control me-3 fs-4" name="searchItem" type="search" value=""
                                 aria-label="Search" placeholder="Search">
                             <button class="btn btn-outline-success me-2 fs-4" type="submit">Search</button>
-                            <a class="btn btn-outline-secondary fs-4" href="?usertype=&searchUser=">Clear</a>
+                            <a class="btn btn-outline-secondary fs-4" href="?category=&searchItem=">Clear</a>
                         </form>
                     </div>
                 </div>
@@ -81,9 +86,9 @@
                                 <td>
                                     <a class="btn btn-primary updateitem-btn" data-bs-toggle="modal"
                                         data-bs-target="#inventoryAddUpdateModal" data-id="{{ $item->id }}"
-                                        data-category_id="{{ $item->category_id }}" data-itemname="{{ $item->item_name }}"
+                                        data-itemname="{{ $item->item_name }}"
                                         data-itemdescription="{{ $item->item_description }}"
-                                        data-itemcategory="{{ $item->item_category }}"
+                                        data-category_id="{{ $item->category_id }}"
                                         data-itemquantity="{{ $item->item_quantity }}"
                                         data-itemexpired="{{ $item->expired_at }}" href="#">
                                         <i class="bi bi-pencil-square"></i></a>
