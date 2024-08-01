@@ -48,7 +48,7 @@
         </div>
         <div class="admin-content">
             <h1>All users({{ $allCount }})</h1>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary pb-3">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-xl">
                     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                         type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -86,7 +86,7 @@
                 </div>
             </nav>
             <div class="table-responsive-lg fs-4">
-                <table class="table table table-light table-hover mt-5 align-middle">
+                <table class="table table table-light table-hover mt-3 align-middle">
                     <thead class="table-dark">
                         <tr>
                             <th scope="col-1">First Name</th>
@@ -210,9 +210,6 @@
                     @csrf
                     <div class="modal-body ms-2">
                         <h2>Are you sure you want to delete this user?</h2>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="userid" name="userid" type="hidden">
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-danger fs-3 btn-delete" type="submit">Delete</button>
@@ -286,7 +283,6 @@
 
             $('.deleteuser-btn').on('click', function() {
                 let id = $(this).data('id');
-                $('#userid').val(id)
                 $('#modalForm').attr('action', '/deleteuser?id=' + id)
             })
 

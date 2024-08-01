@@ -59,11 +59,12 @@
                 </div>
             </nav>
             <div class="table-responsive-lg fs-4">
-                <table class="table table table-light table-hover mt-5 align-middle">
+                <table class="table table table-light table-hover mt-3 align-middle">
                     <thead class="table-dark">
                         <tr>
-                            <th style="width: 10r%" scope="col">#</th>
-                            <th style="width: 50%" scope="col-4">Item Name</th>
+                            <th style="width: 10%" scope="col">#</th>
+                            <th style="width: 15%" scope="col-4">Item Name</th>
+                            <th style="width: 35%" scope="col-4">Item Description</th>
                             <th scope="col-4"style="width: 20%">Category</th>
                             <th scope="col-1"style="width: 10%">Quantity</th>
                             <th scope="col-1"style="width: 10%">Actions</th>
@@ -74,12 +75,21 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->item_name }}</td>
+                                <td>{{ $item->item_description }}</td>
                                 <td>{{ $item->item_category }}</td>
                                 <td>{{ $item->item_quantity }}</td>
                                 <td>
-                                    <a class="btn btn-primary update-btn" href="#">
+                                    <a class="btn btn-primary updateitem-btn" data-bs-toggle="modal"
+                                        data-bs-target="#inventoryAddUpdateModal" data-id="{{ $item->id }}"
+                                        data-category_id="{{ $item->category_id }}" data-itemname="{{ $item->item_name }}"
+                                        data-itemdescription="{{ $item->item_description }}"
+                                        data-itemcategory="{{ $item->item_category }}"
+                                        data-itemquantity="{{ $item->item_quantity }}"
+                                        data-itemexpired="{{ $item->expired_at }}" href="#">
                                         <i class="bi bi-pencil-square"></i></a>
-                                    <a class="btn btn-danger delete-btn"><i class="bi bi-trash3-fill"></i></a>
+                                    <a class="btn btn-danger deleteitem-btn" data-bs-toggle="modal"
+                                        data-bs-target="#inventoryDeleteModal" data-id="{{ $item->id }}"><i
+                                            class="bi bi-trash3-fill"></i></a>
                                 </td>
                             </tr>
                         @empty
@@ -137,6 +147,26 @@
         </div>
     </div>
 
+    <div class="modal fade" id="inventoryDeleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
+                </div>
+                <form id="modalForm" action="" method="post">
+                    @csrf
+                    <div class="modal-body ms-2">
+                        <h2>Are you sure you want to delete this item?</h2>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger fs-3 btn-delete" type="submit">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="loadingModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
@@ -168,7 +198,18 @@
                     $('.btn-save').text('ADD')
                     $('#modalTitle').text('ADD ITEM')
                     $('#modalForm').attr('action', '/additem')
+                })
 
+                $('.updateitem-btn').on('click', function() {
+                    let id = $(this).data('id');
+                    $('#itemname').val($(this).data('itemname'))
+                    $('#itemdescription').val($(this).data('itemdescription'))
+                    $('#itemcategory').val($(this).data('category_id'))
+                    $('#itemexpired').val($(this).data('itemexpired'))
+                    $('#itemquantity').val($(this).data('itemquantity'))
+                    $('.btn-save').text('UPDATE')
+                    $('#modalTitle').text('UPDATE ITEM')
+                    $('#modalForm').attr('action', '/updateitem?id=' + id)
                 })
 
                 $('#itemcategory').on('click', function() {
@@ -181,6 +222,12 @@
                         $('#itemexpiredlabel').attr('style', 'display: none')
                     }
                 })
+
+                $('.deleteitem-btn').on('click', function() {
+                    let id = $(this).data('id');
+                    $('#modalForm').attr('action', '/deleteitem?id=' + id)
+                })
+
 
                 $('.btn-save').on('click', function(e) {
                     e.preventDefault();
@@ -210,7 +257,7 @@
                         $('.success-alert').css("display", "block")
                         $('.modal-content').css("background",
                             "linear-gradient(102.2deg, rgb(250, 45, 66) 9.6%, rgb(245, 104, 104) 96.1%)"
-                            )
+                        )
                     }, 1500);
                     setTimeout(function() {
                         $("#loadingModal").modal('hide');

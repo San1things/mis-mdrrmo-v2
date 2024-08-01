@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
 
         $data = [];
         $qstring = [];
@@ -21,20 +22,46 @@ class InventoryController extends Controller
         return view('admin.inventory', $data);
     }
 
-    public function itemAdd(Request $request){
+    public function itemAdd(Request $request)
+    {
         $input = request()->input();
 
         $ctgnm = DB::table('tbl_categories')->where('id', $input['itemcategory'])->first();
         DB::table('tbl_items')
-        ->insert([
-            'category_id' => $input['itemcategory'],
-            'item_name' => $input['itemname'],
-            'item_description' => $input['itemdescription'],
-            'item_category' => $ctgnm->category_name,
-            'item_quantity' => $input['itemquantity'],
-            'expired_at' => $input['itemexpired']
-        ]);
+            ->insert([
+                'category_id' => $input['itemcategory'],
+                'item_name' => $input['itemname'],
+                'item_description' => $input['itemdescription'],
+                'item_category' => $ctgnm->category_name,
+                'item_quantity' => $input['itemquantity'],
+                'expired_at' => $input['itemexpired']
+            ]);
 
+        return redirect('/inventory');
+    }
+
+    public function itemUpdate(Request $request)
+    {
+        $input = request()->input();
+
+        $ctgnm = DB::table('tbl_categories')->where('id', $input['itemcategory'])->first();
+        DB::table('tbl_items')->where('id', $input['id'])
+            ->update([
+                'category_id' => $input['itemcategory'],
+                'item_name' => $input['itemname'],
+                'item_description' => $input['itemdescription'],
+                'item_category' => $ctgnm->category_name,
+                'item_quantity' => $input['itemquantity'],
+                'expired_at' => $input['itemexpired']
+            ]);
+
+        return redirect('/inventory');
+    }
+
+    public function itemDelete(Request $request)
+    {
+        $input = request()->input();
+        DB::table('tbl_items')->where('id', $input['id'])->delete();
         return redirect('/inventory');
     }
 }
