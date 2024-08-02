@@ -1,4 +1,4 @@
-@extends('templates.template')
+@extends('admin.components.layout')
 @section('content')
     <div class="container-xl mt-3">
 

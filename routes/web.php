@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\PDFController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
 // =======================

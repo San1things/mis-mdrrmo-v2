@@ -7,6 +7,20 @@
     --site-color-text-main: #606060;
     --site-color-text-lite: #e5e5e5;
     --site-color-accent: #03a9f4;
+
+    ::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0);
+    }
 }
 
 
@@ -45,6 +59,22 @@ body {
     overflow: hidden;
     transition: all 0.35s ease-in-out;
     background-color: #FAF9F6;
+}
+
+tr {
+    cursor: pointer;
+}
+
+.modal {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+}
+.modal .modal-content{
+    background: linear-gradient(to top, #dfe9f3 0%, white 100%);
 }
 
 #sidebar {

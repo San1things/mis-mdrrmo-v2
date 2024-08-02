@@ -1,4 +1,4 @@
-@extends('templates.template')
+@extends('admin.components.layout')
 @section('content')
     <div class="container-xl mt-3">
         <div class="admin-header d-flex align-items-center mb-3">
@@ -175,6 +175,8 @@
                         <div class="form-floating mb-3">
                             <input class="form-control fs-4" id="password" name="password"></input>
                             <label for="floatingInput">Password</label>
+                            <i class="bi bi-eye-fill"></i>
+                            <i class="bi bi-eye-slash-fill"></i>
                         </div>
                         <div class="form-floating mb-3">
                             <input class="form-control fs-4" id="gender" name="gender"></input>
@@ -194,7 +196,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary fs-3 btn-save" type="submit">Save changes</button>
+                        <button class="btn btn-primary fs-3 btn-save px-5 py-2" type="submit">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -212,7 +214,7 @@
                         <h2>Are you sure you want to delete this user?</h2>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger fs-3 btn-delete" type="submit">Delete</button>
+                        <button class="btn btn-danger fs-3 btn-delete px-5 py-2" type="submit">Delete</button>
                     </div>
                 </form>
             </div>

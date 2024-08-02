@@ -1,4 +1,4 @@
-@extends('templates.template')
+@extends('admin.components.layout')
 @section('content')
     <div class="container-xl mt-3">
 
@@ -21,12 +21,16 @@
 
         <div class="admin-content">
             @foreach ($categories as $category)
-                <div class="card mb-3">
+                <div class="card mb-3 position-relative">
+                    <div class="position-absolute top-0 end-0 pe-3 pt-2">
+                        <a href="#"><i class="bi bi-pencil-square me-3 jl-card-edit-btn"></i></a>
+                        <a href="#"><i class="bi bi-x-lg jl-card-x-btn"></i></a>
+                    </div>
                     <div class="card-body categories-card-body">
                         <h3 class="card-title categories-card title ms-2">{{ $category->category_name }}</h3>
                         <p class="card-text categories-card-text ms-2">{{ $category->category_description }}</p>
-                        <a class="card-link" href="#">Card link</a>
-                        <a class="card-link" href="#">Another link</a>
+                        <a class="card-link categories-card-link" href="#">See {{ $category->item_count }} items in this
+                            category...</a>
                     </div>
                 </div>
             @endforeach
