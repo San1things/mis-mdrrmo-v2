@@ -16,9 +16,12 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"
         integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
     <link href="{{ asset('css/template.css') }}" rel="stylesheet">
     <link href="{{ asset('css/modalloader.css') }}" rel="stylesheet">
+
 </head>
 
 <body class="bg-light">
@@ -29,12 +32,12 @@
                     <i class="bi bi-list"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">MDRRMO</a>
+                    <a href="/users">MDRRMO</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="/">
+                    <a class="sidebar-link" href="/users">
                         <i class="bi bi-person-fill"></i>
                         <span>Users</span>
                     </a>
@@ -53,8 +56,8 @@
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#">
-                        <i class="bi bi-person-fill"></i>
-                        <span>Test</span>
+                        <i class="bi bi-person-video3"></i>
+                        <span>Seminars</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -68,7 +71,7 @@
                             <a class="sidebar-link" href="/categories">Categories</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Test</a>
+                            <a class="sidebar-link" href="#">System Logs</a>
                         </li>
                     </ul>
                 </li>

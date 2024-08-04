@@ -2,45 +2,54 @@
 /* DEFAULTS */
 
 .container-xl h1 {
+    font-family: 'Poppins';
     font-size: 5.0rem;
     line-height: 1.5;
 }
 
 .container-xl h2 {
+    font-family: 'Poppins';
     font-size: 4.0rem;
     line-height: 1.5;
 }
 
 .container-xl h3 {
+    font-family: 'Poppins';
     font-size: 3.75rem;
     line-height: 1.5;
 }
 
 .container-xl h4 {
+    font-family: 'Poppins';
     font-size: 3.25rem;
     line-height: 1.5;
 }
 
 .container-xl h5 {
+    font-family: 'Poppins';
     font-size: 3.0rem;
     line-height: 1.5;
 }
 
 .container-xl h6 {
+    font-family: 'Poppins';
     font-size: 2.5rem;
     line-height: 1.5;
 }
 
 .container-xl p {
+    font-family: 'Poppins';
     font-size: 2.0rem;
     line-height: 1.5;
 }
 
 .container-xl a {
+    font-family: 'Poppins';
     font-size: 2.0rem;
 }
 
 .btn-primary {
+    font-family: 'Poppins';
     background-color: rgb(102, 188, 239);
     border: none;
 }

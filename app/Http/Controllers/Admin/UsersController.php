@@ -92,7 +92,7 @@ class UsersController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
-        return redirect('/');
+        return redirect('/users');
     }
 
     public function userUpdate(Request $request)
@@ -112,13 +112,13 @@ class UsersController extends Controller
                 'team' => $input['team'],
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
-        return redirect('/');
+        return redirect('/users');
     }
 
     public function userDelete(Request $request)
     {
         $input = $request->input();
         DB::table('tbl_users')->where('id', $input['id'])->delete();
-        return redirect('/');
+        return redirect('/users');
     }
 }
