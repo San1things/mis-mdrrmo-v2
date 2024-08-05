@@ -43,35 +43,49 @@
                     $path = request()->path();
                 @endphp
                 <ul class="navbar-nav p-2 flex-grow-1 align-items-center">
-                    <li class="nav-item border-end px-3">
+                    <li class="nav-item px-3 {{ $path == '/' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/" aria-current="page"
                             style="{{ $path == '/' ? 'font-weight: bolder;' : '' }}">Home</a>
                     </li>
-                    <li class="nav-item border-end px-3">
+                    <li class="nav-item px-3 {{ $path == 'about' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/about"
                             style="{{ $path == 'about' ? 'font-weight: bolder;' : '' }}">About</a>
                     </li>
-                    <li class="nav-item border-end px-3">
-                        <a class="nav-link" href="/announcements"
-                            style="{{ $path == 'announcements' ? 'font-weight: bolder;' : '' }}">Announcements</a>
+
+                    <li class="nav-item px-3 {{ $path == 'services' ? 'border-end border-start' : '' }}">
+                        <a class="nav-link" href="/services"
+                            style="{{ $path == 'services' ? 'font-weight: bolder;' : '' }}">Services</a>
                     </li>
-                    <li class="nav-item border-end px-3">
+                    <li class="nav-item px-3 {{ $path == 'faqs' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/faqs"
                             style="{{ $path == 'faqs' ? 'font-weight: bolder;' : '' }}">FAQs</a>
+                    </li>
+                    <li class="nav-item px-3 {{ $path == 'announcements' ? 'border-end border-start' : '' }}">
+                        <a class="nav-link" href="/announcements"
+                            style="{{ $path == 'announcements' ? 'font-weight: bolder;' : '' }}">Announcements</a>
                     </li>
                 </ul>
 
                 <div class="p-2">
-                    <button class="btn btn-primary jl-register-btn">Register</button>
+                    <button class="btn btn-secondary jl-register-btn">Register</button>
                     <button class="btn btn-primary jl-login-btn">Log in</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main style="">
+    <main>
         @yield('public_content')
     </main>
+
+    <footer>
+        <div class="container-fluid wrapper">
+            <center>
+                <p class="footer-text">Copyright © MDRRMO Morong, Rizal All rights reserved</p>
+            </center>
+        </div>
+    </footer>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

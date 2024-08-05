@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Route;
 // =======================
 Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/about', [PublicController::class, 'about'])->name('about');
-Route::get('/announcements', [PublicController::class, 'home'])->name('announcements');
-Route::get('/faqs', [PublicController::class, 'home'])->name('faqs');
+Route::get('/services', [PublicController::class, 'services'])->name('services');
+Route::get('/faqs', [PublicController::class, 'faqs'])->name('faqs');
+Route::get('/announcements', [PublicController::class, 'announcements'])->name('announcements');
 
 
 // =======================
