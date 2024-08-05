@@ -43,8 +43,8 @@ footer .footer-text {
 }
 
 
-/* =====HOME===== */
 
+/* =====HOME===== */
 .home-title {
     width: 100%;
     height: calc(100vh - 100px);
@@ -186,6 +186,7 @@ footer .footer-text {
 }
 
 
+
 /* =====ABOUT===== */
 .about-primary {
     padding: 0 0 40px 0;
@@ -287,20 +288,23 @@ footer .footer-text {
     box-shadow: 20px 20px 50px grey;
 }
 
-.about-map{
+.about-map {
     padding: 40px 0;
 }
-.about-map-container{
+
+.about-map-container {
     border-radius: 10px;
     box-shadow: 20px 20px 50px grey;
     padding: 20px;
 }
-.about-map-container p{
+
+.about-map-container p {
     font-size: 1.0rem;
     font-weight: 600;
     margin-top: 10px;
     border-top: black 2px solid;
 }
+
 
 
 /* =====SERVICES===== */
@@ -390,4 +394,42 @@ footer .footer-text {
 
 .services-footer-text {
     padding-top: 5px;
+}
+
+.faqs-content {
+    padding: 40px 0;
+}
+
+.faqs-intro {
+    padding: 20px 100px;
+}
+
+.faqs-intro img {
+    height: 25vh;
+    padding: 10px 0;
+}
+
+.faqs-questions {
+    cursor: pointer;
+    padding: 10px 10px;
+    border-bottom: gray 2px solid;
+    border-top: gray 2px solid;
+}
+
+.faqs-collapse {
+    padding: 10px 30px;
+    color: gray;
+}
+
+.faqs-collapse img{
+    height: 80vh;
+    border-radius: 10px;
+    box-shadow: 20px 20px 50px grey;
+}
+.faqs-collapse-subscribe input{
+    font-size: 2.0rem;
+}
+.faqs-collapse-subscribe button{
+    padding: 0 20px;
+    font-size: 2.0rem;
 }
