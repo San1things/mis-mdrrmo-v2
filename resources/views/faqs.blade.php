@@ -78,9 +78,14 @@
                     <p><i class="bi bi-pin-fill"></i> It depends, you can subscribe us to get an email for real-time updates
                         from our org.</p>
                     <div class="input-group faqs-collapse-subscribe">
-                        <input class="form-control" type="email" aria-label="Email"
-                            aria-describedby="button-addon2" placeholder="Email" required="required">
-                        <button class="btn btn-outline-primary" id="button-addon2" type="button">Subscribe</button>
+                        <form action="">
+                            <div class="input-group">
+                                <input class="form-control" type="email" aria-label="Email"
+                                    aria-describedby="button-addon2" placeholder="Email" required="required">
+                                <button class="btn btn-outline-primary" id="button-addon2" type="button">Subscribe</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>

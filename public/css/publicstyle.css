@@ -4,6 +4,11 @@ body {
     background-color: #FAF9F6;
 }
 
+.wrapper {
+    width: 1200px;
+    margin: 0 auto;
+}
+
 .navbar {
     position: sticky;
     top: 0;
@@ -425,6 +430,9 @@ footer .footer-text {
     height: 80vh;
     border-radius: 10px;
     box-shadow: 20px 20px 50px grey;
+}
+.faqs-collapse-subscribe .input-group{
+    width: 55vw;
 }
 .faqs-collapse-subscribe input{
     font-size: 2.0rem;

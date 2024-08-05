@@ -18,13 +18,6 @@
         integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/publicstyle.css') }}" rel="stylesheet">
-    <style>
-        .wrapper {
-            width: 1200px;
-            margin: 0 auto;
-        }
-    </style>
-
 </head>
 
 <body>
