@@ -417,6 +417,9 @@ footer .footer-text {
     padding-top: 5px;
 }
 
+
+
+/* =====FAQS===== */
 .faqs-content {
     padding: 40px 0;
 }
@@ -477,6 +480,30 @@ footer .footer-text {
     padding: 10px 0 0 0;
     border-top: black 2px solid;
     font-size: 1.1rem;
+}
+
+
+
+/* =====ANNOUNCEMENTS===== */
+.announcements-title{
+    padding: 40px 0;
+    text-align: center;
+    border-bottom: 3px gray solid;
+}
+
+.announcements-content{
+    padding: 20px 20px;
+    border-bottom: 2px gray solid;
+}
+
+.announcements-content .announcements-datetime{
+    font-size: 1.1rem;
+}
+
+.announcements-content img{
+    height: 50vh;
+    border-radius: 10px;
+    box-shadow: 20px 20px 50px grey;
 }
 
 
