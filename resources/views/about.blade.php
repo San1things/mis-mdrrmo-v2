@@ -4,7 +4,7 @@
         <center>
             <h1>ABOUT US:</h1>
         </center>
-        <div class="container-xl wrapper">
+        <div class="container-xl">
             <div class="about-primary-image">
                 <img src="{{ asset('images/publicpics/mdrrmopic8.jpg') }}" alt="">
             </div>
@@ -35,7 +35,7 @@
         </div>
     </section>
     <section class="about-founder">
-        <div class="container-xl wrapper about-founder-flexbox">
+        <div class="container-xl about-founder-flexbox">
             <div class="about-founder-text">
                 <h3>OUR HEAD</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque maximus lorem a elit blandit, non
@@ -50,7 +50,7 @@
                 <img src="{{ asset('images/publicpics/mdrrmopic9.jpg') }}" alt="">
             </div>
         </div>
-        <div class="container-xl wrapper about-founder-flexbox">
+        <div class="container-xl about-founder-flexbox">
             <div class="about-founder-images">
                 <img src="{{ asset('images/publicpics/mdrrmopic12.jpg') }}" alt="">
             </div>
@@ -65,7 +65,7 @@
     </section>
 
     <section class="about-misvis">
-        <div class="container-xl wrapper about-misvis-flexbox">
+        <div class="container-xl about-misvis-flexbox">
             <div class="about-misvis-text">
                 <h2>MISSION</h2>
                 <p>The MDRRMO, for the Glory of God, shall be the primary institution to develop knowledge and skills, and
@@ -76,7 +76,7 @@
                 <img src="{{ asset('images/publicpics/mdrrmopic6.jpg') }}" alt="">
             </div>
         </div>
-        <div class="container-xl wrapper about-misvis-flexbox">
+        <div class="container-xl about-misvis-flexbox">
             <div class="about-misvis-images">
                 <img src="{{ asset('images/publicpics/mdrrmopic10.jpg') }}" alt="">
             </div>
@@ -90,7 +90,7 @@
     </section>
 
     <section class="about-cvm">
-        <div class="container-xl wrapper">
+        <div class="container-xl">
             <center class="about-cvm-text">
                 <h2>CORE VALUES</h2>
                 <p>Professionalism, Integrity and Service</p>
@@ -122,7 +122,7 @@
     </section>
 
     <section class="about-map">
-        <div class="container-xl wrapper">
+        <div class="container-xl">
             <center>
                 <h2>WHERE TO FIND US?</h2>
                 <div class="about-map-container">

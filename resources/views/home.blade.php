@@ -1,7 +1,7 @@
 @extends('publiclayout')
 @section('public_content')
     <section class="home-title">
-        <div class="container-xl wrapper">
+        <div class="container-xl">
             <div class="title-section">
                 <center>
                     <h1>This is the official website of</h1>
@@ -13,7 +13,7 @@
     </section>
 
     <section class="home-about">
-        <div class="container-xl wrapper home-about-flexbox">
+        <div class="container-xl home-about-flexbox">
             <div class="home-about-image">
                 <img src="{{ asset('images/publicpics/mdrrmopic3.jpg') }}" alt="abtpic">
             </div>
@@ -28,7 +28,7 @@
     </section>
 
     <section class="home-services">
-        <div class="container-xl wrapper">
+        <div class="container-xl">
             <center class="home-services-text">
                 <h1>Services</h1>
                 <p>At the Municipality Disaster Risk Reduction and Management Office of Morong Rizal, we pride ourselves on
@@ -50,7 +50,7 @@
     </section>
 
     <section class="home-subscribe">
-        <div class="container-xl wrapper">
+        <div class="container-xl">
             <center>
                 <h4>If you want to get a real time update on us. Subscribe now!</h4>
                 <form action="" method="">
@@ -66,7 +66,7 @@
     </section>
 
     <section class="home-sitemap">
-        <div class="container-xl wrapper home-sitemap-flexbox">
+        <div class="container-xl home-sitemap-flexbox">
             <ul>
                 <li><a href="/">HOME</a></li>
                 <li><a href="/about">ABOUT</a></li>

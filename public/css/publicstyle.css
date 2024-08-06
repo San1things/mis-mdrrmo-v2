@@ -4,14 +4,14 @@ body {
     background-color: #FAF9F6;
 }
 
-.wrapper {
-    width: 1200px;
-    margin: 0 auto;
+.container-xl {
+    padding: 0 15px;
 }
 
 .navbar {
     position: sticky;
     top: 0;
+    z-index: 1000;
     background-color: white;
     height: 100px;
     font-size: 1.8rem;
@@ -121,7 +121,7 @@ footer .footer-text {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 100px;
+    gap: 10rem;
 }
 
 .home-services-images img {
@@ -237,7 +237,7 @@ footer .footer-text {
 }
 
 .about-founder-flexbox {
-    padding: 20px 0;
+    padding: 20px 15px;
     display: flex;
     align-items: center;
     align-content: center;
@@ -258,7 +258,7 @@ footer .footer-text {
 }
 
 .about-misvis-flexbox {
-    padding: 20px 0;
+    padding: 20px 15px;
     display: flex;
     align-items: center;
     align-content: center;
@@ -282,7 +282,7 @@ footer .footer-text {
 }
 
 .about-cvm {
-    padding: 40px 0;
+    padding: 40px 15px;
     background: linear-gradient(67.6deg, rgb(225, 242, 254) -2.8%, rgb(193, 224, 250) 44.6%, rgb(19, 116, 197) 102.4%);
 
 }
@@ -310,7 +310,7 @@ footer .footer-text {
 }
 
 .about-map {
-    padding: 40px 0;
+    padding: 40px;
 }
 
 .about-map-container {
@@ -425,7 +425,7 @@ footer .footer-text {
 }
 
 .faqs-intro {
-    padding: 20px 100px;
+    padding: 20px 20px;
 }
 
 .faqs-intro img {
@@ -438,6 +438,9 @@ footer .footer-text {
     padding: 10px 10px;
     border-bottom: gray 2px solid;
     border-top: gray 2px solid;
+}
+.faqs-questions h6{
+    font-size: 2.0rem;
 }
 
 .faqs-collapse {
@@ -504,6 +507,9 @@ footer .footer-text {
     height: 50vh;
     border-radius: 10px;
     box-shadow: 20px 20px 50px grey;
+}
+.announcements-content h4{
+    padding: 20px 0 0 0;
 }
 
 

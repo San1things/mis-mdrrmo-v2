@@ -1,10 +1,10 @@
 @extends('publiclayout')
 @section('public_content')
     <section class="faqs-content">
-        <div class="container-xl wrapper">
+        <div class="container-xl">
             <div class="faqs-intro">
                 <center>
-                    <h3>Do You Have Questions?</h3>
+                    <h2>Do You Have Questions?</h2>
                     <h6>We have your answers</h6>
                     <p>Below you have the answer to all your questions and concerns. Our comprehensive FAQ section is
                         designed to provide you with quick and easy access to the information you need. Whether you’re
@@ -94,7 +94,7 @@
 
     <section>
         <div class="faqs-additional-question">
-            <div class="container-xl wrapper">
+            <div class="container-xl">
                 <center>
                     <h4>If you stil dont have your answer, you can ask us here!</h4>
 

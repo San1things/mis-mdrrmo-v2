@@ -22,9 +22,9 @@
 
 <body>
     <nav class="navbar navbar-expand-lg ps-2">
-        <div class="container-fluid wrapper d-flex">
+        <div class="container-xl d-flex">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('images/publicpics/mdrrmopic2.png') }}" alt="logo" style="border-radius:100%;"
+                <img src="{{ asset('images/publicpics/logo.png') }}" alt="logo" style="border-radius:100%;"
                     height="80">
             </a>
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" type="button"
@@ -36,32 +36,32 @@
                     $path = request()->path();
                 @endphp
                 <ul class="navbar-nav p-2 flex-grow-1 align-items-center">
-                    <li class="nav-item px-3 {{ $path == '/' ? 'border-end border-start' : '' }}">
+                    <li class="nav-item p-3 {{ $path == '/' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/" aria-current="page"
                             style="{{ $path == '/' ? 'font-weight: bolder;' : '' }}">Home</a>
                     </li>
-                    <li class="nav-item px-3 {{ $path == 'about' ? 'border-end border-start' : '' }}">
+                    <li class="nav-item p-3 {{ $path == 'about' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/about"
                             style="{{ $path == 'about' ? 'font-weight: bolder;' : '' }}">About</a>
                     </li>
 
-                    <li class="nav-item px-3 {{ $path == 'services' ? 'border-end border-start' : '' }}">
+                    <li class="nav-item p-3 {{ $path == 'services' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/services"
                             style="{{ $path == 'services' ? 'font-weight: bolder;' : '' }}">Services</a>
                     </li>
-                    <li class="nav-item px-3 {{ $path == 'faqs' ? 'border-end border-start' : '' }}">
+                    <li class="nav-item p-3 {{ $path == 'faqs' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/faqs"
                             style="{{ $path == 'faqs' ? 'font-weight: bolder;' : '' }}">FAQs</a>
                     </li>
-                    <li class="nav-item px-3 {{ $path == 'announcements' ? 'border-end border-start' : '' }}">
+                    <li class="nav-item p-3 {{ $path == 'announcements' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/announcements"
                             style="{{ $path == 'announcements' ? 'font-weight: bolder;' : '' }}">Announcements</a>
                     </li>
                 </ul>
 
                 <div class="p-2">
-                    <button class="btn btn-secondary jl-register-btn">Register</button>
-                    <button class="btn btn-primary jl-login-btn">Log in</button>
+                    <a class="btn btn-secondary jl-register-btn" href="/register">Register</a>
+                    <a class="btn btn-primary jl-login-btn" href="/login">Log in</a>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
     </main>
 
     <footer>
-        <div class="container-fluid wrapper">
+        <div class="container-xl">
             <center>
                 <p class="footer-text">Copyright © MDRRMO Morong, Rizal All rights reserved</p>
             </center>

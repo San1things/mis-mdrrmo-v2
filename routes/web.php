@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,8 @@ Route::get('/about', [PublicController::class, 'about'])->name('about');
 Route::get('/services', [PublicController::class, 'services'])->name('services');
 Route::get('/faqs', [PublicController::class, 'faqs'])->name('faqs');
 Route::get('/announcements', [PublicController::class, 'announcements'])->name('announcements');
+Route::get('/login', [LoginController::class, 'login'])->name('loginpage');
+Route::get('/register', [LoginController::class, 'register'])->name('registerpage');
 
 
 // =======================

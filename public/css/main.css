@@ -1,12 +1,6 @@
 :root {
     font-size: 62.5%;
     font-family: 'Poppins';
-    --site-color-main: #606060;
-    --site-color-secondary: #a8a8a8;
-    --site-color-secondary-lite: #e5e5e5;
-    --site-color-text-main: #606060;
-    --site-color-text-lite: #e5e5e5;
-    --site-color-accent: #03a9f4;
 
     ::-webkit-scrollbar {
         width: 2px;
@@ -36,36 +30,36 @@ h2 {
 }
 
 h3 {
-    font-size: 3.75rem;
+    font-size: 3.5rem;
     line-height: 1.5;
     font-family: 'Poppins';
 }
 
 h4 {
-    font-size: 3.25rem;
-    line-height: 1.5;
-    font-family: 'Poppins';
-}
-
-h5 {
     font-size: 3.0rem;
     line-height: 1.5;
     font-family: 'Poppins';
 }
 
-h6 {
+h5 {
     font-size: 2.5rem;
     line-height: 1.5;
     font-family: 'Poppins';
 }
 
-p {
+h6 {
     font-size: 2.0rem;
+    line-height: 1.5;
+    font-family: 'Poppins';
+}
+
+p {
+    font-size: 1.5rem;
     font-family: 'Poppins';
 }
 
 a {
-    font-size: 2.0rem;
+    font-size: 1.5rem;
     font-family: 'Poppins';
 }
 
@@ -73,10 +67,6 @@ a {
     font-family: 'Poppins';
     background-color: rgb(102, 188, 239);
     border: none;
-}
-
-tr {
-    cursor: pointer;
 }
 
 .modal {

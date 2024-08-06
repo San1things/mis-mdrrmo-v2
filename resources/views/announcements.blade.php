@@ -1,12 +1,12 @@
 @extends('publiclayout')
 @section('public_content')
-    <section class="container-xl wrapper announcements-title">
+    <section class="container-xl announcements-title">
             <h2>Don't get yourself outdated!</h2>
             <h6>Here's our latest announcements.</h6>
     </section>
 
     <section class="announcements-content">
-        <div class="container-xl wrapper">
+        <div class="container-xl">
             <center>
                 <img src="{{ asset('images/publicpics/mdrrmopic11.jpg') }}" alt="">
                 <p class="announcements-datetime">announced at: SAMPLE DATETIME</p>

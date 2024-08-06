@@ -1,7 +1,7 @@
 @extends('publiclayout')
 @section('public_content')
     <section class="services-context">
-        <div class="container-xl wrapper">
+        <div class="container-xl">
             <div class="services-ESA-flexbox">
                 <div class="services-images">
                     <img src="{{ asset('images/publicpics/alarm.png') }}" alt="">
