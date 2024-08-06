@@ -49,6 +49,22 @@
         </div>
     </section>
 
+    <section class="home-subscribe">
+        <div class="container-xl wrapper">
+            <center>
+                <h4>If you want to get a real time update on us. Subscribe now!</h4>
+                <form action="" method="">
+                    @csrf
+                    <div class="input-group">
+                        <input class="form-control" type="email" aria-label="Email" aria-describedby="button-addon2"
+                            placeholder="Email" required="required" name="homeemail">
+                        <button class="btn btn-outline-primary" id="button-addon2" type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </center>
+        </div>
+    </section>
+
     <section class="home-sitemap">
         <div class="container-xl wrapper home-sitemap-flexbox">
             <ul>
@@ -81,7 +97,7 @@
                     <p><i class="bi bi-telephone-fill"></i> : 0919-081-7181/(027)212-5741</p>
                 </li>
                 <li>
-                    <p><i class="bi bi-envelope-at-fill"></i> :  mdrrmo.morongrizal1@gmail.com</p>
+                    <p><i class="bi bi-envelope-at-fill"></i> : mdrrmo.morongrizal1@gmail.com</p>
                 </li>
             </ul>
         </div>

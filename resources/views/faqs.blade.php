@@ -77,17 +77,42 @@
                 <div class="faqs-collapse">
                     <p><i class="bi bi-pin-fill"></i> It depends, you can subscribe us to get an email for real-time updates
                         from our org.</p>
-                    <div class="input-group faqs-collapse-subscribe">
-                        <form action="">
+                    <div class="faqs-collapse-subscribe">
+                        <form action="" method="">
+                            @csrf
                             <div class="input-group">
-                                <input class="form-control" type="email" aria-label="Email"
+                                <input class="form-control" name="faqscollapseemail" type="email" aria-label="Email"
                                     aria-describedby="button-addon2" placeholder="Email" required="required">
-                                <button class="btn btn-outline-primary" id="button-addon2" type="button">Subscribe</button>
+                                <button class="btn btn-outline-primary" id="button-addon2" type="submit">Subscribe</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="faqs-additional-question">
+            <div class="container-xl wrapper">
+                <center>
+                    <h4>If you stil dont have your answer, you can ask us here!</h4>
+
+                    <form action="" method="">
+                        @csrf
+                        <div class="input-group">
+                            <input class="form-control" name="faqsquestionname" type="text" aria-label="Name"
+                                placeholder="Name" required="required">
+                            <input class="form-control" name="faqsquestionemail" type="email" aria-label="Email"
+                                placeholder="Email" required="required">
+                        </div>
+                        <textarea class="form-control" id="" name="" rows="3"
+                            placeholder="Ask your question here..." required="required"></textarea>
+                        <button class="btn btn-primary" type="submit">Send</button>
+                    </form>
+                    <p>Note: It is important to put your real email at the top because we're gonna send our answers there.
+                    </p>
+                </center>
             </div>
         </div>
     </section>

@@ -128,6 +128,22 @@ footer .footer-text {
     height: 70px;
 }
 
+.home-subscribe {
+    padding: 40px 0;
+    background: linear-gradient(67.6deg, rgb(19, 116, 197) -2.8%, rgb(193, 224, 250) 44.6%, rgb(225, 242, 254) 102.4%);
+}
+.home-subscribe .input-group{
+    padding: 10px 20px 0 20px;
+}
+.home-subscribe .input-group input {
+    font-size: 2.0rem;
+}
+
+.home-subscribe .input-group button {
+    font-size: 2.0rem;
+    padding: 0 20px;
+}
+
 .home-sitemap {
     padding: 20px 0;
     background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%);
@@ -426,18 +442,42 @@ footer .footer-text {
     color: gray;
 }
 
-.faqs-collapse img{
+.faqs-collapse img {
     height: 80vh;
     border-radius: 10px;
     box-shadow: 20px 20px 50px grey;
 }
-.faqs-collapse-subscribe .input-group{
-    width: 55vw;
-}
-.faqs-collapse-subscribe input{
+
+.faqs-collapse-subscribe input {
     font-size: 2.0rem;
 }
-.faqs-collapse-subscribe button{
+
+.faqs-collapse-subscribe button {
     padding: 0 20px;
     font-size: 2.0rem;
 }
+
+.faqs-additional-question{
+    padding: 40px 0;
+    background: linear-gradient(67.6deg, rgb(225, 242, 254) -2.8%, rgb(193, 224, 250) 44.6%, rgb(19, 116, 197) 102.4%);
+
+}
+.faqs-additional-question .input-group input, .faqs-additional-question textarea{
+    font-size: 2.0rem;
+    margin-bottom: 10px;
+}
+
+.faqs-additional-question button{
+    font-size: 2.0rem;
+    padding: 10px 150px;
+    margin-bottom: 10px;
+}
+
+.faqs-additional-question p{
+    padding: 10px 0 0 0;
+    border-top: black 2px solid;
+    font-size: 1.1rem;
+}
+
+
+
