@@ -1,0 +1,121 @@
+body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../images/publicpics/loginbg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.login-content {
+    padding: 24vh 0;
+}
+
+
+.login-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+    padding: 50px 20px;
+    border-radius: 10px;
+    background: linear-gradient(67.6deg, rgb(19, 116, 197) -2.8%, rgb(193, 224, 250) 44.6%, rgb(225, 242, 254) 102.4%);
+
+}
+
+.login-container a:nth-child(2) {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'poppins';
+    transition: all ease-in-out 0.2s;
+}
+
+.login-container a:nth-child(2):hover {
+    color: white;
+}
+
+.eye-password {
+    position: relative;
+}
+
+#eye-logo {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 10px;
+    font-size: 2.5rem
+}
+
+.login-image img {
+    height: 10vh;
+    border-radius: 100%;
+}
+
+.login-inputs {
+    padding: 0 10px;
+}
+
+.login-inputs .alert {
+    font-size: 1.3rem;
+}
+
+.login-inputs input {
+    font-size: 2.0rem;
+    line-height: 1;
+}
+
+.login-inputs button {
+    width: 100%;
+    font-size: 1.7rem;
+    padding: 8px 0;
+}
+
+/* =====REGISTER===== */
+
+.register-content {
+    padding: 8vh 0;
+}
+
+.register-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    padding: 40px 40px;
+    border-radius: 10px;
+    background: linear-gradient(67.6deg, rgb(19, 116, 197) -2.8%, rgb(193, 224, 250) 44.6%, rgb(225, 242, 254) 102.4%);
+}
+
+.register-container a:nth-child(2) {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'poppins';
+    transition: all ease-in-out 0.2s;
+}
+
+.register-container a:nth-child(2):hover {
+    color: white;
+}
+
+.register-image img {
+    height: 10vh;
+    border-radius: 100%;
+}
+
+.register-inputs button {
+    width: 100%;
+    font-size: 1.7rem;
+    padding: 8px 0;
+}

@@ -96,8 +96,10 @@
                             <th scope="col-1">Username</th>
                             <th scope="col-1">Password</th>
                             <th scope="col-1">Gender</th>
+                            <th scope="col-1">Address</th>
                             <th scope="col-1">Birthday</th>
                             <th scope="col-1">Contact #</th>
+                            <th scope="col-1">Status</th>
                             <th scope="col-1">Team</th>
                             <th scope="col-1">Actions</th>
                         </tr>
@@ -112,8 +114,10 @@
                                 <td>{{ $user->username }}</td>
                                 <td>{{ $user->password }}</td>
                                 <td>{{ $user->gender }}</td>
+                                <td>{{ $user->address }}</td>
                                 <td>{{ $user->bday }}</td>
                                 <td>{{ $user->contact }}</td>
+                                <td>{{ $user->status }}</td>
                                 <td>{{ $user->team }}</td>
                                 <td>
                                     <a class="btn btn-primary updateuser-btn" data-id="{{ $user->id }}"
@@ -121,9 +125,10 @@
                                         data-bs-target="#userAddUpdateModal" data-lastname="{{ $user->lastname }}"
                                         data-email="{{ $user->email }}" data-usertype="{{ $user->usertype }}"
                                         data-username="{{ $user->username }}" data-password="{{ $user->password }}"
-                                        data-gender="{{ $user->gender }}" data-birthday="{{ $user->bday }}"
-                                        data-contact="{{ $user->contact }}" data-team="{{ $user->team }}"
-                                        href="#"><i class="bi bi-pencil-square"></i></a>
+                                        data-gender="{{ $user->gender }}" data-address="{{ $user->address }}"
+                                        data-birthday="{{ $user->bday }}" data-contact="{{ $user->contact }}"
+                                        data-team="{{ $user->team }}" href="#"><i
+                                            class="bi bi-pencil-square"></i></a>
                                     <a class="btn btn-danger deleteuser-btn" data-id="{{ $user->id }}"
                                         data-bs-toggle="modal" data-bs-target="#userDeleteModal"><i
                                             class="bi bi-trash3-fill"></i></a>
@@ -175,12 +180,14 @@
                         <div class="form-floating mb-3">
                             <input class="form-control fs-4" id="password" name="password"></input>
                             <label for="floatingInput">Password</label>
-                            <i class="bi bi-eye-fill"></i>
-                            <i class="bi bi-eye-slash-fill"></i>
                         </div>
                         <div class="form-floating mb-3">
                             <input class="form-control fs-4" id="gender" name="gender"></input>
                             <label for="floatingInput">Gender</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control fs-4" id="address" name="address"></input>
+                            <label for="floatingInput">Address</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input class="form-control fs-4" id="birthday" name="birthday"></input>
@@ -243,7 +250,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('scripts')
@@ -260,6 +266,7 @@
                 $('#gender').val('')
                 $('#birthday').val('')
                 $('#contact').val('')
+                $('#address').val('')
                 $('#team').val('')
                 $('.btn-save').text('ADD')
                 $('#modalTitle').text('ADD USER')
@@ -277,6 +284,7 @@
                 $('#gender').val($(this).data('gender'))
                 $('#birthday').val($(this).data('birthday'))
                 $('#contact').val($(this).data('contact'))
+                $('#address').val($(this).data('address'))
                 $('#team').val($(this).data('team'))
                 $('.btn-save').text('UPDATE')
                 $('#modalTitle').text('UPDATE USER')
@@ -315,7 +323,8 @@
                     $('.dot-spinner').css("display", "none")
                     $('.success-alert').css("display", "block")
                     $('.modal-content').css("background",
-                        "linear-gradient(102.2deg, rgb(250, 45, 66) 9.6%, rgb(245, 104, 104) 96.1%)")
+                        "linear-gradient(102.2deg, rgb(250, 45, 66) 9.6%, rgb(245, 104, 104) 96.1%)"
+                        )
                 }, 1500);
                 setTimeout(function() {
                     $("#loadingModal").modal('hide');

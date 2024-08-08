@@ -22,15 +22,62 @@
 
 <body>
 
-    <div class="container-xl">
-        
-    </div>
+    <center>
+        <div class="container-xl login-content">
+            <div class="login-container">
+                <div class="login-image">
+                    <img src="{{ asset('images/publicpics/logo.png') }}" alt="">
+                </div>
+                <a href="/"><i class="bi bi-arrow-bar-left"></i>HOMEPAGE</a>
+                <h4>| LOG-IN</h4>
+                <div class="login-inputs">
+                    <div class="alert alert-danger" role="alert">
+                        A simple danger alert—check it out!A simple danger alert—check it out!A simple danger
+                        alert—check it out!
+                    </div>
+                    <form action="#" method="POST">
+                        @csrf
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="floatingInput" type="email" required
+                                placeholder="name@example.com">
+                            <label for="floatingInput">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control eye-password" id="floatingPassword" type="password" placeholder="Password"
+                                required><i class="bi bi-eye-fill" id="eye-logo"></i>
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Log in</button>
+                    </form>
+                </div>
+                <p>Don't have an account? <a href="/register">Register</a> here.</p>
+            </div>
+        </div>
+    </center>
+
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#eye-logo').on('click', function(){
+                if($('.eye-password').attr('type') == 'password'){
+                    $('.eye-password').attr('type', 'text')
+                    $('#eye-logo').removeClass('bi bi-eye-fill')
+                    $('#eye-logo').addClass('bi bi-eye-slash-fill')
+                }else if($('.eye-password').attr('type') == 'text'){
+                    $('.eye-password').attr('type', 'password')
+                    $('#eye-logo').removeClass('bi bi-eye-slash-fill')
+                    $('#eye-logo').addClass('bi bi-eye-fill')
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>

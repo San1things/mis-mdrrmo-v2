@@ -61,6 +61,17 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link" href="#">
+                        <i class="bi bi-bell-fill position-relative">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                99+
+                                <span class="visually-hidden">unread messages</span>
+                              </span>
+                        </i>
+                        <span>Notifications</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
                         data-bs-target="#collapsetest" href="#" aria-expanded="true" aria-controls="collapsetest">
                         <i class="bi bi-gear-fill"></i>
@@ -72,6 +83,9 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="#">System Logs</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="#">User Profile</a>
                         </li>
                     </ul>
                 </li>

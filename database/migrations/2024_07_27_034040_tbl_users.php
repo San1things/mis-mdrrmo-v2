@@ -19,9 +19,15 @@ return new class extends Migration
             $table->string('usertype');
             $table->string('username');
             $table->string('password');
+            $table->string('status')->default('active');
+            $table->string('otp')->nullable();
+            $table->time('otp_added_at')->nullable();
+            $table->string('otp_token')->nullable();
+            $table->boolean('verified')->default(false);
             $table->string('gender');
+            $table->string('address');
             $table->date('bday');
-            $table->string('contact', 20);
+            $table->string('contact');
             $table->string('team')->default('undefined');
             $table->timestamps();
         });
