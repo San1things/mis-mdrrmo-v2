@@ -119,3 +119,26 @@ body {
     font-size: 1.7rem;
     padding: 8px 0;
 }
+
+.eye-show1 {
+    position: relative;
+}
+
+#eye-logo1 {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 10px;
+    font-size: 2.5rem
+}
+.eye-show2 {
+    position: relative;
+}
+
+#eye-logo2 {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 10px;
+    font-size: 2.5rem
+}

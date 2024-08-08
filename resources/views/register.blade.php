@@ -42,10 +42,16 @@
                             placeholder="Email">
                         <input class="form-control mb-4 fs-3" id="Username" name="username" type="text"
                             placeholder="Username">
-                        <input class="form-control mb-4 fs-3" id="Password" name="password" type="password"
-                            placeholder="Password">
-                        <input class="form-control mb-4 fs-3" id="ConfirmPassword" name="password" type="password"
-                            placeholder="Confirm Password">
+                        <div class="eye-show1">
+                            <input class="form-control mb-4 fs-3 eye-password1" id="Password" name="password"
+                                type="password" placeholder="Password">
+                            <i class="bi bi-eye-fill" id="eye-logo1"></i>
+                        </div>
+                        <div class="eye-show2">
+                            <input class="form-control mb-4 fs-3 eye-password2" id="ConfirmPassword" name="password"
+                                type="password" placeholder="Confirm Password">
+                            <i class="bi bi-eye-fill" id="eye-logo2"></i>
+                        </div>
                         <div class="input-group mb-3">
                             <input class="form-control fs-3" id="Fullname" type="text" aria-label="Username"
                                 placeholder="First Name">
@@ -74,6 +80,34 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#eye-logo1').on('click', function() {
+                if ($('.eye-password1').attr('type') == 'password') {
+                    $('.eye-password1').attr('type', 'text')
+                    $('#eye-logo1').removeClass('bi bi-eye-fill')
+                    $('#eye-logo1').addClass('bi bi-eye-slash-fill')
+                } else if ($('.eye-password1').attr('type') == 'text') {
+                    $('.eye-password1').attr('type', 'password')
+                    $('#eye-logo1').removeClass('bi bi-eye-slash-fill')
+                    $('#eye-logo1').addClass('bi bi-eye-fill')
+                }
+            })
+
+            $('#eye-logo2').on('click', function() {
+                if ($('.eye-password2').attr('type') == 'password') {
+                    $('.eye-password2').attr('type', 'text')
+                    $('#eye-logo2').removeClass('bi bi-eye-fill')
+                    $('#eye-logo2').addClass('bi bi-eye-slash-fill')
+                } else if ($('.eye-password2').attr('type') == 'text') {
+                    $('.eye-password2').attr('type', 'password')
+                    $('#eye-logo2').removeClass('bi bi-eye-slash-fill')
+                    $('#eye-logo2').addClass('bi bi-eye-fill')
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>
