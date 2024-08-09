@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="admin-content">
-            <h1>All users({{ $allCount }})</h1>
+            <h3>All users({{ $allCount }})</h3>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-xl">
                     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -79,7 +79,7 @@
                             <input name="usertype" type="hidden" value="{{ $qstring['usertype'] }}">
                             <input class="form-control me-3 fs-4" name="searchUser" type="search"
                                 value="{{ request('searchUser') }}" aria-label="Search" placeholder="Search">
-                            <button class="btn btn-outline-success me-2 fs-4" type="submit">Search</button>
+                            <button class="btn btn-outline-primary me-2 fs-4" type="submit">Search</button>
                             <a class="btn btn-outline-secondary fs-4" href="?usertype=&searchUser=">Clear</a>
                         </form>
                     </div>
@@ -87,18 +87,13 @@
             </nav>
             <div class="table-responsive-lg fs-4">
                 <table class="table table table-light table-hover mt-3 align-middle">
-                    <thead class="table-dark">
+                    <thead>
                         <tr>
+                            <th scope="col-1">Email</th>
                             <th scope="col-1">First Name</th>
                             <th scope="col-1">Last Name</th>
-                            <th scope="col-1">Email</th>
                             <th scope="col-1">Usertype</th>
                             <th scope="col-1">Username</th>
-                            <th scope="col-1">Password</th>
-                            <th scope="col-1">Gender</th>
-                            <th scope="col-1">Address</th>
-                            <th scope="col-1">Birthday</th>
-                            <th scope="col-1">Contact #</th>
                             <th scope="col-1">Status</th>
                             <th scope="col-1">Team</th>
                             <th scope="col-1">Actions</th>
@@ -106,17 +101,12 @@
                     </thead>
                     <tbody>
                         @forelse ($users as $user)
-                            <tr>
+                            <tr class="{{ $user->status == 'inactive' ? 'table-danger' : '' }}">
+                                <td>{{ $user->email }}</td>
                                 <td>{{ $user->firstname }}</td>
                                 <td>{{ $user->lastname }}</td>
-                                <td>{{ $user->email }}</td>
                                 <td>{{ $user->usertype }}</td>
                                 <td>{{ $user->username }}</td>
-                                <td>{{ $user->password }}</td>
-                                <td>{{ $user->gender }}</td>
-                                <td>{{ $user->address }}</td>
-                                <td>{{ $user->bday }}</td>
-                                <td>{{ $user->contact }}</td>
                                 <td>{{ $user->status }}</td>
                                 <td>{{ $user->team }}</td>
                                 <td>
@@ -124,19 +114,25 @@
                                         data-firstname="{{ $user->firstname }}" data-bs-toggle="modal"
                                         data-bs-target="#userAddUpdateModal" data-lastname="{{ $user->lastname }}"
                                         data-email="{{ $user->email }}" data-usertype="{{ $user->usertype }}"
-                                        data-username="{{ $user->username }}" data-password="{{ $user->password }}"
-                                        data-gender="{{ $user->gender }}" data-address="{{ $user->address }}"
-                                        data-birthday="{{ $user->bday }}" data-contact="{{ $user->contact }}"
-                                        data-team="{{ $user->team }}" href="#"><i
-                                            class="bi bi-pencil-square"></i></a>
-                                    <a class="btn btn-danger deleteuser-btn" data-id="{{ $user->id }}"
-                                        data-bs-toggle="modal" data-bs-target="#userDeleteModal"><i
-                                            class="bi bi-trash3-fill"></i></a>
+                                        data-username="{{ $user->username }}" data-gender="{{ $user->gender }}"
+                                        data-address="{{ $user->address }}" data-birthday="{{ $user->bday }}"
+                                        data-contact="{{ $user->contact }}" data-team="{{ $user->team }}"
+                                        href="#"><i class="bi bi-pencil-square"></i></a>
+                                    @if ($user->status == 'active')
+                                        <a class="btn btn-danger lockuser-btn" data-id="{{ $user->id }}"
+                                            data-bs-toggle="modal" data-bs-target="#userLockUnlockModal">
+                                            <i class="bi bi-lock-fill"></i></a>
+                                    @elseif ($user->status == 'inactive')
+                                        <a class="btn btn-primary unlockuser-btn" data-id="{{ $user->id }}"
+                                            data-bs-toggle="modal" data-bs-target="#userLockUnlockModal">
+                                            <i class="bi bi-unlock-fill"></i></a>
+                                    @endif
+
                                 </td>
                             </tr>
                         @empty
                             <div>
-                                <h1>NO USER FOUND!</h1>
+                                <h4 style="color: red">NO USER FOUND!</h4>
                             </div>
                         @endforelse
                     </tbody>
@@ -151,65 +147,112 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                    <h1 class="modal-title fs-3" id="modalTitle"></h1>
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
-                <form id="modalForm" action="" method="post">
+                <form id="modalForm1" action="" method="post">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="firstname" name="firstname" type="text">
-                            <label for="floatingInput">First Name</label>
+
+                        <div class="mb-3">
+                            <label class="form-label fs-5" for="floatingInput">Email:</label>
+                            <input class="form-control fs-4" id="email" name="email" type="email"
+                                placeholder="Email"></input>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="lastname" name="lastname"></input>
-                            <label for="floatingInput">Last Name</label>
+                        <div class="mb-3">
+                            <label class="form-label fs-5" for="floatingInput">Username:</label>
+                            <input class="form-control fs-4" id="username" name="username" type="text"
+                                placeholder="Username"></input>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="email" name="email"></input>
-                            <label for="floatingInput">Email</label>
+                        <div class="addpasswords">
+                            <div class="mb-3">
+                                <label class="form-label fs-5" for="floatingInput">Password:</label>
+                                <input class="form-control fs-4" id="addpassword1" name="addpassword1" type="password"
+                                    placeholder="Password"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fs-5" for="floatingInput">Confirm Password:</label>
+                                <input class="form-control fs-4" id="addpassword2" name="addpassword2" type="password"
+                                    placeholder="Confirm Password"></input>
+                            </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="usertype" name="usertype"></input>
-                            <label for="floatingInput">Usertype</label>
+                        <div class="mb-3">
+                            <select class="form-select fs-4" id="usertype" name="usertype">
+                                <option value="" hidden>Usertype</option>
+                                <option value="admin">Admin</option>
+                                <option value="staff">Staff</option>
+                                <option value="resident">Resident</option>
+                                <option value="other">Other</option>
+                            </select>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="username" name="username"></input>
-                            <label for="floatingInput">Username</label>
+                        <div class="my-3 pt-3 border-black border-top">
+                            <label class="form-label fs-5" for="floatingInput">Full Name:</label>
+                            <div class="input-group">
+                                <input class="form-control fs-4" id="firstname" name="firstname" type="text"
+                                    placeholder="First Name">
+                                <input class="form-control fs-4" id="lastname" name="lastname"
+                                    placeholder="Last Name"></input>
+                            </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="password" name="password"></input>
-                            <label for="floatingInput">Password</label>
+                        <div class="mb-3">
+                            <select class="form-select fs-4" id="gender" name="gender">
+                                <option value="" hidden>Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="LGBTQIA+">LGBTQIA+</option>
+                            </select>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="gender" name="gender"></input>
-                            <label for="floatingInput">Gender</label>
+                        <div class="mb-3">
+                            <label class="form-label fs-5" for="floatingInput">Address:</label>
+                            <input class="form-control fs-4" id="address" name="address"
+                                placeholder="ex. Morong, Rizal"></input>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="address" name="address"></input>
-                            <label for="floatingInput">Address</label>
+                        <div class="mb-3">
+                            <label class="form-label fs-5" for="floatingInput">Birthday:</label>
+                            <input class="form-control fs-4" id="birthday" name="birthday" type="date"></input>
+
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="birthday" name="birthday"></input>
-                            <label for="floatingInput">Birthday</label>
+                        <div class="mb-3">
+                            <label class="form-label fs-5" for="floatingInput">Contact:</label>
+                            <input class="form-control fs-4" id="contact" name="contact"
+                                placeholder="Mobile Number"></input>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="contact" name="contact"></input>
-                            <label for="floatingInput">Contact</label>
+                        <div class="mb-3">
+                            <select class="form-select fs-4" id="team" name="team">
+                                <option value="" hidden>Team</option>
+                                <option value="team a">Team A</option>
+                                <option value="team b">Team B</option>
+                                <option value="team c">Team C</option>
+                                <option value="undefined">No Team/Not an Employee</option>
+                            </select>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="team" name="team"></input>
-                            <label for="floatingInput">Team</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary fs-3 btn-save px-5 py-2" type="submit">Save changes</button>
+                        <button class="btn btn-primary fs-3 btn-save px-5 py-2" type="submit">Save
+                            changes</button>
                     </div>
                 </form>
+                <div class="modal-body">
+                    <form id="modalForm2" action="" method="post">
+                        @csrf
+                        <div class="updatepasswords border-top border-black">
+                            <div class="mb-3">
+                                <label class="form-label fs-3" for="floatingInput">UPDATE PASSWORD:</label>
+                                <input class="form-control fs-4" id="password" name="updatepassword1" type="password"
+                                    placeholder="Password"></input>
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control fs-4" id="password" name="updatepassword2"
+                                    type="addpassword2" placeholder="Confirm Password"></input>
+                            </div>
+                            <button class="btn btn-primary fs-3 btn-save-password px-5 py-2" type="submit">Change
+                                Password</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
-    <div class="modal fade" id="userDeleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
+    <div class="modal fade" id="userLockUnlockModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -218,35 +261,12 @@
                 <form id="modalForm" action="" method="post">
                     @csrf
                     <div class="modal-body ms-2">
-                        <h2>Are you sure you want to delete this user?</h2>
+                        <h6 class="modal-text"></h6>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger fs-3 btn-delete px-5 py-2" type="submit">Delete</button>
+                        <button class="btn btn-danger fs-3 btn-lock-unlock px-5 py-2" type="submit"></button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="loadingModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-body d-flex justify-content-center my-5">
-                    <div class="dot-spinner">
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                    </div>
-                    <div class="success-alert my-5 mx-5" style="display: none;">
-                        <i class="bi bi-check-circle"></i>
-                        <p class="success-alert-text">SAVED SUCCESFULLY!</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -262,7 +282,10 @@
                 $('#email').val('')
                 $('#usertype').val('')
                 $('#username').val('')
-                $('#password').val('')
+                $('.addpasswords').css("display", "block")
+                $('.updatepasswords').css("display", "none")
+                $('#addpassword1').val('')
+                $('#addpassword2').val('')
                 $('#gender').val('')
                 $('#birthday').val('')
                 $('#contact').val('')
@@ -270,7 +293,7 @@
                 $('#team').val('')
                 $('.btn-save').text('ADD')
                 $('#modalTitle').text('ADD USER')
-                $('#modalForm').attr('action', '/adduser')
+                $('#modalForm1').attr('action', '/adduser')
             })
 
             $('.updateuser-btn').on('click', function() {
@@ -280,7 +303,8 @@
                 $('#email').val($(this).data('email'))
                 $('#usertype').val($(this).data('usertype'))
                 $('#username').val($(this).data('username'))
-                $('#password').val($(this).data('password'))
+                $('.addpasswords').css("display", "none")
+                $('.updatepasswords').css("display", "block")
                 $('#gender').val($(this).data('gender'))
                 $('#birthday').val($(this).data('birthday'))
                 $('#contact').val($(this).data('contact'))
@@ -288,48 +312,23 @@
                 $('#team').val($(this).data('team'))
                 $('.btn-save').text('UPDATE')
                 $('#modalTitle').text('UPDATE USER')
-                $('#modalForm').attr('action', '/updateuser?id=' + id)
+                $('#modalForm1').attr('action', '/updateuserdetails?id=' + id)
+                $('#modalForm2').attr('action', '/updateuserpassword?id=' + id)
             })
 
-            $('.deleteuser-btn').on('click', function() {
+            $('.lockuser-btn').on('click', function() {
                 let id = $(this).data('id');
-                $('#modalForm').attr('action', '/deleteuser?id=' + id)
+                $('.btn-lock-unlock').text('LOCK');
+                $('.modal-text').text('Are you sure you want to lock this user?');
+                $('#modalForm').attr('action', '/lockuser?id=' + id)
             })
 
-            $('.btn-save').on('click', function(e) {
-                e.preventDefault();
-                $("#userAddUpdateModal").modal('hide');
-                $("#loadingModal").modal('show');
-                $('.success-alert-text').text('SAVED SUCCESFULLY')
-
-                setTimeout(function() {
-                    $('.dot-spinner').css("display", "none")
-                    $('.success-alert').css("display", "block")
-                    $('.modal-content').css("background",
-                        "linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147))")
-                }, 1500);
-                setTimeout(function() {
-                    $("#loadingModal").modal('hide');
-                    $('#modalForm').submit();
-                }, 2500);
-            })
-            $('.btn-delete').on('click', function(e) {
-                e.preventDefault();
-                $("#userDeleteModal").modal('hide');
-                $("#loadingModal").modal('show');
-                $('.success-alert-text').text('DELETED SUCCESFULLY')
-
-                setTimeout(function() {
-                    $('.dot-spinner').css("display", "none")
-                    $('.success-alert').css("display", "block")
-                    $('.modal-content').css("background",
-                        "linear-gradient(102.2deg, rgb(250, 45, 66) 9.6%, rgb(245, 104, 104) 96.1%)"
-                        )
-                }, 1500);
-                setTimeout(function() {
-                    $("#loadingModal").modal('hide');
-                    $('#modalForm').submit();
-                }, 2500);
+            $('.unlockuser-btn').on('click', function() {
+                let id = $(this).data('id');
+                $('.btn-lock-unlock').text('UNLOCK')
+                $('.btn-lock-unlock').attr('class', 'btn btn-primary fs-3 btn-lock-unlock px-5 py-2')
+                $('.modal-text').text('Are you sure you want to unlock this user?');
+                $('#modalForm').attr('action', '/unlockuser?id=' + id)
             })
         })
     </script>

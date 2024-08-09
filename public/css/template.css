@@ -53,6 +53,10 @@
     background-color: rgb(102, 188, 239);
     border: none;
 }
+.btn-danger {
+    font-family: 'Poppins';
+    border: none;
+}
 
 /* USERS */
 

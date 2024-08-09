@@ -49,7 +49,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
+                    <a class="sidebar-link" href="/adminannouncements">
                         <i class="bi bi-megaphone-fill"></i>
                         <span>Announcements</span>
                     </a>

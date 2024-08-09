@@ -9,12 +9,8 @@
             </div>
             <div class="header-export pe-3">
                 <a class="btn btn-primary px-4 py-2" href="#">
-                    <i class="bi bi-file-earmark-arrow-down-fill"></i>
-                    <span>Export</span>
-                </a>
-                <a class="btn btn-primary px-4 py-2" href="#">
-                    <i class="bi bi-plus-lg"></i>
-                    <span>Add</span>
+                    <i class="bi bi-plus-lg fs-1"></i>
+                    <span></span>
                 </a>
             </div>
         </div>

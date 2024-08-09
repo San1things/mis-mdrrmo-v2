@@ -77,6 +77,17 @@ class UsersController extends Controller
     public function userAdd(Request $request)
     {
         $input = $request->input();
+
+        if (strlen($input['addpassword1']) < 8) {
+            return redirect('/users');
+            die();
+        }
+
+        if ($input['addpassword1'] != $input['addpassword2']) {
+            return redirect('/users');
+            die();
+        }
+
         DB::table('tbl_users')
             ->insert([
                 'firstname' => $input['firstname'],
@@ -84,7 +95,7 @@ class UsersController extends Controller
                 'email' => $input['email'],
                 'usertype' => $input['usertype'],
                 'username' => $input['username'],
-                'password' => $input['password'],
+                'password' => $input['addpassword1'],
                 'gender' => $input['gender'],
                 'address' => $input['address'],
                 'bday' => $input['birthday'],
@@ -96,7 +107,7 @@ class UsersController extends Controller
         return redirect('/users');
     }
 
-    public function userUpdate(Request $request)
+    public function userUpdateDetails(Request $request)
     {
         $input = $request->input();
         DB::table('tbl_users')->where('id', $input['id'])
@@ -106,7 +117,6 @@ class UsersController extends Controller
                 'email' => $input['email'],
                 'usertype' => $input['usertype'],
                 'username' => $input['username'],
-                'password' => $input['password'],
                 'gender' => $input['gender'],
                 'address' => $input['address'],
                 'bday' => $input['birthday'],
@@ -117,10 +127,46 @@ class UsersController extends Controller
         return redirect('/users');
     }
 
-    public function userDelete(Request $request)
+    public function userUpdatePassword(Request $request)
     {
         $input = $request->input();
-        DB::table('tbl_users')->where('id', $input['id'])->delete();
+
+        if (strlen($input['updatepassword1']) < 8) {
+            return redirect('/users');
+            die();
+        }
+
+        if ($input['updatepassword1'] != $input['updatepassword2']) {
+            return redirect('/users');
+            die();
+        }
+
+        DB::table('tbl_users')->where('id', $input['id'])
+            ->update([
+                'password' => $input['updatepassword1'],
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+        return redirect('/users');
+    }
+
+    public function userLock(Request $request)
+    {
+        $input = $request->input();
+        DB::table('tbl_users')->where('id', $input['id'])
+            ->update([
+                'status' => "inactive",
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+        return redirect('/users');
+    }
+    public function userUnlock(Request $request)
+    {
+        $input = $request->input();
+        DB::table('tbl_users')->where('id', $input['id'])
+            ->update([
+                'status' => "active",
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
         return redirect('/users');
     }
 }
