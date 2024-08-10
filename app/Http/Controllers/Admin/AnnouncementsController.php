@@ -18,7 +18,7 @@ class AnnouncementsController extends Controller
         return view('admin.adminannouncements', $data);
     }
 
-    public function announcementAdd(){
-        
+    public function announcementAdd(Request $request){
+        $input = request()->input();
     }
 }

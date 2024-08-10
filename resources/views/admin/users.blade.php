@@ -47,6 +47,17 @@
             </div>
         </div>
         <div class="admin-content">
+            @isset($alert)
+                <center>
+                    <div class="alert alert-dismissible fs-2 py-5 fade show alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                        role="alert">
+                        {{ !empty($alerts[$alert]) ? $alerts[$alert][0] : '' }}
+                        <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+                    </div>
+                </center>
+            @endisset
+
+
             <h3>All users({{ $allCount }})</h3>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-xl">
@@ -80,7 +91,7 @@
                             <input class="form-control me-3 fs-4" name="searchUser" type="search"
                                 value="{{ request('searchUser') }}" aria-label="Search" placeholder="Search">
                             <button class="btn btn-outline-primary me-2 fs-4" type="submit">Search</button>
-                            <a class="btn btn-outline-secondary fs-4" href="?usertype=&searchUser=">Clear</a>
+                            <a class="btn btn-outline-secondary fs-4" href="/users">Clear</a>
                         </form>
                     </div>
                 </div>
@@ -118,6 +129,7 @@
                                         data-address="{{ $user->address }}" data-birthday="{{ $user->bday }}"
                                         data-contact="{{ $user->contact }}" data-team="{{ $user->team }}"
                                         href="#"><i class="bi bi-pencil-square"></i></a>
+                                        
                                     @if ($user->status == 'active')
                                         <a class="btn btn-danger lockuser-btn" data-id="{{ $user->id }}"
                                             data-bs-toggle="modal" data-bs-target="#userLockUnlockModal">
@@ -153,32 +165,33 @@
                 <form id="modalForm1" action="" method="post">
                     @csrf
                     <div class="modal-body">
-
                         <div class="mb-3">
                             <label class="form-label fs-5" for="floatingInput">Email:</label>
                             <input class="form-control fs-4" id="email" name="email" type="email"
-                                placeholder="Email"></input>
+                                placeholder="Email*" required></input>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-5" for="floatingInput">Username:</label>
                             <input class="form-control fs-4" id="username" name="username" type="text"
-                                placeholder="Username"></input>
+                                placeholder="Username*" required></input>
                         </div>
-                        <div class="addpasswords">
+                        <div class="addpasswords eye-add-pass">
                             <div class="mb-3">
                                 <label class="form-label fs-5" for="floatingInput">Password:</label>
                                 <input class="form-control fs-4" id="addpassword1" name="addpassword1" type="password"
-                                    placeholder="Password"></input>
+                                    placeholder="Password*" required><i class="bi bi-eye-fill"
+                                    id="eye-logo1"></i></input>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label fs-5" for="floatingInput">Confirm Password:</label>
                                 <input class="form-control fs-4" id="addpassword2" name="addpassword2" type="password"
-                                    placeholder="Confirm Password"></input>
+                                    placeholder="Confirm Password*" required><i class="bi bi-eye-fill"
+                                    id="eye-logo2"></i></input>
                             </div>
                         </div>
                         <div class="mb-3">
                             <select class="form-select fs-4" id="usertype" name="usertype">
-                                <option value="" hidden>Usertype</option>
+                                <option value="" hidden>Usertype*</option>
                                 <option value="admin">Admin</option>
                                 <option value="staff">Staff</option>
                                 <option value="resident">Resident</option>
@@ -189,14 +202,14 @@
                             <label class="form-label fs-5" for="floatingInput">Full Name:</label>
                             <div class="input-group">
                                 <input class="form-control fs-4" id="firstname" name="firstname" type="text"
-                                    placeholder="First Name">
-                                <input class="form-control fs-4" id="lastname" name="lastname"
-                                    placeholder="Last Name"></input>
+                                    placeholder="First Name*" required>
+                                <input class="form-control fs-4" id="lastname" name="lastname" placeholder="Last Name*"
+                                    required></input>
                             </div>
                         </div>
                         <div class="mb-3">
                             <select class="form-select fs-4" id="gender" name="gender">
-                                <option value="" hidden>Gender</option>
+                                <option value="" hidden>Gender*</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="LGBTQIA+">LGBTQIA+</option>
@@ -205,7 +218,7 @@
                         <div class="mb-3">
                             <label class="form-label fs-5" for="floatingInput">Address:</label>
                             <input class="form-control fs-4" id="address" name="address"
-                                placeholder="ex. Morong, Rizal"></input>
+                                placeholder="ex. Morong, Rizal*" required></input>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-5" for="floatingInput">Birthday:</label>
@@ -214,12 +227,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-5" for="floatingInput">Contact:</label>
-                            <input class="form-control fs-4" id="contact" name="contact"
-                                placeholder="Mobile Number"></input>
+                            <input class="form-control fs-4" id="contact" name="contact" placeholder="Mobile Number*"
+                                required></input>
                         </div>
                         <div class="mb-3">
                             <select class="form-select fs-4" id="team" name="team">
-                                <option value="" hidden>Team</option>
+                                <option value="" hidden>Team*</option>
                                 <option value="team a">Team A</option>
                                 <option value="team b">Team B</option>
                                 <option value="team c">Team C</option>
@@ -233,15 +246,17 @@
                 <div class="modal-body">
                     <form id="modalForm2" action="" method="post">
                         @csrf
-                        <div class="updatepasswords border-top border-black">
+                        <div class="updatepasswords eye-update-pass border-top border-black">
                             <div class="mb-3">
                                 <label class="form-label fs-3" for="floatingInput">UPDATE PASSWORD:</label>
-                                <input class="form-control fs-4" id="password" name="updatepassword1" type="password"
-                                    placeholder="Password"></input>
+                                <input class="form-control fs-4" id="updatepassword1" name="updatepassword1"
+                                    type="password" placeholder="Password*" required><i class="bi bi-eye-fill"
+                                    id="eye-logo3"></i></input>
                             </div>
                             <div class="mb-3">
-                                <input class="form-control fs-4" id="password" name="updatepassword2"
-                                    type="addpassword2" placeholder="Confirm Password"></input>
+                                <input class="form-control fs-4" id="updatepassword2" name="updatepassword2"
+                                    type="password" placeholder="Confirm Password*" required><i class="bi bi-eye-fill"
+                                    id="eye-logo4"></i></input>
                             </div>
                             <button class="btn btn-primary fs-3 btn-save-password px-5 py-2" type="submit">Change
                                 Password</button>
@@ -252,7 +267,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="userLockUnlockModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
+    <div class="modal fade" id="userLockUnlockModal" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -329,6 +345,51 @@
                 $('.btn-lock-unlock').attr('class', 'btn btn-primary fs-3 btn-lock-unlock px-5 py-2')
                 $('.modal-text').text('Are you sure you want to unlock this user?');
                 $('#modalForm').attr('action', '/unlockuser?id=' + id)
+            })
+
+            $('#eye-logo1').on('click', function() {
+                if ($('#addpassword1').attr('type') == 'password') {
+                    $('#addpassword1').attr('type', 'text')
+                    $('#eye-logo1').removeClass('bi bi-eye-fill')
+                    $('#eye-logo1').addClass('bi bi-eye-slash-fill')
+                } else if ($('#addpassword1').attr('type') == 'text') {
+                    $('#addpassword1').attr('type', 'password')
+                    $('#eye-logo1').removeClass('bi bi-eye-slash-fill')
+                    $('#eye-logo1').addClass('bi bi-eye-fill')
+                }
+            })
+            $('#eye-logo2').on('click', function() {
+                if ($('#addpassword2').attr('type') == 'password') {
+                    $('#addpassword2').attr('type', 'text')
+                    $('#eye-logo2').removeClass('bi bi-eye-fill')
+                    $('#eye-logo2').addClass('bi bi-eye-slash-fill')
+                } else if ($('#addpassword2').attr('type') == 'text') {
+                    $('#addpassword2').attr('type', 'password')
+                    $('#eye-logo2').removeClass('bi bi-eye-slash-fill')
+                    $('#eye-logo2').addClass('bi bi-eye-fill')
+                }
+            })
+            $('#eye-logo3').on('click', function() {
+                if ($('#updatepassword1').attr('type') == 'password') {
+                    $('#updatepassword1').attr('type', 'text')
+                    $('#eye-logo3').removeClass('bi bi-eye-fill')
+                    $('#eye-logo3').addClass('bi bi-eye-slash-fill')
+                } else if ($('#updatepassword1').attr('type') == 'text') {
+                    $('#updatepassword1').attr('type', 'password')
+                    $('#eye-logo3').removeClass('bi bi-eye-slash-fill')
+                    $('#eye-logo3').addClass('bi bi-eye-fill')
+                }
+            })
+            $('#eye-logo4').on('click', function() {
+                if ($('#updatepassword2').attr('type') == 'password') {
+                    $('#updatepassword2').attr('type', 'text')
+                    $('#eye-logo4').removeClass('bi bi-eye-fill')
+                    $('#eye-logo4').addClass('bi bi-eye-slash-fill')
+                } else if ($('#updatepassword2').attr('type') == 'text') {
+                    $('#updatepassword2').attr('type', 'password')
+                    $('#eye-logo4').removeClass('bi bi-eye-slash-fill')
+                    $('#eye-logo4').addClass('bi bi-eye-fill')
+                }
             })
         })
     </script>

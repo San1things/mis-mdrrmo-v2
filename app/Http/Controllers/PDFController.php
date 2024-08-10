@@ -32,7 +32,7 @@ class PDFController extends Controller
         $users = $query->get();
         $data['tbl_users'] = $users;
 
-        $pdf = Pdf::loadView('templates.pdf.user-generate-pdf', $data);
+        $pdf = Pdf::loadView('admin.components.pdf.user-generate-pdf', $data);
         return $pdf->stream();
     }
 }

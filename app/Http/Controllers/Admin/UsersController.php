@@ -24,6 +24,20 @@ class UsersController extends Controller
         $qstring['usertype'] = '';
         $qstring['searchUser'] = '';
 
+        $data['alerts'] = [
+            1 => ['Successful! User has been added succesfully.', 'success'],
+            2 => ['Successful! User details has been updated succesfully.', 'primary'],
+            3 => ['Successful! User password has been updated succesfully.', 'primary'],
+            4 => ['Failed! User password must be 8 characters long!', 'danger'],
+            5 => ['Failed! User password not matched!', 'danger'],
+            6 => ['Succesful! The user has been locked and the account is now inactive.', 'warning'],
+            7 => ['Succesful! The user has been unlocked and the account is ready to use again.', 'success'],
+        ];
+
+        if (!empty(request()->input('alert'))) {
+            $data['alert'] = request()->input('alert');
+        }
+
         if (!empty($query['usertype'])) {
             $qstring['usertype'] = $query['usertype'];
             if ($query['usertype'] == 'other') {
@@ -32,7 +46,6 @@ class UsersController extends Controller
                 $users->where('usertype', $query['usertype']);
             }
         }
-
 
         if (!empty($query['searchUser'])) {
             $qstring['searchUser'] = $query['searchUser'];
@@ -104,7 +117,7 @@ class UsersController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
-        return redirect('/users');
+        return redirect('/users?alert=1');
     }
 
     public function userUpdateDetails(Request $request)
@@ -124,7 +137,7 @@ class UsersController extends Controller
                 'team' => $input['team'],
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
-        return redirect('/users');
+        return redirect('/users?alert=2');
     }
 
     public function userUpdatePassword(Request $request)
@@ -132,12 +145,12 @@ class UsersController extends Controller
         $input = $request->input();
 
         if (strlen($input['updatepassword1']) < 8) {
-            return redirect('/users');
+            return redirect('/users?alert=4');
             die();
         }
 
         if ($input['updatepassword1'] != $input['updatepassword2']) {
-            return redirect('/users');
+            return redirect('/users?alert=5');
             die();
         }
 
@@ -146,7 +159,7 @@ class UsersController extends Controller
                 'password' => $input['updatepassword1'],
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
-        return redirect('/users');
+        return redirect('/users?alert=3');
     }
 
     public function userLock(Request $request)
@@ -157,8 +170,9 @@ class UsersController extends Controller
                 'status' => "inactive",
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
-        return redirect('/users');
+        return redirect('/users?alert=6');
     }
+
     public function userUnlock(Request $request)
     {
         $input = $request->input();
@@ -167,6 +181,6 @@ class UsersController extends Controller
                 'status' => "active",
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
-        return redirect('/users');
+        return redirect('/users?alert=7');
     }
 }

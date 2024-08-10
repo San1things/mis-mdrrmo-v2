@@ -119,33 +119,36 @@
                 <form id="modalForm" action="" method="post">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="itemname" name="itemname" type="text">
-                            <label for="floatingInput">Item Name</label>
+                        <div class="mb-3">
+                            <label class="form-label fs-3" for="form-label fs-4">Item Name:</label>
+                            <input class="form-control fs-3" id="itemname" name="itemname" type="text"
+                                placeholder="Item Name">
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="itemdescription" name="itemdescription"></input>
-                            <label for="floatingInput">Item Descrition</label>
+                        <div class="mb-3">
+                            <label for="floatingInput" class="fomr-label fs-3">Item Description</label>
+                            <input class="form-control fs-3" id="itemdescription" name="itemdescription" placeholder="Item Description"></input>
                         </div>
-                        <div class="form-floating mb-3">
-                            <select class="form-select" id="itemcategory" name="itemcategory">
+                        <div class="mb-3">
+                            <select class="form-select fs-3" id="itemcategory" name="itemcategory">
+                                <option value="" hidden>Category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-floating mb-3">
-                            <span id="itemexpiredlabel" style="display: none">Expiration Date:</span>
-                            <input class="form-control fs-4" id="itemexpired" name="itemexpired" type="hidden"></input>
+                        <div class="mb-3">
+                            <span class="fs-4" id="itemexpiredlabel" style="display: none">Expiration Date:</span>
+                            <input class="form-control fs-3" id="itemexpired" name="itemexpired" type="hidden"></input>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control fs-4" id="itemquantity" name="itemquantity"
-                                type="number"></input>
-                            <label for="floatingInput">Quantity</label>
+                        <div class="mb-3">
+                            <label class="form-label fs-3" for="floatingInput">Quantity</label>
+                            <input class="form-control fs-3" id="itemquantity" name="itemquantity"
+                                type="number" placeholder="Quantity"></input>
+
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary fs-3 btn-save" type="submit">Save changes</button>
+                        <button class="btn btn-primary fs-3 px-5 btn-save" type="submit">Save changes</button>
                     </div>
                 </form>
             </div>
