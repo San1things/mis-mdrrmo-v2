@@ -1,5 +1,5 @@
 body {
-    height: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,13 +10,12 @@ body {
 }
 
 .login-content {
-    padding: 24vh 0;
+    padding: 22vh 0;
 }
 
 
 .login-container {
-    width: 100%;
-    max-width: 500px;
+    width: 500px;
     margin: 0 auto;
     position: relative;
     padding: 50px 20px;
@@ -48,7 +47,7 @@ body {
 #eye-logo {
     position: absolute;
     cursor: pointer;
-    top: 0;
+    top: 30px;
     right: 10px;
     font-size: 2.5rem
 }
@@ -62,12 +61,19 @@ body {
     padding: 0 10px;
 }
 
+.login-inputs .form-label {
+    text-align: left !important;
+    display: block;
+    width: 100%;
+
+}
+
 .login-inputs .alert {
     font-size: 1.3rem;
 }
 
 .login-inputs input {
-    font-size: 2.0rem;
+    font-size: 1.8rem;
     line-height: 1;
 }
 
@@ -80,7 +86,7 @@ body {
 /* =====REGISTER===== */
 
 .register-content {
-    padding: 8vh 0;
+    padding: 6vh 0;
 }
 
 .register-container {
@@ -120,6 +126,12 @@ body {
     padding: 8px 0;
 }
 
+.register-inputs .jl-label {
+    text-align: left !important;
+    display: block;
+    width: 100%;
+}
+
 .eye-show1 {
     position: relative;
 }
@@ -131,6 +143,7 @@ body {
     right: 10px;
     font-size: 2.5rem
 }
+
 .eye-show2 {
     position: relative;
 }

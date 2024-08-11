@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class CategoriesController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware('adminhandler');
+    }
+
     public function index(Request $request){
     $data = [];
     $categories = DB::table('tbl_categories')->leftJoin('tbl_items', 'tbl_categories.id', '=', 'tbl_items.category_id')

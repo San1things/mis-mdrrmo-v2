@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class AnnouncementsController extends Controller
 {
+
+    public function __construct(Request $request)
+    {
+        $this->middleware('adminhandler');
+    }
+
     public function index(){
         $data = [];
         $announcements = DB::table('tbl_announcements');

@@ -31,21 +31,28 @@
                 <a href="/"><i class="bi bi-arrow-bar-left"></i>HOMEPAGE</a>
                 <h4>| LOG-IN</h4>
                 <div class="login-inputs">
-                    <div class="alert alert-danger" role="alert">
-                        A simple danger alert—check it out!A simple danger alert—check it out!A simple danger
-                        alert—check it out!
-                    </div>
-                    <form action="#" method="POST">
-                        @csrf
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="floatingInput" type="email" required
-                                placeholder="name@example.com">
-                            <label for="floatingInput">Email</label>
+
+                    @isset($alert)
+                        <div class="alert alert-{{ empty(!$alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                            role="alert">
+                            <strong>{{ empty(!$alerts[$alert]) ? $alerts[$alert][2] : 'error' }}</strong>
+                            {{ empty(!$alerts[$alert]) ? $alerts[$alert][0] : '' }}
                         </div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control eye-password" id="floatingPassword" type="password" placeholder="Password"
-                                required><i class="bi bi-eye-fill" id="eye-logo"></i>
-                            <label for="floatingPassword">Password</label>
+                    @endisset
+
+                    <form action="/loginprocess" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="floatingInput" class="form-label fs-3">Email</label>
+                            <input class="form-control" id="loginemail" type="email" required name="email"
+                                placeholder="name@example.com">
+
+                        </div>
+                        <div class="eye-password mb-3">
+                            <label for="floatingPassword" class="form-label fs-3">Password</label>
+                            <input class="form-control" id="loginpassword" type="password" name="password"
+                                placeholder="Password" required><i class="bi bi-eye-fill" id="eye-logo"></i>
+
                         </div>
                         <button class="btn btn-primary" type="submit">Log in</button>
                     </form>
@@ -65,13 +72,13 @@
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#eye-logo').on('click', function(){
-                if($('.eye-password').attr('type') == 'password'){
-                    $('.eye-password').attr('type', 'text')
+            $('#eye-logo').on('click', function() {
+                if ($('#loginpassword').attr('type') == 'password') {
+                    $('#loginpassword').attr('type', 'text')
                     $('#eye-logo').removeClass('bi bi-eye-fill')
                     $('#eye-logo').addClass('bi bi-eye-slash-fill')
-                }else if($('.eye-password').attr('type') == 'text'){
-                    $('.eye-password').attr('type', 'password')
+                } else if ($('#loginpassword').attr('type') == 'text') {
+                    $('#loginpassword').attr('type', 'password')
                     $('#eye-logo').removeClass('bi bi-eye-slash-fill')
                     $('#eye-logo').addClass('bi bi-eye-fill')
                 }

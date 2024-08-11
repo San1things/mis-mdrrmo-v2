@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware('adminhandler');
+    }
+
     public function index(Request $request)
     {
 

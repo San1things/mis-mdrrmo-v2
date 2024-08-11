@@ -62,8 +62,25 @@
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#">
+                        <i class="bi bi-bell-fill"></i>
+                        <span>Subscriptions</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#">
+                        <i class="bi bi-chat-left-text-fill position-relative">
+                            <span class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                99+
+                                <span class="visually-hidden">unread messages</span>
+                              </span>
+                        </i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#">
                         <i class="bi bi-bell-fill position-relative">
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <span class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 99+
                                 <span class="visually-hidden">unread messages</span>
                               </span>
@@ -82,7 +99,7 @@
                             <a class="sidebar-link" href="/categories">Categories</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">System Logs</a>
+                            <a class="sidebar-link" href="/logs">Logs</a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="#">User Profile</a>
@@ -91,7 +108,7 @@
                 </li>
             </ul>
             <div class="sidebar-footer">
-                <a class="sidebar-link" href="#" href="#" style="color: black">
+                <a class="sidebar-link" href="/logout" href="#" style="color: black">
                     <i class="bi bi-box-arrow-left"></i>
                     <span>Log Out</span>
                 </a>

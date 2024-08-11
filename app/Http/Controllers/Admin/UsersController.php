@@ -12,8 +12,10 @@ use Symfony\Component\Console\Input\Input;
 
 class UsersController extends Controller
 {
-    // public $default_lpp = 2;
-    // public $default_sp = 1;
+    public function __construct(Request $request)
+    {
+        $this->middleware('adminhandler');
+    }
 
     public function index(Request $request)
     {
@@ -59,7 +61,8 @@ class UsersController extends Controller
                     ->where('usertype', $query['usertype']);
             }
         };
-
+        // public $default_lpp = 2;
+        // public $default_sp = 1;
         // $page = $this->default_sp;
         // if (!empty($query['page'])) {
         //     $qstring['page'] = $query['page'];

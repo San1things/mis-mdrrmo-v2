@@ -1,4 +1,4 @@
-@extends('admin.components.layout')
+@extends('admin.components.adminlayout')
 @section('content')
     <div class="container-xl mt-3">
 
@@ -65,7 +65,7 @@
             </nav>
             <div class="table-responsive-lg fs-4">
                 <table class="table table table-light table-hover mt-3 align-middle">
-                    <thead class="table-dark">
+                    <thead>
                         <tr>
                             <th style="width: 10%" scope="col">#</th>
                             <th style="width: 15%" scope="col-4">Item Name</th>

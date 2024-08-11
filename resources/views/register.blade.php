@@ -33,41 +33,44 @@
                 </div>
                 <a href="/"><i class="bi bi-arrow-bar-left"></i>HOMEPAGE</a>
                 <div class="register-inputs">
-                    <div class="alert alert-danger" role="alert">
-                        A simple danger alert—check it out!A simple danger alert—check it out!A simple danger
-                        alert—check it out!
-                    </div>
+
+                    @isset($alert)
+                        <div class="alert fs-5 alert-{{ empty(!$alerts[$alert]) ? $alerts[$alert][1] : '' }}" role="alert">
+                            <strong>{{ empty(!$alerts[$alert]) ? $alerts[$alert][2] : 'error' }}</strong> {{ empty(!$alerts[$alert]) ? $alerts[$alert][0] : '' }}
+                        </div>
+                    @endisset
+
                     <form action="#" method="POST">
                         <input class="form-control mb-4 fs-3" id="Email" name="email" type="email"
-                            placeholder="Email">
+                            placeholder="Email*">
                         <input class="form-control mb-4 fs-3" id="Username" name="username" type="text"
-                            placeholder="Username">
+                            placeholder="Username*">
                         <div class="eye-show1">
                             <input class="form-control mb-4 fs-3 eye-password1" id="Password" name="password"
-                                type="password" placeholder="Password">
+                                type="password" placeholder="Password*">
                             <i class="bi bi-eye-fill" id="eye-logo1"></i>
                         </div>
                         <div class="eye-show2">
                             <input class="form-control mb-4 fs-3 eye-password2" id="ConfirmPassword" name="password"
-                                type="password" placeholder="Confirm Password">
+                                type="password" placeholder="Confirm Password*">
                             <i class="bi bi-eye-fill" id="eye-logo2"></i>
                         </div>
                         <div class="input-group mb-3">
-                            <input class="form-control fs-3" id="Fullname" type="text" aria-label="Username"
-                                placeholder="First Name">
-                            <input class="form-control fs-3" type="text" aria-label="Server" placeholder="Last Name">
+                            <input class="form-control fs-3" id="Fullname" type="text" placeholder="First Name*">
+                            <input class="form-control fs-3" type="text" placeholder="Last Name*">
                         </div>
+                        <label class="fs-5 jl-label" for="Birthday">Birthday:</label>
                         <input class="form-control mb-4 fs-3" id="Birthday" name="bday" type="date">
                         <select class="form-select fs-3 mb-4" id="Gender" name="gender">
-                            <option value="" selected hidden>Gender</option>
+                            <option value="" selected hidden>Gender*</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="LGBTQIA+">LGBTQIA+</option>
                         </select>
                         <input class="form-control mb-4 fs-3" id="Address" name="address" type="text"
-                            placeholder="Address">
+                            placeholder="ex. Morong, Rizal">
                         <input class="form-control mb-4 fs-3" id="Contact" name="contact" type="number"
-                            placeholder="Contact #">
+                            placeholder="Contact #*">
                         <button class="btn btn-primary">Register</button>
                     </form>
                 </div>

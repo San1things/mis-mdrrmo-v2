@@ -1,4 +1,4 @@
-@extends('admin.components.layout')
+@extends('admin.components.adminlayout')
 @section('content')
     <div class="container-xl mt-3">
         <div class="admin-header d-flex align-items-center mb-3">

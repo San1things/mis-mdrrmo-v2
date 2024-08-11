@@ -1,4 +1,4 @@
-@extends('admin.components.layout')
+@extends('admin.components.adminlayout')
 @section('content')
     <div class="container-xl mt-3">
         <div class="admin-header d-flex align-items-center mb-3">
@@ -129,7 +129,7 @@
                                         data-address="{{ $user->address }}" data-birthday="{{ $user->bday }}"
                                         data-contact="{{ $user->contact }}" data-team="{{ $user->team }}"
                                         href="#"><i class="bi bi-pencil-square"></i></a>
-                                        
+
                                     @if ($user->status == 'active')
                                         <a class="btn btn-danger lockuser-btn" data-id="{{ $user->id }}"
                                             data-bs-toggle="modal" data-bs-target="#userLockUnlockModal">
