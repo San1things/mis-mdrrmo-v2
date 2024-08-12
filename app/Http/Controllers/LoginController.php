@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
-    public function login()
+    public function login(Request $request)
     {
+        $data = [];
         $data['alerts'] = [
             1 => ['Wrong email or pasword, try again.', 'danger', 'Error!'],
             2 => ['Session expired.', 'warning', 'Error!'],

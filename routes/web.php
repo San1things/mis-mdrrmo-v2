@@ -39,8 +39,6 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::post('/lockuser', [UsersController::class, 'userLock'])->name('adminlockuser');
     Route::post('/unlockuser', [UsersController::class, 'userUnlock'])->name('adminunlockuser');
     Route::get('/generate-user-pdf', [PDFController::class, 'generateUserPdf'])->name('generate-user-pdf');
-
-
     // =======================
     //     Admin/Inventory
     // =======================
@@ -48,20 +46,14 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::post('/additem', [InventoryController::class, 'itemAdd'])->name('adminadditem');
     Route::post('/updateitem', [InventoryController::class, 'itemUpdate'])->name('adminupdateitem');
     Route::post('/deleteitem', [InventoryController::class, 'itemDelete'])->name('admindeleteitem');
-
-
     // =======================
     //     Admin/Categories
     // =======================
     Route::get('/adminannouncements', [AnnouncementsController::class, 'index'])->name('adminannouncement');
-
-
     // =======================
     //     Admin/Categories
     // =======================
     Route::get('/categories', [CategoriesController::class, 'index'])->name('admincategories');
-
-
     // =======================
     //     Admin/Logs
     // =======================

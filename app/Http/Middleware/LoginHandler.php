@@ -15,13 +15,13 @@ class LoginHandler
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!$request->session()->has('sessionkey')){
+        if (!$request->session()->has('sessionkey')) {
             return redirect()->route('loginpage', ['alert' => 2]);
         }
 
         $value = $request->session()->get('sessionkey');
         $decryptedvalue = decrypt($value);
-        $userinfo = explode(',' , $decryptedvalue);
+        $userinfo = explode(',', $decryptedvalue);
         $request->attributes->add(['userinfo' => $userinfo]);
 
         return $next($request);

@@ -19,13 +19,13 @@ class SessionRedirect
             $value = $request->session()->get('sessionkey');
             $decryptedvalue = decrypt($value);
             $userinfo = explode(',', $decryptedvalue);
-
-            if ($userinfo[4] == 'admin') {
+            if ($userinfo[4] == 'admin' || $userinfo[4] == 'staff') {
                 return redirect()->route('adminhomepage');
             } else {
                 return redirect()->route('home');
             }
         }
+
         return $next($request);
     }
 }
