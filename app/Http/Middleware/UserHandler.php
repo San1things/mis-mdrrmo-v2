@@ -16,7 +16,7 @@ class UserHandler
     public function handle(Request $request, Closure $next): Response
     {
         if(!$request->session()->has('sessionkey')){
-            return redirect()->route('home', ['alert' => 2]);
+            return redirect()->route('loginpage', ['alert' => 2]);
             die();
         }
 

@@ -68,6 +68,18 @@ a {
     background-color: rgb(102, 188, 239);
     border: none;
 }
+.btn-secondary {
+    font-family: 'Poppins';
+    border: none;
+}
+.btn-danger {
+    font-family: 'Poppins';
+    border: none;
+}
+.btn-dark {
+    font-family: 'Poppins';
+    border: none;
+}
 
 .modal {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));

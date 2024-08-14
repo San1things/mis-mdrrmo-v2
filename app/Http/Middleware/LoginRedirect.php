@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SessionRedirect
+class LoginRedirect
 {
     /**
      * Handle an incoming request.
@@ -15,14 +15,14 @@ class SessionRedirect
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (session()->has('sessionkey')) {
+        if ($request->session()->has('sessionkey')) {
             $value = $request->session()->get('sessionkey');
             $decryptedvalue = decrypt($value);
             $userinfo = explode(',', $decryptedvalue);
-            if ($userinfo[4] === 'admin' || $userinfo[4] === 'staff') {
-                return redirect('/users');
-            } else if($userinfo[4] === 'resident'){
-                return redirect('/userhome');
+            if ($userinfo[4] == 'admin' || $userinfo[4] == 'staff') {
+                return redirect()->route('adminhomepage');
+            } else {
+                return redirect()->route('home');
             }
         }
 

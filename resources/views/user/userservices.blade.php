@@ -1,5 +1,5 @@
-@extends('publiclayout')
-@section('public_content')
+@extends('user.components.userlayout')
+@section('resident_content')
     <section class="services-context">
         <div class="container-xl">
             <div class="services-ESA-flexbox">
@@ -63,7 +63,7 @@
                         DRR seminars. These sessions equip individuals and businesses with essential
                         knowledge and skills to effectively respond to and mitigate the impacts of natural and man-made
                         disasters. Join us to learn about emergency planning, safety protocols, and recovery strategies, and
-                        help build a safer, more prepared community. Interested? <a href="#">Join</a> with us on our
+                        help build a safer, more prepared community. Interested? <a href="/userseminars">Join</a> with us on our
                         upcoming seminars!
                     </p>
                 </div>

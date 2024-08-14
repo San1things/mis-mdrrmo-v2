@@ -1,5 +1,5 @@
-@extends('publiclayout')
-@section('public_content')
+@extends('user.components.userlayout')
+@section('resident_content')
     <section class="container-xl announcements-title">
         <h2>Don't get yourself outdated!</h2>
         <h6>Here's our latest announcements.</h6>

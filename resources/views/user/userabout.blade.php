@@ -1,5 +1,5 @@
-@extends('publiclayout')
-@section('public_content')
+@extends('user.components.userlayout')
+@section('resident_content')
     <section class="about-primary">
         <center>
             <h1>ABOUT US:</h1>

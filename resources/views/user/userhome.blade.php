@@ -1,10 +1,10 @@
-@extends('publiclayout')
-@section('public_content')
+@extends('user.components.userlayout')
+@section('resident_content')
     <section class="home-title">
         <div class="container-xl">
             <div class="title-section">
                 <center>
-                    <h1>This is the official website of</h1>
+                    <h1>Hi {{ $userinfo[1] }}! This is the official website of</h1>
                     <h1>Municipal Disaster Risk Reduction and Management Office</h1>
                     <h1>Morong, Rizal</h1>
                 </center>
@@ -22,7 +22,7 @@
                 <p>The primary objective MDRRMO is to ensure effective and efficient implementation of civil protection
                     programme through an integrated, multi-sectoral and community based approach and strategies for the
                     protection and preservation of life, property and environment.</p>
-                <a class="btn btn-secondary home-about-btn mt-3" href="/about">READ MORE</a>
+                <a class="btn btn-secondary home-about-btn mt-3" href="/userabout">READ MORE</a>
             </div>
         </div>
     </section>
@@ -36,7 +36,7 @@
                     to ensure the safety, health, and well-being of our community. Our dedicated team is equipped and ready
                     to handle a wide range of emergency situations, offering the different kind of safety critical services.
                 </p>
-                <a class="btn btn-primary home-services-btn" href="/services">CHECK OUR SERVICES</a>
+                <a class="btn btn-primary home-services-btn" href="/userservices">CHECK OUR SERVICES</a>
             </center>
             <div class="home-services-images">
                 <img src="{{ asset('images/publicpics/alarm.png') }}" alt="">
@@ -57,7 +57,7 @@
                     @csrf
                     <div class="input-group">
                         <input class="form-control" type="email" aria-label="Email" aria-describedby="button-addon2"
-                            placeholder="Email" required="required" name="homeemail">
+                            placeholder="Email" required="required" name="homeemail" value="{{ $userinfo[3] }}" disabled>
                         <button class="btn btn-outline-primary" id="button-addon2" type="submit">Subscribe</button>
                     </div>
                 </form>
@@ -68,17 +68,17 @@
     <section class="home-sitemap">
         <div class="container-xl home-sitemap-flexbox">
             <ul>
-                <li><a href="/">HOME</a></li>
-                <li><a href="/about">ABOUT</a></li>
-                <li><a href="/services">SERVICES</a></li>
-                <li><a href="/faqs">FAQS</a></li>
-                <li><a href="/announcements">ANNOUNCEMENTS</a></li>
+                <li><a href="/userhome">HOME</a></li>
+                <li><a href="/userabout">ABOUT</a></li>
+                <li><a href="/userservices">SERVICES</a></li>
+                <li><a href="/userfaqs">FAQS</a></li>
+                <li><a href="/userannouncements">ANNOUNCEMENTS</a></li>
             </ul>
             <ul>
                 <li>
                     <h6>
                         If you need more information about contacts or have specific questions, please check our
-                        <a href="/faqs">FAQs</a>.
+                        <a href="/userfaqs">FAQs</a>.
                         Our Frequently Asked Questions section is designed to provide you with quick and easy access to the
                         most
                         commonly asked questions and detailed answers. Whether you're looking for contact information,

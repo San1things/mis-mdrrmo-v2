@@ -35,12 +35,15 @@
                 <div class="register-inputs">
 
                     @isset($alert)
-                        <div class="alert fs-5 alert-{{ empty(!$alerts[$alert]) ? $alerts[$alert][1] : '' }}" role="alert">
-                            <strong>{{ empty(!$alerts[$alert]) ? $alerts[$alert][2] : 'error' }}</strong> {{ empty(!$alerts[$alert]) ? $alerts[$alert][0] : '' }}
+                        <div class="alert fs-5 alert-{{ empty(!$alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                            role="alert">
+                            <strong>{{ empty(!$alerts[$alert]) ? $alerts[$alert][2] : 'error' }}</strong>
+                            {{ empty(!$alerts[$alert]) ? $alerts[$alert][0] : '' }}
                         </div>
                     @endisset
 
-                    <form action="#" method="POST">
+                    <form action="/registerprocess" method="POST">
+                        @csrf
                         <input class="form-control mb-4 fs-3" id="Email" name="email" type="email"
                             placeholder="Email*">
                         <input class="form-control mb-4 fs-3" id="Username" name="username" type="text"
@@ -51,13 +54,14 @@
                             <i class="bi bi-eye-fill" id="eye-logo1"></i>
                         </div>
                         <div class="eye-show2">
-                            <input class="form-control mb-4 fs-3 eye-password2" id="ConfirmPassword" name="password"
-                                type="password" placeholder="Confirm Password*">
+                            <input class="form-control mb-4 fs-3 eye-password2" id="ConfirmPassword"
+                                name="confirmpassword" type="password" placeholder="Confirm Password*">
                             <i class="bi bi-eye-fill" id="eye-logo2"></i>
                         </div>
                         <div class="input-group mb-3">
-                            <input class="form-control fs-3" id="Fullname" type="text" placeholder="First Name*">
-                            <input class="form-control fs-3" type="text" placeholder="Last Name*">
+                            <input class="form-control fs-3" id="Fullname" name="fname" type="text"
+                                placeholder="First Name*">
+                            <input class="form-control fs-3" name="lname" type="text" placeholder="Last Name*">
                         </div>
                         <label class="fs-5 jl-label" for="Birthday">Birthday:</label>
                         <input class="form-control mb-4 fs-3" id="Birthday" name="bday" type="date">
@@ -71,7 +75,7 @@
                             placeholder="ex. Morong, Rizal">
                         <input class="form-control mb-4 fs-3" id="Contact" name="contact" type="number"
                             placeholder="Contact #*">
-                        <button class="btn btn-primary">Register</button>
+                        <button class="btn btn-primary" type="submit">Register</button>
                     </form>
                 </div>
                 <p>Already have an account? <a href="/login">Login</a> here.</p>

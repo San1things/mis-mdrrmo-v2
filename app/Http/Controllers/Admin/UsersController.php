@@ -34,6 +34,8 @@ class UsersController extends Controller
             5 => ['Failed! User password not matched!', 'danger'],
             6 => ['Succesful! The user has been locked and the account is now inactive.', 'warning'],
             7 => ['Succesful! The user has been unlocked and the account is ready to use again.', 'success'],
+            8 => ['Failed! Email is taken please put another one.', 'danger'],
+            9 => ['Failed! Contact number must be 11 digits.', 'danger'],
         ];
 
         if (!empty(request()->input('alert'))) {
@@ -95,12 +97,24 @@ class UsersController extends Controller
         $input = $request->input();
 
         if (strlen($input['addpassword1']) < 8) {
-            return redirect('/users');
+            return redirect('/users?alert=4');
             die();
         }
 
         if ($input['addpassword1'] != $input['addpassword2']) {
-            return redirect('/users');
+            return redirect('/users?alert=5');
+            die();
+        }
+
+        $tableemail = DB::table('tbl_users')
+        ->where('email', $input['email'])->count();
+        if($tableemail >= 1){
+            return redirect('/users?alert=8');
+            die();
+        }
+
+        if(strlen($input['contact']) != 11){
+            return redirect('/users?alert=9');
             die();
         }
 

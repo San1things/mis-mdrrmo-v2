@@ -6,6 +6,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\AnnouncementsController;
 use App\Http\Controllers\Admin\LogsController;
+use App\Http\Controllers\Resident\ResidentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
@@ -20,9 +21,10 @@ Route::group(['middleware' => 'havesessionkey'], function () {
     Route::get('/services', [PublicController::class, 'services'])->name('services');
     Route::get('/faqs', [PublicController::class, 'faqs'])->name('faqs');
     Route::get('/announcements', [PublicController::class, 'announcements'])->name('announcements');
-    Route::get('/login', [LoginController::class, 'login'])->name('loginpage');
+    Route::get('/login', [LoginController::class, 'login'])->name('loginpage')->middleware('havesessionkey');
     Route::post('/loginprocess', [LoginController::class, 'loginProcess'])->name('loginprocess');
     Route::get('/register', [LoginController::class, 'register'])->name('registerpage');
+    Route::post('/registerprocess', [LoginController::class, 'registerProcess'])->name('registerprocess');
 });
 
 
@@ -58,4 +60,19 @@ Route::group(['middleware' => 'loginhandler'], function () {
     //     Admin/Logs
     // =======================
     Route::get('/logs', [LogsController::class, 'index'])->name('adminlogs');
+
+
+
+
+    // =======================
+    //     Resident
+    // =======================
+    Route::get('/userhome', [ResidentController::class, 'userhome'])->name('userhome');
+    Route::get('/userabout', [ResidentController::class, 'userabout'])->name('userabout');
+    Route::get('/userservices', [ResidentController::class, 'userservices'])->name('userservices');
+    Route::get('/userfaqs', [ResidentController::class, 'userfaqs'])->name('userfaqs');
+    Route::get('/userannouncements', [ResidentController::class, 'userannouncements'])->name('userannouncements');
+    Route::get('/userseminars', [ResidentController::class, 'userseminars'])->name('userseminars');
+    Route::get('/userprofile', [ResidentController::class, 'userprofile'])->name('userprofile');
+    Route::get('/usernotif', [ResidentController::class, 'usernotif'])->name('usernotif');
 });

@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'loginhandler' => \App\Http\Middleware\LoginHandler::class,
         'adminhandler' => \App\Http\Middleware\AdminHandler::class,
         'residenthandler' => \App\Http\Middleware\UserHandler::class,
+        'loginredirect' => \App\Http\Middleware\UserHandler::class,
     ];
 }

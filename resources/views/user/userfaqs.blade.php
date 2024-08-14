@@ -1,5 +1,5 @@
-@extends('publiclayout')
-@section('public_content')
+@extends('user.components.userlayout')
+@section('resident_content')
     <section class="faqs-content">
         <div class="container-xl">
             <div class="faqs-intro">
@@ -41,7 +41,7 @@
             </div>
             <div class="collapse" id="collapseExample3">
                 <div class="faqs-collapse">
-                    <p><i class="bi bi-pin-fill"></i> Log in and <a href="#">join</a> our seminar to reserve your
+                    <p><i class="bi bi-pin-fill"></i> Log in and <a href="/userseminars">join</a> our seminar to reserve your
                         slots and seats.</p>
                 </div>
             </div>
@@ -81,8 +81,9 @@
                         <form action="" method="">
                             @csrf
                             <div class="input-group">
-                                <input class="form-control" name="faqscollapseemail" type="email" aria-label="Email"
-                                    aria-describedby="button-addon2" placeholder="Email" required="required">
+                                <input class="form-control" name="faqscollapseemail" type="email"
+                                    value="{{ $email }}" aria-label="Email" aria-describedby="button-addon2"
+                                    placeholder="Email" required="required" disabled>
                                 <button class="btn btn-outline-primary" id="button-addon2" type="submit">Subscribe</button>
                             </div>
                         </form>
@@ -101,13 +102,14 @@
                     <form action="" method="">
                         @csrf
                         <div class="input-group">
-                            <input class="form-control" name="faqsquestionname" type="text" aria-label="Name"
-                                placeholder="Name" required="required">
-                            <input class="form-control" name="faqsquestionemail" type="email" aria-label="Email"
-                                placeholder="Email" required="required">
+                            <input class="form-control" name="faqsquestionname" type="text" value="{{ $name }}"
+                                aria-label="Name" placeholder="Name" required="required" disabled>
+                            <input class="form-control" name="faqsquestionemail" type="email"
+                                value=" {{ $email }} " aria-label="Email" placeholder="Email" required="required"
+                                disabled>
                         </div>
-                        <textarea class="form-control" id="" name="" rows="3"
-                            placeholder="Ask your question here..." required="required"></textarea>
+                        <textarea class="form-control" id="" name="" rows="3" placeholder="Ask your question here..."
+                            required="required"></textarea>
                         <button class="btn btn-primary" type="submit">Send</button>
                     </form>
                     <p>Note: It is important to put your real email at the top because we're gonna send our answers there.
