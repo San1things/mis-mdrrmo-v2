@@ -31,34 +31,35 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item border">
                                 <a class="{{ request('category') === null ? 'nav-link active' : 'nav-link' }}"
-                                    href="?category=&searchItem=" aria-current="page">View
+                                    href="?type=&searchAnnouncement={{ $qstring['searchAnnouncement'] }}" aria-current="page">View
                                     All</a>
                             </li>
                             <li class="nav-item border border-start-0">
                                 <a class="{{ request('type') === 'seminars' ? 'nav-link active' : 'nav-link ' }}"
-                                    href="?type=seminars&searchAnnouncement=">Seminars</a>
+                                    href="?type=seminars&searchAnnouncement={{ $qstring['searchAnnouncement'] }}">Seminars</a>
                             </li>
                             <li class="nav-item border border-start-0">
                                 <a class="{{ request('type') === 'events' ? 'nav-link active' : 'nav-link' }}"
-                                    href="?type=events&searchAnnouncement=">Events</a>
+                                    href="?type=events&searchAnnouncement={{ $qstring['searchAnnouncement'] }}">Events</a>
                             </li>
                             <li class="nav-item border border-start-0">
                                 <a class="{{ request('type') === 'other' ? 'nav-link active' : 'nav-link' }}"
-                                    href="?type=other&searchAnnouncement=">Other</a>
+                                    href="?type=other&searchAnnouncement={{ $qstring['searchAnnouncement'] }}">Other</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="get">
-                            <input class="form-control me-3 fs-4" name="searchItem" type="search" value=""
+                            <input name="type" type="hidden" value="{{ $qstring['type'] }}">
+                            <input class="form-control me-3 fs-4" name="searchAnnouncement" type="search" value=""
                                 aria-label="Search" placeholder="Search">
                             <button class="btn btn-outline-primary me-2 fs-4" type="submit">Search</button>
-                            <a class="btn btn-outline-secondary fs-4" href="?&searchAnnouncement=">Clear</a>
+                            <a class="btn btn-outline-secondary fs-4" href="/adminannouncements">Clear</a>
                         </form>
                     </div>
                 </div>
             </nav>
             <div class="table-responsive-lg fs-4">
                 <table class="table table table-light table-hover mt-3 align-middle">
-                    <thead class="table-dark">
+                    <thead class="table">
                         <tr>
                             <th style="width: 10%" scope="col-4">Type</th>
                             <th style="width: 20%" scope="col-4">Announcement Name</th>
@@ -83,7 +84,7 @@
                                         data-announcementtype="{{ $announcement->announcement_type }}" href="#">
                                         <i class="bi bi-pencil-square"></i></a>
                                     <a class="btn btn-danger deleteitem-btn" data-bs-toggle="modal"
-                                        data-bs-target="#inventoryDeleteModal" data-id="{{ }}"><i
+                                        data-bs-target="#inventoryDeleteModal" data-id=""><i
                                             class="bi bi-trash3-fill"></i></a>
                                 </td>
                             </tr>
@@ -106,28 +107,27 @@
                     <h1 class="modal-title fs-5" id="modalTitle"></h1>
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
-                <form id="modalForm" action="" method="post">
+                <form id="modalForm" action="/adminpostannouncement" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label fs-4" for="announcementname">Announcement Name:</label>
                             <input class="form-control fs-3" id="announcementname" name="announcementname"
-                                type="text">
+                                type="text" placeholder="Announcement Name*">
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-4" for="announcementdescription">Description:</label>
                             <input class="form-control fs-3" id="announcementdescription"
-                                name="announcementdescription"></input>
+                                name="announcementdescription" placeholder="Announcement Description*"></input>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-4" for="formFile">Image Header:</label>
-                            <input class="form-control fs-3" id="formFile" type="file">
+                            <input class="form-control fs-3" id="formFile" type="file" name="announcementimage">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fs-4" for="announcementdescription">Link (if you have extra
-                                info):</label>
-                            <input class="form-control fs-3" id="announcementdescription"
-                                name="announcementdescription"></input>
+                            <label class="form-label fs-4" for="announcementdescription">Link:</label>
+                            <input class="form-control fs-3" id="announcementlink"
+                                name="announcementlink" placeholder="ex. Facebook link for extra information"></input>
                         </div>
                         <div class="mb-3">
                             <select class="form-select fs-3" id="announcementtype" name="announcementtype">

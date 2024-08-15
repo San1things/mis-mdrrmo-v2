@@ -517,6 +517,11 @@ footer .footer-text {
     padding: 20px 0 0 0;
 }
 
+.announcements-container{
+    padding: 30px 0;
+    border-bottom: gray 2px solid;
+}
+
 
 
 @media only screen and (max-width: 1200px) {

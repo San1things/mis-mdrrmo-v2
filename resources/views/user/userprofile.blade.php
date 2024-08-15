@@ -4,7 +4,7 @@
         <section class="profile-content">
             <center>
                 <div class="profile-title">
-                    <h2>Hello! {{ $userinfo[1] }} {{ $userinfo[2] }}.</h2>
+                    <h2>Hello! {{ $userprofile->firstname }} {{ $userprofile->lastname }}.</h2>
                 </div>
                 <img src="{{ asset('images/publicpics/hello-userprof.png') }}" alt="headerpic" height="200px">
             </center>

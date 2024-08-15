@@ -35,7 +35,13 @@
                     <i class="bi bi-list"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="/users">MDRRMO</a>
+                    @php
+                        $userinfo = request()->attributes->get('userinfo');
+                        $user = DB::table('tbl_users')
+                        ->where('id', $userinfo[0])
+                        ->first();
+                    @endphp
+                    <a href="/users">{{ $user->username }}</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
@@ -72,10 +78,11 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#">
                         <i class="bi bi-chat-left-text-fill position-relative">
-                            <span class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <span
+                                class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 99+
                                 <span class="visually-hidden">unread messages</span>
-                              </span>
+                            </span>
                         </i>
                         <span>Messages</span>
                     </a>
@@ -83,10 +90,11 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#">
                         <i class="bi bi-bell-fill position-relative">
-                            <span class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <span
+                                class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 99+
                                 <span class="visually-hidden">unread messages</span>
-                              </span>
+                            </span>
                         </i>
                         <span>Notifications</span>
                     </a>

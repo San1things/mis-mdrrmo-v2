@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller
 {
@@ -22,8 +23,13 @@ class PublicController extends Controller
     {
         return view('faqs');
     }
-    public function announcements()
+    public function announcements(Request $request)
     {
-        return view('announcements');
+        $data = [];
+        $announcements = DB::table('tbl_announcements');
+
+        $data['announcements'] = $announcements->get()->toArray();
+
+        return view('announcements', $data);
     }
 }

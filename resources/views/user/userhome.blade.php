@@ -4,7 +4,7 @@
         <div class="container-xl">
             <div class="title-section">
                 <center>
-                    <h1>Hi {{ $userinfo[1] }}! This is the official website of</h1>
+                    <h1>Hi {{ $user->firstname }}! This is the official website of</h1>
                     <h1>Municipal Disaster Risk Reduction and Management Office</h1>
                     <h1>Morong, Rizal</h1>
                 </center>
@@ -57,7 +57,7 @@
                     @csrf
                     <div class="input-group">
                         <input class="form-control" type="email" aria-label="Email" aria-describedby="button-addon2"
-                            placeholder="Email" required="required" name="homeemail" value="{{ $userinfo[3] }}" disabled>
+                            placeholder="Email" required="required" name="homeemail" value="{{ $user->email }}" disabled>
                         <button class="btn btn-outline-primary" id="button-addon2" type="submit">Subscribe</button>
                     </div>
                 </form>

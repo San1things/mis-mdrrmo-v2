@@ -82,7 +82,7 @@
                             @csrf
                             <div class="input-group">
                                 <input class="form-control" name="faqscollapseemail" type="email"
-                                    value="{{ $email }}" aria-label="Email" aria-describedby="button-addon2"
+                                    value="{{ $user->email }}" aria-label="Email" aria-describedby="button-addon2"
                                     placeholder="Email" required="required" disabled>
                                 <button class="btn btn-outline-primary" id="button-addon2" type="submit">Subscribe</button>
                             </div>
@@ -102,10 +102,10 @@
                     <form action="" method="">
                         @csrf
                         <div class="input-group">
-                            <input class="form-control" name="faqsquestionname" type="text" value="{{ $name }}"
+                            <input class="form-control" name="faqsquestionname" type="text" value="{{ $user->firstname }} {{ $user->lastname }}"
                                 aria-label="Name" placeholder="Name" required="required" disabled>
                             <input class="form-control" name="faqsquestionemail" type="email"
-                                value=" {{ $email }} " aria-label="Email" placeholder="Email" required="required"
+                                value=" {{ $user->email }} " aria-label="Email" placeholder="Email" required="required"
                                 disabled>
                         </div>
                         <textarea class="form-control" id="" name="" rows="3" placeholder="Ask your question here..."

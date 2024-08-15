@@ -16,7 +16,9 @@ class ResidentController extends Controller
     public function userhome(Request $request)
     {
         $data = [];
-        $data['userinfo'] = $userinfo = $request->attributes->get('userinfo');
+        $userinfo = $request->attributes->get('userinfo');
+        $data['user'] = DB::table('tbl_users')
+        ->where('id', $userinfo[0])->first();
 
         return view('user.userhome', $data);
     }
@@ -32,8 +34,8 @@ class ResidentController extends Controller
     {
         $data = [];
         $userinfo = $request->attributes->get('userinfo');
-        $data['name'] = $userinfo[1] . " " . $userinfo[2];
-        $data['email'] = $userinfo[3];
+        $data['user'] = DB::table('tbl_users')
+        ->where('id', $userinfo[0])->first();
 
         return view('user.userfaqs', $data);
     }
@@ -75,13 +77,13 @@ class ResidentController extends Controller
     {
         $input = $request->input();
         $userinfo = $request->attributes->get('userinfo');
-        $users = DB::table('tbl_users');
 
         if ($input['email'] == null || $input['username'] == null || $input['firstname'] == null || $input['lastname'] == null || $input['birthday'] == null || $input['gender'] == null || $input['address'] == null || $input['contact'] == null) {
             return redirect('/userprofile?alert=7');
             die();
         }
 
+        $users = DB::table('tbl_users');
         $tableemail = $users
             ->where('email', $input['email'])
             ->where('id', '!=', $userinfo[0])->count();
@@ -107,7 +109,7 @@ class ResidentController extends Controller
                 'contact' => $input['contact'],
             ]);
 
-            return redirect('/userprofile?alert=5');
+        return redirect('/userprofile?alert=5');
     }
     public function userUpdatePassword(Request $request)
     {
@@ -130,7 +132,7 @@ class ResidentController extends Controller
                 'password' => $input['profilepassword1']
             ]);
 
-            return redirect('userprofile?alert=6');
+        return redirect('userprofile?alert=6');
     }
 
     public function usernotif()

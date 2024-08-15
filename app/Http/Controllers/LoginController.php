@@ -12,7 +12,7 @@ class LoginController extends Controller
     {
         $data = [];
         $data['alerts'] = [
-            1 => ['Wrong email or pasword, try again.', 'danger', 'Error!'],
+            1 => ['Wrong email or pasword or the account is inactive, try again.', 'danger', 'Error!'],
             2 => ['Session expired.', 'warning', 'Error!'],
             3 => ['You have no permission to access.', 'danger', 'Error!'],
         ];

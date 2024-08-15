@@ -67,11 +67,13 @@
                     <div class="dropdown">
                         @php
                             $userinfo = request()->attributes->get('userinfo');
-                            $username = $userinfo[5];
+                            $user = DB::table('tbl_users')
+                                ->where('id', $userinfo[0])
+                                ->first();
                         @endphp
                         <button class="btn btn-lite dropdown-toggle fs-2 san1-dropdown" data-bs-toggle="dropdown"
                             type="button" aria-expanded="false">
-                            {{ $username }}
+                            {{ $user->username }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lite">
                             <li><a class="dropdown-item py-3 px-5" href="/userprofile">User Profile</a></li>
