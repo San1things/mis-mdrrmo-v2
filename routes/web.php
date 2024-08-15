@@ -74,5 +74,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::get('/userannouncements', [ResidentController::class, 'userannouncements'])->name('userannouncements');
     Route::get('/userseminars', [ResidentController::class, 'userseminars'])->name('userseminars');
     Route::get('/userprofile', [ResidentController::class, 'userprofile'])->name('userprofile');
+    Route::post('/userupdateprofile', [ResidentController::class, 'userUpdateProfile'])->name('userupdateprofile');
+    Route::post('/userupdatepassword', [ResidentController::class, 'userUpdatePassword'])->name('userupdatepassword');
     Route::get('/usernotif', [ResidentController::class, 'usernotif'])->name('usernotif');
 });
