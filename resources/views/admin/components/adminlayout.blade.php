@@ -44,39 +44,42 @@
                     <a href="/users">{{ $user->username }}</a>
                 </div>
             </div>
+            @php
+                $path = request()->path();
+            @endphp
             <ul class="sidebar-nav">
-                <li class="sidebar-item">
+                <li class="sidebar-item" style="{{ $path == 'users' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link" href="/users">
                         <i class="bi bi-person-fill"></i>
                         <span>Users</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item" style="{{ $path == 'inventory' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link" href="/inventory">
                         <i class="bi bi-duffle-fill"></i>
                         <span>Inventory</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item" style="{{ $path == 'adminannouncements' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link" href="/adminannouncements">
                         <i class="bi bi-megaphone-fill"></i>
                         <span>Announcements</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
+                <li class="sidebar-item" style="{{ $path == 'adminseminars' ? 'background-color: #3b7ddd' : '' }}">
+                    <a class="sidebar-link" href="/adminseminars">
                         <i class="bi bi-person-video3"></i>
                         <span>Seminars</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item" style="{{ $path == 'subscriptions' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link" href="/subscriptions">
                         <i class="bi bi-bell-fill"></i>
                         <span>Subscriptions</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
+                <li class="sidebar-item" style="{{ $path == 'adminmessages' ? 'background-color: #3b7ddd' : '' }}">
+                    <a class="sidebar-link" href="/adminmessages">
                         <i class="bi bi-chat-left-text-fill position-relative">
                             <span
                                 class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -87,8 +90,8 @@
                         <span>Messages</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
+                <li class="sidebar-item" style="{{ $path == 'adminnotif' ? 'background-color: #3b7ddd' : '' }}">
+                    <a class="sidebar-link" href="/adminnotif">
                         <i class="bi bi-bell-fill position-relative">
                             <span
                                 class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -99,7 +102,7 @@
                         <span>Notifications</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item" style="{{ $path == 'categories' || $path == 'logs' || $path == 'adminprofile' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
                         data-bs-target="#collapsetest" href="#" aria-expanded="true" aria-controls="collapsetest">
                         <i class="bi bi-gear-fill"></i>
@@ -113,7 +116,7 @@
                             <a class="sidebar-link" href="/logs">Logs</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">User Profile</a>
+                            <a class="sidebar-link" href="/adminprofile">User Profile</a>
                         </li>
                     </ul>
                 </li>

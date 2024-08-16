@@ -6,6 +6,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\AnnouncementsController;
 use App\Http\Controllers\Admin\LogsController;
+use App\Http\Controllers\Admin\SeminarsController;
 use App\Http\Controllers\Admin\StaticPageController;
 use App\Http\Controllers\Resident\ResidentController;
 use App\Http\Controllers\LoginController;
@@ -22,6 +23,7 @@ Route::group(['middleware' => 'havesessionkey'], function () {
     Route::get('/about', [PublicController::class, 'about'])->name('about');
     Route::get('/services', [PublicController::class, 'services'])->name('services');
     Route::get('/faqs', [PublicController::class, 'faqs'])->name('faqs');
+    Route::post('/publicfaqssubscribe', [PublicController::class, 'publicFaqsSubscribe'])->name('publicfaqssubscribe');
     Route::get('/announcements', [PublicController::class, 'announcements'])->name('announcements');
     Route::get('/login', [LoginController::class, 'login'])->name('loginpage')->middleware('havesessionkey');
     Route::post('/loginprocess', [LoginController::class, 'loginProcess'])->name('loginprocess');
@@ -51,22 +53,40 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::post('/updateitem', [InventoryController::class, 'itemUpdate'])->name('adminupdateitem');
     Route::post('/deleteitem', [InventoryController::class, 'itemDelete'])->name('admindeleteitem');
     // =======================
-    //     Admin/Categories
+    //   Admin/Announcements
     // =======================
     Route::get('/adminannouncements', [AnnouncementsController::class, 'index'])->name('adminannouncement');
     Route::post('/adminpostannouncement', [AnnouncementsController::class, 'announcementAdd'])->name('adminpostannouncement');
     // =======================
     //     Admin/Categories
     // =======================
-    Route::get('/categories', [CategoriesController::class, 'index'])->name('admincategories');
+    Route::get('/categories', [InventoryController::class, 'categoriesIndex'])->name('admincategories');
     // =======================
-    //     Admin/Subscriptions
+    //     Admin/Seminars
     // =======================
-    Route::get('/subscriptions', [StaticPageController::class, 'subscriptionsIndex'])->name('adminlogs');
+    Route::get('/adminseminars', [SeminarsController::class, 'index'])->name('adminseminars');
+    // =======================
+    //   Admin/Subscriptions
+    // =======================
+    Route::get('/subscriptions', [StaticPageController::class, 'subscriptionsIndex'])->name('adminsubscription');
+    // =======================
+    //     Admin/Messages
+    // =======================
+    Route::get('/adminmessages', [StaticPageController::class, 'adminMessagesIndex'])->name('adminsubscription');
+    // =======================
+    //   Admin/Notifications
+    // =======================
+    Route::get('/adminnotif', [StaticPageController::class, 'adminNotifIndex'])->name('adminsubscription');
     // =======================
     //     Admin/Logs
     // =======================
-    Route::get('/logs', [StaticPageController::class, 'logsIndex'])->name('adminlogs');
+    Route::get('/logs', [StaticPageController::class, 'logsIndex'])->name('adminsubscription');
+    // =======================
+    //     Admin/Profile
+    // =======================
+    Route::get('/adminprofile', [StaticPageController::class, 'adminprofileIndex'])->name('adminprofile');
+    Route::post('/adminupdateprofile', [StaticPageController::class, 'adminUpdateProfile'])->name('adminupdateprofile');
+    Route::post('/adminupdatepassword', [StaticPageController::class, 'adminUpdatePassword'])->name('adminupdatepasword');
 
 
 

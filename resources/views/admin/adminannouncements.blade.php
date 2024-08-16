@@ -125,9 +125,9 @@
                             <input class="form-control fs-3" id="formFile" type="file" name="announcementimage">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fs-4" for="announcementdescription">Link:</label>
+                            <label class="form-label fs-4" for="announcementdescription">Link(leave it blank if none):</label>
                             <input class="form-control fs-3" id="announcementlink"
-                                name="announcementlink" placeholder="ex. Facebook link for extra information"></input>
+                                name="announcementlink" placeholder="ex. facebook link for extra information"></input>
                         </div>
                         <div class="mb-3">
                             <select class="form-select fs-3" id="announcementtype" name="announcementtype">

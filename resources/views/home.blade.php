@@ -2,6 +2,7 @@
 @section('public_content')
     <section class="home-title">
         <div class="container-xl">
+
             @isset($alert)
                 <center>
                     <div class="alert alert-dismissible fade show fs-3 alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
@@ -11,6 +12,7 @@
                     </div>
                 </center>
             @endisset
+
             <div class="title-section">
                 <center>
                     <h1>This is the official website of</h1>

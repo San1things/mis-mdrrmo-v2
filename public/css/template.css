@@ -157,6 +157,25 @@
     font-size: 2.0rem;
 }
 
+/* ADMIN PROFILE */
+.adminprofilepasswords{
+    position: relative;
+}
+.adminprofilepasswords #eye-logo1{
+    position: absolute;
+    top: 85px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 2.5rem;
+}
+.adminprofilepasswords #eye-logo2{
+    position: absolute;
+    top: 155px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 2.5rem;
+}
+
 
 /* PAGINATION CSS */
 

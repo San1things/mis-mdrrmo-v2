@@ -25,19 +25,19 @@ class InventoryController extends Controller
         $qstring['category'] = '';
         $qstring['searchItem'] = '';
 
-        if(!empty($query['category'])){
+        if (!empty($query['category'])) {
             $qstring['category'] = $query['category'];
             $items->where('item_category', $query['category']);
         }
 
-        if(!empty($query['searchItem'])){
+        if (!empty($query['searchItem'])) {
             $qstring['searchItem'] = $query['searchItem'];
             $name = $query['searchItem'];
-            if(empty($query['category'])){
+            if (empty($query['category'])) {
                 $items->where('item_name', 'like', "%$name%");
             } else {
                 $items->where('item_name', 'like', "%$name%")
-                ->where('item_category', $query['category']);
+                    ->where('item_category', $query['category']);
             }
         }
 
@@ -90,5 +90,18 @@ class InventoryController extends Controller
         $input = request()->input();
         DB::table('tbl_items')->where('id', $input['id'])->delete();
         return redirect('/inventory');
+    }
+
+    public function categoriesIndex()
+    {
+        $data = [];
+        $categories = DB::table('tbl_categories')->leftJoin('tbl_items', 'tbl_categories.id', '=', 'tbl_items.category_id')
+            ->select('tbl_categories.*', DB::raw('COUNT(tbl_items.id) as item_count'))
+            ->groupBy('tbl_categories.id')
+            ->get()->toArray();
+
+        $data['categories'] = $categories;
+
+        return view('admin.categories', $data);
     }
 }

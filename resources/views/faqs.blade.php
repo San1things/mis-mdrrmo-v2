@@ -2,6 +2,17 @@
 @section('public_content')
     <section class="faqs-content">
         <div class="container-xl">
+
+            @isset($alert)
+                <center>
+                    <div class="alert alert-dismissible fade show fs-3 alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                        role="alert">
+                        {{ !empty($alerts[$alert]) ? $alerts[$alert][0] : 'error' }}
+                        <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+                    </div>
+                </center>
+            @endisset
+
             <div class="faqs-intro">
                 <center>
                     <h2>Do You Have Questions?</h2>
@@ -78,7 +89,7 @@
                     <p><i class="bi bi-pin-fill"></i> It depends, you can subscribe us to get an email for real-time updates
                         from our org.</p>
                     <div class="faqs-collapse-subscribe">
-                        <form action="" method="">
+                        <form action="/publicfaqssubscribe" method="POST">
                             @csrf
                             <div class="input-group">
                                 <input class="form-control" name="faqscollapseemail" type="email" aria-label="Email"
@@ -106,8 +117,8 @@
                             <input class="form-control" name="faqsquestionemail" type="email" aria-label="Email"
                                 placeholder="Email" required="required">
                         </div>
-                        <textarea class="form-control" id="" name="" rows="3"
-                            placeholder="Ask your question here..." required="required"></textarea>
+                        <textarea class="form-control" id="" name="" rows="3" placeholder="Ask your question here..."
+                            required="required"></textarea>
                         <button class="btn btn-primary" type="submit">Send</button>
                     </form>
                     <p>Note: It is important to put your real email at the top because we're gonna send our answers there.

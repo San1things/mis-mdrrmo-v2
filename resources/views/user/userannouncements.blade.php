@@ -11,9 +11,20 @@
                 <div class="announcements-container">
                     <center>
                         <h6>Announcement Type: {{ $announcement->announcement_type }}</h6>
-                        <a href="{{ $announcement->announcement_link }}">
-                            <img src="{{ asset('images/uploadedpics/' . $announcement->announcement_image) }}" alt="">
-                        </a>
+                        @if ($announcement->announcement_link == null)
+                            <div class="announcements-image">
+                                <img src="{{ asset('images/uploadedpics/' . $announcement->announcement_image) }}"
+                                    alt="">
+                            </div>
+                        @else
+                            <div class="announcements-image">
+                                <a href="{{ $announcement->announcement_link }}">
+                                    <img src="{{ asset('images/uploadedpics/' . $announcement->announcement_image) }}"
+                                        alt="">
+                                </a>
+                            </div>
+                        @endif
+
 
                         <p class="announcements-datetime">announced at: {{ $announcement->created_at }}</p>
                         <h4>{{ $announcement->announcement_name }}</h4>

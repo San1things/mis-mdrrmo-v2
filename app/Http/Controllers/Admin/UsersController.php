@@ -107,13 +107,13 @@ class UsersController extends Controller
         }
 
         $tableemail = DB::table('tbl_users')
-        ->where('email', $input['email'])->count();
-        if($tableemail >= 1){
+            ->where('email', $input['email'])->count();
+        if ($tableemail >= 1) {
             return redirect('/users?alert=8');
             die();
         }
 
-        if(strlen($input['contact']) != 11){
+        if (strlen($input['contact']) != 11) {
             return redirect('/users?alert=9');
             die();
         }
