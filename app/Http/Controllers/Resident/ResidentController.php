@@ -18,7 +18,7 @@ class ResidentController extends Controller
         $data = [];
         $userinfo = $request->attributes->get('userinfo');
         $data['user'] = DB::table('tbl_users')
-        ->where('id', $userinfo[0])->first();
+            ->where('id', $userinfo[0])->first();
 
         return view('user.userhome', $data);
     }
@@ -35,13 +35,18 @@ class ResidentController extends Controller
         $data = [];
         $userinfo = $request->attributes->get('userinfo');
         $data['user'] = DB::table('tbl_users')
-        ->where('id', $userinfo[0])->first();
+            ->where('id', $userinfo[0])->first();
 
         return view('user.userfaqs', $data);
     }
-    public function userannouncements()
+    public function userannouncements(Request $request)
     {
-        return view('user.userannouncements');
+        $data = [];
+        $announcements = DB::table('tbl_announcements');
+
+        $data['announcements'] = $announcements->get()->toArray();
+
+        return view('user.userannouncements', $data);
     }
     public function userseminars()
     {

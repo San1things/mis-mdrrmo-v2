@@ -2,15 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
-        return view('home');
+        $data = [];
+        $data['alerts'] = [
+            1 => ['Error subscribing, the email you input has been subscribed.', 'danger'],
+            2 => ['You are now subscribed! You will receive all the updates from us.', 'success']
+        ];
+
+        if (!empty(request()->input('alert'))) {
+            $data['alert'] = request()->input('alert');
+        }
+
+        return view('home', $data);
     }
+
+    public function publicHomeSubscribe(Request $request)
+    {
+        $input = $request->input();
+        $checkEmail = DB::table('tbl_subscriptions')
+        ->where('email', $input['homeemail'])->count();
+
+        if($checkEmail >= 1){
+            return redirect('/?alert=1');
+            die();
+        }
+        $formattedNow = Carbon::now('Asia/Manila')->format('m/d/y h:ia');
+        DB::table('tbl_subscriptions')
+        ->insert([
+            'email' => $input['homeemail'],
+            'subscribed_at' => $formattedNow,
+            'created_at' => Carbon::now('Asia/Manila'),
+            'updated_at' => Carbon::now('Asia/Manila')
+        ]);
+
+        return redirect('/?alert=2');
+    }
+
     public function about()
     {
         return view('about');

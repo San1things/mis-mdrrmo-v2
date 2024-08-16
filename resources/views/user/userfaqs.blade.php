@@ -69,27 +69,6 @@
                         afternoon. Monday to Saturday.</p>
                 </div>
             </div>
-            <div class="faqs-questions" data-bs-toggle="collapse" data-bs-target="#collapseExample6" aria-expanded="false"
-                aria-controls="collapseExample">
-                <h6>What are the dates of the seminars?</h6>
-            </div>
-            <div class="collapse" id="collapseExample6">
-                <div class="faqs-collapse">
-                    <p><i class="bi bi-pin-fill"></i> It depends, you can subscribe us to get an email for real-time updates
-                        from our org.</p>
-                    <div class="faqs-collapse-subscribe">
-                        <form action="" method="">
-                            @csrf
-                            <div class="input-group">
-                                <input class="form-control" name="faqscollapseemail" type="email"
-                                    value="{{ $user->email }}" aria-label="Email" aria-describedby="button-addon2"
-                                    placeholder="Email" required="required" disabled>
-                                <button class="btn btn-outline-primary" id="button-addon2" type="submit">Subscribe</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 

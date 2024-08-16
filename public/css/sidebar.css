@@ -31,8 +31,6 @@ h1 {
 }
 
 #sidebar {
-    margin: 20px 0 20px 10px;
-    border-radius: 10px;
     width: 70px;
     min-width: 70px;
     z-index: 1000;
@@ -51,12 +49,11 @@ h1 {
     background-color: transparent;
     cursor: pointer;
     border: 0;
-    padding: 1rem 1.5rem;
+    padding: 1.5rem 1.5rem;
 }
 
-.toggle-btn i {
-    font-size: 3.5rem;
-    color: #FFF;
+.toggle-btn img {
+    height: 40px;
 }
 
 .sidebar-logo {
@@ -87,7 +84,6 @@ a.sidebar-link {
     white-space: nowrap;
     padding: 1rem 0 1rem 2rem;
     border-left: 3px solid transparent;
-    border-radius: 0 10px 10px 0;
 }
 
 .sidebar-link i {
@@ -98,7 +94,6 @@ a.sidebar-link {
 a.sidebar-link:hover {
     background-color: rgba(102, 188, 239, 0.5);
     border-left: 3px solid #3b7ddd;
-    border-radius: 0 10px 10px 0;
 }
 
 .sidebar-item {
@@ -113,7 +108,6 @@ a.sidebar-link:hover {
     padding: 0;
     min-width: 15rem;
     display: none;
-    border-radius: 0 10px 10px 0;
 }
 
 #sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {

@@ -41,7 +41,7 @@
             </div>
             <div class="collapse" id="collapseExample3">
                 <div class="faqs-collapse">
-                    <p><i class="bi bi-pin-fill"></i> Log in and <a href="#">join</a> our seminar to reserve your
+                    <p><i class="bi bi-pin-fill"></i> Log in and <a href="/login">join</a> our seminar to reserve your
                         slots and seats.</p>
                 </div>
             </div>

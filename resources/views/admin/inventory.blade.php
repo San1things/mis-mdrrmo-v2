@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-xl mt-3">
 
-        <div class="admin-header d-flex align-items-center mb-3">
+        <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark">
             <div class="header-title p-2 flex-grow-1">
                 <h1>Inventory</h1>
                 <p>All the items information is here.</p>

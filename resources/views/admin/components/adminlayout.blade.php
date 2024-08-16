@@ -29,11 +29,11 @@
 
 <body class="bg-light">
     <div class="wrapper">
-        <aside id="sidebar">
+        <aside id="sidebar" class="expand">
             <div class="d-flex">
-                <button class="toggle-btn" type="button">
-                    <i class="bi bi-list"></i>
-                </button>
+                <a class="toggle-btn" type="button">
+                    <img src="{{ asset('images/publicpics/logo.png') }}" alt="">
+                </a>
                 <div class="sidebar-logo">
                     @php
                         $userinfo = request()->attributes->get('userinfo');
@@ -70,7 +70,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
+                    <a class="sidebar-link" href="/subscriptions">
                         <i class="bi bi-bell-fill"></i>
                         <span>Subscriptions</span>
                     </a>

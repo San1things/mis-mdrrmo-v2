@@ -6,6 +6,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\AnnouncementsController;
 use App\Http\Controllers\Admin\LogsController;
+use App\Http\Controllers\Admin\StaticPageController;
 use App\Http\Controllers\Resident\ResidentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PublicController;
@@ -17,6 +18,7 @@ Route::group(['middleware' => 'havesessionkey'], function () {
     //        Public
     // =======================
     Route::get('/', [PublicController::class, 'home'])->name('home');
+    Route::post('/publichomesubscribe', [PublicController::class, 'publicHomeSubscribe'])->name('publichomesubscribe');
     Route::get('/about', [PublicController::class, 'about'])->name('about');
     Route::get('/services', [PublicController::class, 'services'])->name('services');
     Route::get('/faqs', [PublicController::class, 'faqs'])->name('faqs');
@@ -58,9 +60,13 @@ Route::group(['middleware' => 'loginhandler'], function () {
     // =======================
     Route::get('/categories', [CategoriesController::class, 'index'])->name('admincategories');
     // =======================
+    //     Admin/Subscriptions
+    // =======================
+    Route::get('/subscriptions', [StaticPageController::class, 'subscriptionsIndex'])->name('adminlogs');
+    // =======================
     //     Admin/Logs
     // =======================
-    Route::get('/logs', [LogsController::class, 'index'])->name('adminlogs');
+    Route::get('/logs', [StaticPageController::class, 'logsIndex'])->name('adminlogs');
 
 
 

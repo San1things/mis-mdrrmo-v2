@@ -52,15 +52,12 @@
     <section class="home-subscribe">
         <div class="container-xl">
             <center>
-                <h4>If you want to get a real time update on us. Subscribe now!</h4>
-                <form action="" method="">
-                    @csrf
-                    <div class="input-group">
-                        <input class="form-control" type="email" aria-label="Email" aria-describedby="button-addon2"
-                            placeholder="Email" required="required" name="homeemail" value="{{ $user->email }}" disabled>
-                        <button class="btn btn-outline-primary" id="button-addon2" type="submit">Subscribe</button>
-                    </div>
-                </form>
+                <h4>Since you have an account, you dont need to subscribe anymore! You will receive all update news about us on this email:</h4>
+                <div class="input-group">
+                    <input class="form-control" name="homeemail" type="email" value="{{ $user->email }}"
+                        aria-label="Email" aria-describedby="button-addon2" placeholder="Email" required="required"
+                        disabled>
+                </div>
             </center>
         </div>
     </section>
