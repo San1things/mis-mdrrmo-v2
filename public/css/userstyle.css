@@ -505,6 +505,7 @@ footer .footer-text {
 }
 
 .announcements-content img {
+    max-width: 1100px;
     height: 50vh;
     border-radius: 10px;
     box-shadow: 20px 20px 50px grey;
@@ -561,6 +562,13 @@ footer .footer-text {
     .about-cvm-images img {
         height: 30vh;
         border-radius: 15px;
+        box-shadow: 20px 20px 50px grey;
+    }
+
+    .announcements-content img {
+        max-width: 920px;
+        height: 50vh;
+        border-radius: 10px;
         box-shadow: 20px 20px 50px grey;
     }
 
@@ -664,6 +672,7 @@ footer .footer-text {
         box-shadow: 20px 20px 50px grey;
     }
     .announcements-content img {
+        max-width: 710px;
         height: 45vh;
         border-radius: 10px;
         box-shadow: 20px 20px 50px grey;
@@ -812,6 +821,7 @@ footer .footer-text {
     /* =====ANNOUNCEMENTS===== */
 
     .announcements-content img {
+        max-width: 500px;
         height: 35vh;
         border-radius: 10px;
         box-shadow: 20px 20px 50px grey;
@@ -1030,6 +1040,7 @@ footer .footer-text {
     }
 
     .announcements-content img {
+        max-width: 360px;
         height: 29vh;
         border-radius: 10px;
         box-shadow: 20px 20px 50px grey;
