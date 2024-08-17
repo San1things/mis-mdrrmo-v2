@@ -20,6 +20,7 @@ class LoginController extends Controller
             $data['alert'] = request()->input('alert');
         }
 
+        // dd(session()->has('sessionkey'));
         if (session()->has('sessionkey')) {
             return redirect()->route('adminhomepage');
         }

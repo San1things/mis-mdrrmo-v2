@@ -21,6 +21,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\CacheHandler::class
     ];
 
     /**
@@ -40,7 +41,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -68,6 +69,6 @@ class Kernel extends HttpKernel
         'loginhandler' => \App\Http\Middleware\LoginHandler::class,
         'adminhandler' => \App\Http\Middleware\AdminHandler::class,
         'residenthandler' => \App\Http\Middleware\UserHandler::class,
-        'loginredirect' => \App\Http\Middleware\UserHandler::class,
+        // 'loginredirect' => \App\Http\Middleware\UserHandler::class,
     ];
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Resident;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ResidentController extends Controller
@@ -48,9 +49,38 @@ class ResidentController extends Controller
 
         return view('user.userannouncements', $data);
     }
-    public function userseminars()
+    public function userseminars(Request $request)
     {
-        return view('user.userseminars');
+        $data = [];
+        $data['seminars'] = DB::table('tbl_seminars')->get()->toArray();
+        $data['attendeeCount'] = DB::table('tbl_attendees')->count();
+        return view('user.userseminars', $data);
+    }
+    public function userJoinSeminar(Request $request)
+    {
+        $seminarid = $request->query('sid');
+        $userinfo = $request->attributes->get('userinfo');
+
+        DB::table('tbl_attendees')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'seminar_id' => $seminarid,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        return redirect('/userseminars');
+    }
+    public function userUnregisterSeminar(Request $request)
+    {
+        $seminarid = $request->query('sid');
+        $userinfo = $request->attributes->get('userinfo');
+
+        DB::table('tbl_attendees')
+        ->where('user_id', $userinfo[0])
+        ->where('seminar_id', $seminarid)
+        ->delete();
+        
+        return redirect('/userseminars');
     }
     public function userprofile(Request $request)
     {

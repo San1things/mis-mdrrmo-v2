@@ -21,7 +21,7 @@ class SessionRedirect
             $userinfo = explode(',', $decryptedvalue);
             if ($userinfo[4] === 'admin' || $userinfo[4] === 'staff') {
                 return redirect('/users');
-            } else if($userinfo[4] === 'resident'){
+            } else if ($userinfo[4] === 'resident') {
                 return redirect('/userhome');
             }
         }

@@ -14,10 +14,10 @@ use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
 
+// =======================
+//        Public
+// =======================
 Route::group(['middleware' => 'havesessionkey'], function () {
-    // =======================
-    //        Public
-    // =======================
     Route::get('/', [PublicController::class, 'home'])->name('home');
     Route::post('/publichomesubscribe', [PublicController::class, 'publicHomeSubscribe'])->name('publichomesubscribe');
     Route::get('/about', [PublicController::class, 'about'])->name('about');
@@ -65,6 +65,9 @@ Route::group(['middleware' => 'loginhandler'], function () {
     //     Admin/Seminars
     // =======================
     Route::get('/adminseminars', [SeminarsController::class, 'index'])->name('adminseminars');
+    Route::post('/createseminar', [SeminarsController::class, 'createSeminar'])->name('createseminar');
+    Route::get('/seminarcollapseddiv', [SeminarsController::class, 'collapsedDiv'])->name('seminarcollapseddiv');
+    Route::post('/adminremoveattendee', [SeminarsController::class, 'adminRemoveAttendee'])->name('adminremoveattendee');
     // =======================
     //   Admin/Subscriptions
     // =======================
@@ -72,15 +75,15 @@ Route::group(['middleware' => 'loginhandler'], function () {
     // =======================
     //     Admin/Messages
     // =======================
-    Route::get('/adminmessages', [StaticPageController::class, 'adminMessagesIndex'])->name('adminsubscription');
+    Route::get('/adminmessages', [StaticPageController::class, 'adminMessagesIndex'])->name('adminmessages');
     // =======================
     //   Admin/Notifications
     // =======================
-    Route::get('/adminnotif', [StaticPageController::class, 'adminNotifIndex'])->name('adminsubscription');
+    Route::get('/adminnotif', [StaticPageController::class, 'adminNotifIndex'])->name('adminnotif');
     // =======================
     //     Admin/Logs
     // =======================
-    Route::get('/logs', [StaticPageController::class, 'logsIndex'])->name('adminsubscription');
+    Route::get('/logs', [StaticPageController::class, 'logsIndex'])->name('logs');
     // =======================
     //     Admin/Profile
     // =======================
@@ -100,6 +103,8 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::get('/userfaqs', [ResidentController::class, 'userfaqs'])->name('userfaqs');
     Route::get('/userannouncements', [ResidentController::class, 'userannouncements'])->name('userannouncements');
     Route::get('/userseminars', [ResidentController::class, 'userseminars'])->name('userseminars');
+    Route::get('/userjoinseminar', [ResidentController::class, 'userJoinSeminar'])->name('userjoinseminar');
+    Route::get('/userunregisterseminar', [ResidentController::class, 'userUnregisterSeminar'])->name('userunregisterseminar');
     Route::get('/userprofile', [ResidentController::class, 'userprofile'])->name('userprofile');
     Route::post('/userupdateprofile', [ResidentController::class, 'userUpdateProfile'])->name('userupdateprofile');
     Route::post('/userupdatepassword', [ResidentController::class, 'userUpdatePassword'])->name('userupdatepassword');

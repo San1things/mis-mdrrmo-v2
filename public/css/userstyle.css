@@ -520,6 +520,47 @@ footer .footer-text {
     border-bottom: gray 2px solid;
 }
 
+/* =====SEMINAR===== */
+
+.userseminar {
+    padding: 30px 0;
+}
+
+.userseminar-title {
+    border-bottom: 2px black solid;
+    margin: 20px 0;
+}
+.userseminar-content .seminar-collapse{
+    border-top: 2px gray solid;
+    border-bottom: 2px gray solid;
+    cursor: pointer;
+    padding: 0 10px;
+}
+.userseminar-content .collapsed-div{
+    padding: 20px 20px 0 20px;
+    position: relative;
+}
+.userseminar-content .collapsed-div p:nth-child(1){
+    text-align: center;
+    font-size: 2.0rem;
+}
+.userseminar-content .seminar-button{
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+}
+.userseminar-content .seminar-button a{
+    font-size: 2.0rem;
+    padding: 10px 30px;
+}
+.userseminar-content .seminar-button p{
+    font-size: 1.5rem;
+    text-align: center;
+    color: gray;
+}
+
+
+
 /* =====USERPROFILE===== */
 
 .profile-content{

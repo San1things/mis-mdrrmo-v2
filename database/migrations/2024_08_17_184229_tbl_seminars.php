@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_subscriptions', function (Blueprint $table) {
+        Schema::create('tbl_seminars', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('email');
-            $table->string('subscribed_at');
+            $table->string('title');
+            $table->longText('description');
+            $table->string('location');
+            $table->dateTime('starts_at');
+            $table->string('status')->default('upcoming');
             $table->timestamps();
+
         });
     }
 
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_subscriptions');
+        Schema::dropIfExists('tbl_seminars');
     }
 };

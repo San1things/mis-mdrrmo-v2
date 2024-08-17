@@ -177,6 +177,27 @@
 }
 
 
+/* SEMINAR */
+.admin-content .seminar-collapse{
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+}
+.admin-content .seminar-collapse p:nth-child(2){
+    bottom: 0;
+    right: 10px;
+    position: absolute;
+    color: grey;
+    font-size: 1.5rem;
+}
+.admin-content .seminar-collapse p:nth-child(3){
+    color: grey;
+    font-size: 1.5rem;
+}
+
+
+
 /* PAGINATION CSS */
 
 .pagination {

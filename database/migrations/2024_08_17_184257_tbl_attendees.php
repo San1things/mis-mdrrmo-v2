@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_subscriptions', function (Blueprint $table) {
+        Schema::create('tbl_attendees',function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('email');
-            $table->string('subscribed_at');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('seminar_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('tbl_users')->onDelete('cascade');
+            $table->foreign('seminar_id')->references('id')->on('tbl_seminars')->onDelete('cascade');
         });
     }
 
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_subscriptions');
+        //
     }
 };
