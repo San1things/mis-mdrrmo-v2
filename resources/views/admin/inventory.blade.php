@@ -217,7 +217,7 @@
                     $('#itemquantity').val($(this).data('itemquantity'))
                     $('.btn-save').text('UPDATE')
                     $('#modalTitle').text('UPDATE ITEM')
-                    $('#modalForm').attr('action', '/updateitem?id=' + id)
+                    
                 })
 
                 $('#itemcategory').on('click', function() {

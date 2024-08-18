@@ -32,9 +32,15 @@ class StaticPageController extends Controller
     {
         return view('admin.adminnotif');
     }
-    public function logsIndex()
+    public function logsIndex(Request $request)
     {
-        return view('admin.logs');
+        $data = [];
+        $logs = DB::table('tbl_logs')
+        ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_logs.user_id');
+
+        $data['logs'] = $logs->get()->toArray();
+
+        return view('admin.logs', $data);
     }
 
     public function adminprofileIndex(Request $request)

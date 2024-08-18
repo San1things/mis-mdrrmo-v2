@@ -29,18 +29,18 @@
             <h3>Seminars({{ $seminarCount }})</h3>
 
             @foreach ($seminars as $seminar)
-                <div class="seminar-collapse border border-dark" data-sid="{{ $seminar->id }}" data-bs-toggle="collapse" data-bs-target="#collapsed-div{{ $seminar->id }}" aria-expanded="false"
+                <div class="seminar-collapse border border-dark" data-bs-toggle="collapse" data-bs-target="#collapsed-div{{ $seminar->id }}" aria-expanded="false"
                     aria-controls="collapsed-div">
                     <h6>{{ $seminar->title }}</h6>
                     <p>Start date: {{ $seminar->starts_at }}</p>
-                    <p class="click-details-text" id="click-details-text">click for more details...</p>
-                    <div class="adminseminar-btns" id="adminseminar-btns{{ $seminar->id }}" data-state="hide" style="display: none">
-                        <button class="btn btn-primary fs-3 px-3">Edit Seminar</button>
+                    <p class="click-details-text">click for more details...</p>
+                    <div class="adminseminar-btns" data-state="hide" style="display: none">
+                        <button class="btn btn-primary fs-3 px-3 seminar-edit-btn" data-sid="{{ $seminar->id }}" data-stitle="{{ $seminar->title }}" data-sdescription="{{ $seminar->description }}" data-slocation="{{ $seminar->location }}" data-sstart="{{ $seminar->starts_at }}" data-bs-toggle="modal" data-bs-target="#seminarsAddUpdateModal">Edit Seminar</button>
                         <button class="btn btn-success fs-3 px-3">Start Seminar</button>
                     </div>
                 </div>
                 <div class="collapse border border-top-0 p-5" id="collapsed-div{{ $seminar->id }}">
-                    <iframe src="/seminarcollapseddiv?id={{ $seminar->id }}" style="border: none" width="100%" height="600px"></iframe>
+                    <iframe src="/seminarcollapseddiv?id={{ $seminar->id }}" style="border: none" width="100%" height="500px"></iframe>
                 </div>
             @endforeach
 
@@ -54,7 +54,7 @@
                     <h1 class="modal-title fs-5" id="modalTitle"></h1>
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
-                <form id="modalForm" action="/createseminar" method="post">
+                <form id="modalForm" action="/admincreateseminar" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary fs-3 px-5 btn-save" type="submit">Save changes</button>
+                        <button class="btn btn-primary fs-3 px-5 btn-save" type="submit">Create Seminar</button>
                     </div>
                 </form>
             </div>
@@ -84,11 +84,20 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
+                $('.seminar-edit-btn').on('click', function() {
+                    let id = $(this).data('sid');
+                    $('#seminartitle').val($(this).data('stitle'))
+                    $('#seminardescription').val($(this).data('sdescription'))
+                    $('#seminarlocation').val($(this).data('slocation'))
+                    $('#startdate').val($(this).data('sstart'))
+                    $('.btn-save').text('Update Seminar')
+                    $('#modalForm').attr('action', 'adminupdateseminar?sid=' + id)
+                })
+
                 $(".seminar-collapse").on('click', function() {
                     let child = $(this).find('.adminseminar-btns');
                     let childtext = $(this).find('.click-details-text');
 
-                    // console.log(child.find('.btn-primary'))
                     let state = child.data('state')
                     if (state == 'hide') {
                         childtext.text('')
@@ -99,9 +108,7 @@
                         child.attr('style', 'display: none')
                         child.data('state', 'hide')
                     }
-                    console.log(state);
                 })
-
             })
         </script>
     @endpush
