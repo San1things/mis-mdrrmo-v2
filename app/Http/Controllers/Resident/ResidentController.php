@@ -45,7 +45,7 @@ class ResidentController extends Controller
         $data = [];
         $announcements = DB::table('tbl_announcements');
 
-        $data['announcements'] = $announcements->get()->toArray();
+        $data['announcements'] = $announcements->orderByDesc('id')->get()->toArray();
 
         return view('user.userannouncements', $data);
     }
@@ -79,7 +79,7 @@ class ResidentController extends Controller
         ->where('user_id', $userinfo[0])
         ->where('seminar_id', $seminarid)
         ->delete();
-        
+
         return redirect('/userseminars');
     }
     public function userprofile(Request $request)

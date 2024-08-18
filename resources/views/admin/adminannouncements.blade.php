@@ -31,7 +31,8 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item border">
                                 <a class="{{ request('category') === null ? 'nav-link active' : 'nav-link' }}"
-                                    href="?type=&searchAnnouncement={{ $qstring['searchAnnouncement'] }}" aria-current="page">View
+                                    href="?type=&searchAnnouncement={{ $qstring['searchAnnouncement'] }}"
+                                    aria-current="page">View
                                     All</a>
                             </li>
                             <li class="nav-item border border-start-0">
@@ -57,7 +58,18 @@
                     </div>
                 </div>
             </nav>
-            <div class="table-responsive-lg fs-4">
+
+            @isset($alert)
+                <center>
+                    <div class="alert alert-dismissible fade show fs-3 alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                        role="alert">
+                        {{ !empty($alerts[$alert]) ? $alerts[$alert][0] : 'error' }}
+                        <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+                    </div>
+                </center>
+            @endisset
+
+            <div class="table-responsive-lg fs-4" style="max-height: 59vh; min-height: 59vh; overflow-y:scroll;">
                 <table class="table table table-light table-hover mt-3 align-middle">
                     <thead class="table">
                         <tr>
@@ -76,7 +88,7 @@
                                 <td>{{ $announcement->announcement_description }}</td>
                                 <td>{{ $announcement->created_at }}</td>
                                 <td>
-                                    <a class="btn btn-primary updateitem-btn" data-bs-toggle="modal"
+                                    <a class="btn btn-primary updateannouncement-btn" data-bs-toggle="modal"
                                         data-bs-target="#announcementAddUpdateModal" data-id="{{ $announcement->id }}"
                                         data-announcementname="{{ $announcement->announcement_name }}"
                                         data-announcementdescription="{{ $announcement->announcement_description }}"
@@ -96,6 +108,7 @@
                     </tbody>
                 </table>
             </div>
+            {{ $announcements->links('pagination::bootstrap-5') }}
         </div>
     </div>
 
@@ -107,7 +120,7 @@
                     <h1 class="modal-title fs-5" id="modalTitle"></h1>
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
-                <form id="modalForm" action="/adminpostannouncement" method="POST" enctype="multipart/form-data">
+                <form id="modalForm" action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
@@ -117,17 +130,20 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-4" for="announcementdescription">Description:</label>
-                            <input class="form-control fs-3" id="announcementdescription"
-                                name="announcementdescription" placeholder="Announcement Description*"></input>
+                            <textarea class="form-control fs-3" id="announcementdescription" name="announcementdescription"
+                                placeholder="Announcement Description*"></textarea>
+                        </div>
+                        <div class="announcement-image-container">
+                            <div class="mb-3">
+                                <label class="form-label fs-4" for="formFile">Image Header:</label>
+                                <input class="form-control fs-3" id="formFile" name="announcementimage" type="file">
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fs-4" for="formFile">Image Header:</label>
-                            <input class="form-control fs-3" id="formFile" type="file" name="announcementimage">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fs-4" for="announcementdescription">Link(leave it blank if none):</label>
-                            <input class="form-control fs-3" id="announcementlink"
-                                name="announcementlink" placeholder="ex. facebook link for extra information"></input>
+                            <label class="form-label fs-4" for="announcementdescription">Link(leave it blank if
+                                none):</label>
+                            <input class="form-control fs-3" id="announcementlink" name="announcementlink"
+                                placeholder="ex. facebook link for extra information"></input>
                         </div>
                         <div class="mb-3">
                             <select class="form-select fs-3" id="announcementtype" name="announcementtype">
@@ -146,3 +162,31 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+
+            $('.addannouncement-btn').on('click', function() {
+                $('#announcementname').val('')
+                $('#announcementdescription').val('')
+                $('#announcementtype').val('')
+                $('#announcementlink').val('')
+                $('.announcement-image-container').css("display", "block")
+                $('.btn-save').text('Create Announcement')
+                $('#modalForm').attr('action', '/adminpostannouncement')
+            })
+
+            $('.updateannouncement-btn').on('click', function() {
+                let id = $(this).data('id')
+                $('#announcementname').val($(this).data('announcementname'))
+                $('#announcementdescription').val($(this).data('announcementdescription'))
+                $('#announcementtype').val($(this).data('announcementtype'))
+                $('#announcementlink').val($(this).data('announcementlink'))
+                $('.announcement-image-container').css("display", "none")
+                $('.btn-save').text('Update Announcement')
+                $('#modalForm').attr('action', '/adminupdateannouncement?id=' + id)
+            })
+        })
+    </script>
+@endpush

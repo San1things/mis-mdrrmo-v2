@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id');
             $table->string('item_name');
-            $table->string('item_description');
+            $table->string('item_description')->nullable();
             $table->string('item_category');
             $table->integer('item_quantity');
             $table->date('expired_at')->nullable();

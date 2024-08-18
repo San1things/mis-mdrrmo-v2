@@ -25,7 +25,7 @@
                             </div>
                         @endif
 
-                        <p class="announcements-datetime">announced at: {{ $announcement->created_at }}</p>
+                        <p class="announcements-datetime">announced at: {{ Carbon\Carbon::create($announcement->created_at)->format('M d,Y || h:ia') }}</p>
                         <h4>{{ $announcement->announcement_name }}</h4>
                         <p>
                             {{ $announcement->announcement_description }}
@@ -35,4 +35,5 @@
             @endforeach
         </div>
     </section>
+
 @endsection

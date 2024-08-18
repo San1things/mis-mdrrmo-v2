@@ -13,13 +13,19 @@ class StaticPageController extends Controller
         $this->middleware('adminhandler');
     }
 
-    public function subscriptionsIndex()
+    public function subscriptionsIndex(Request $request)
     {
         $data = [];
-        $subscribers = DB::table('tbl_subscriptions');
+        $query = $request->query();
 
-        $data['subCount'] = $subscribers->count();
-        $data['subscribers'] = $subscribers->get()->toArray();
+        $subscribers = DB::table('tbl_subscriptions');
+        if (!empty(request()->query('searchSubscriber'))) {
+            $emailtyped = $query['searchSubscriber'];
+            $subscribers->where('email', 'like' ,"%$emailtyped%");
+        }
+
+        $data['subCount'] = DB::table('tbl_subscriptions')->count();
+        $data['subscribers'] = $subscribers->orderByDesc('id')->paginate(15)->appends($request->all());
 
         return view('admin.subscriptions', $data);
     }
@@ -36,7 +42,7 @@ class StaticPageController extends Controller
     {
         $data = [];
         $logs = DB::table('tbl_logs')
-        ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_logs.user_id');
+            ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_logs.user_id');
 
         $data['logs'] = $logs->get()->toArray();
 

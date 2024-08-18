@@ -42,7 +42,8 @@
                             </li>
                             <li class="nav-item border border-start-0">
                                 <a class="{{ request('category') === 'supplies' ? 'nav-link active' : 'nav-link' }}"
-                                    href="?category=Disaster+Supplies&searchItem={{ $qstring['searchItem'] }}">Disaster Supplies</a>
+                                    href="?category=Disaster+Supplies&searchItem={{ $qstring['searchItem'] }}">Disaster
+                                    Supplies</a>
                             </li>
                             <li class="nav-item border border-start-0">
                                 <a class="{{ request('category') === 'vehicles' ? 'nav-link active' : 'nav-link' }}"
@@ -63,9 +64,9 @@
                     </div>
                 </div>
             </nav>
-            <div class="table-responsive-lg fs-4">
+            <div class="table-responsive-lg fs-4" style="min-height: 60vh; max-height: 60vh; overflow-y:scroll;">
                 <table class="table table table-light table-hover mt-3 align-middle">
-                    <thead>
+                    <thead style="position: sticky; top: 0;">
                         <tr>
                             <th style="width: 10%" scope="col">#</th>
                             <th style="width: 15%" scope="col-4">Item Name</th>
@@ -105,6 +106,7 @@
                     </tbody>
                 </table>
             </div>
+            {{ $items->links('pagination::bootstrap-5') }}
         </div>
     </div>
 
@@ -125,8 +127,9 @@
                                 placeholder="Item Name">
                         </div>
                         <div class="mb-3">
-                            <label for="floatingInput" class="fomr-label fs-3">Item Description</label>
-                            <input class="form-control fs-3" id="itemdescription" name="itemdescription" placeholder="Item Description"></input>
+                            <label class="fomr-label fs-3" for="floatingInput">Item Description</label>
+                            <input class="form-control fs-3" id="itemdescription" name="itemdescription"
+                                placeholder="Item Description"></input>
                         </div>
                         <div class="mb-3">
                             <select class="form-select fs-3" id="itemcategory" name="itemcategory">
@@ -142,9 +145,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-3" for="floatingInput">Quantity</label>
-                            <input class="form-control fs-3" id="itemquantity" name="itemquantity"
-                                type="number" placeholder="Quantity"></input>
-
+                            <input class="form-control fs-3" id="itemquantity" name="itemquantity" type="number"
+                                placeholder="Quantity"></input>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -175,29 +177,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="loadingModal" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-body d-flex justify-content-center my-5">
-                    <div class="dot-spinner">
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                        <div class="dot-spinner__dot"></div>
-                    </div>
-                    <div class="success-alert my-5 mx-5" style="display: none;">
-                        <i class="bi bi-check-circle"></i>
-                        <p class="success-alert-text">SAVED SUCCESFULLY!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     @push('scripts')
         <script>
             $(document).ready(function() {
@@ -217,7 +196,8 @@
                     $('#itemquantity').val($(this).data('itemquantity'))
                     $('.btn-save').text('UPDATE')
                     $('#modalTitle').text('UPDATE ITEM')
-                    
+                    $('#modalForm').attr('action', '/updateitem')
+
                 })
 
                 $('#itemcategory').on('click', function() {
@@ -234,43 +214,6 @@
                 $('.deleteitem-btn').on('click', function() {
                     let id = $(this).data('id');
                     $('#modalForm').attr('action', '/deleteitem?id=' + id)
-                })
-
-
-                $('.btn-save').on('click', function(e) {
-                    e.preventDefault();
-                    $("#inventoryAddUpdateModal").modal('hide');
-                    $("#loadingModal").modal('show');
-                    $('.success-alert-text').text('SAVED SUCCESFULLY')
-
-                    setTimeout(function() {
-                        $('.dot-spinner').css("display", "none")
-                        $('.success-alert').css("display", "block")
-                        $('.modal-content').css("background",
-                            "linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147))")
-                    }, 1500);
-                    setTimeout(function() {
-                        $("#loadingModal").modal('hide');
-                        $('#modalForm').submit();
-                    }, 2500);
-                })
-                $('.btn-delete').on('click', function(e) {
-                    e.preventDefault();
-                    $("#inventoryDeleteModal").modal('hide');
-                    $("#loadingModal").modal('show');
-                    $('.success-alert-text').text('DELETED SUCCESFULLY')
-
-                    setTimeout(function() {
-                        $('.dot-spinner').css("display", "none")
-                        $('.success-alert').css("display", "block")
-                        $('.modal-content').css("background",
-                            "linear-gradient(102.2deg, rgb(250, 45, 66) 9.6%, rgb(245, 104, 104) 96.1%)"
-                        )
-                    }, 1500);
-                    setTimeout(function() {
-                        $("#loadingModal").modal('hide');
-                        $('#modalForm').submit();
-                    }, 2500);
                 })
             })
         </script>

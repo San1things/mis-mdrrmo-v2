@@ -20,5 +20,9 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call(TblUsersTableSeeder::class);
         $this->call(TblCategoriesTableSeeder::class);
+        $this->call(TblSubscriptionsTableSeeder::class);
+        $this->call(TblItemsTableSeeder::class);
+        $this->call(TblAnnouncementsTableSeeder::class);
+        $this->call(TblSeminarsTableSeeder::class);
     }
 }

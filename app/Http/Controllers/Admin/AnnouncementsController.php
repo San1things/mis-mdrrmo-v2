@@ -24,6 +24,16 @@ class AnnouncementsController extends Controller
         $qstring['type'] = '';
         $qstring['searchAnnouncement'] = '';
 
+        $data['alerts'] = [
+            1 => ['Error! Please put an image haeder!', 'danger'],
+            2 => ['Successful! Announcement has beeen updated', 'success'],
+            3 => ['Well Done! Announcement has beeen posted publicly!', 'success'],
+        ];
+
+        if(!empty($request->query('alert'))){
+            $data['alert'] = request()->query('alert');
+        }
+
 
         if (!empty($query['type'])) {
             $qstring['type'] = $query['type'];
@@ -46,8 +56,8 @@ class AnnouncementsController extends Controller
             }
         }
 
-        $data['annCount'] = $announcements->count();
-        $data['announcements'] = $announcements->get()->toArray();
+        $data['annCount'] = DB::table('tbl_announcements')->count();
+        $data['announcements'] = $announcements->orderByDesc('id')->paginate(15)->appends($request->all());
         $data['qstring'] = $qstring;
 
         return view('admin.adminannouncements', $data);
@@ -56,10 +66,6 @@ class AnnouncementsController extends Controller
     public function announcementAdd(Request $request)
     {
         $input = $request->input();
-
-        // $request->validate([
-        //     'announcementimage' => 'required|image|mimes:,jpeg,gif,png,jpg'
-        // ]);
 
         if (!empty($request->file())) {
             $time = Carbon::now()->toDateString();
@@ -83,6 +89,23 @@ class AnnouncementsController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
-        return redirect('/adminannouncements');
+        return redirect('/adminannouncements?alert=3');
+    }
+
+    public function announcementUpdate(Request $request)
+    {
+        $input = $request->input();
+
+        DB::table('tbl_announcements')
+            ->where('id', $input['id'])
+            ->update([
+                'announcement_name' => $input['announcementname'],
+                'announcement_description' => $input['announcementdescription'],
+                'announcement_link' => $input['announcementlink'],
+                'announcement_type' => $input['announcementtype'],
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+
+        return redirect('/adminannouncements?alert=2');
     }
 }

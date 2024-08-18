@@ -93,7 +93,7 @@ class PublicController extends Controller
         $data = [];
         $announcements = DB::table('tbl_announcements');
 
-        $data['announcements'] = $announcements->get()->toArray();
+        $data['announcements'] = $announcements->orderByDesc('id')->get()->toArray();
 
         return view('announcements', $data);
     }

@@ -15,16 +15,19 @@
         </div>
 
         <div class="admin-content">
-            <div class="input-group mb-3">
-                <input class="form-control fs-3" type="search" aria-label="Search" aria-describedby="searchbutton"
-                    placeholder="Search...">
-                <button class="btn btn-outline-primary fs-3 px-5" id="searchbutton" type="button">Search</button>
-                <button class="btn btn-outline-secondary fs-3 px-5" id="clearbutton" type="button">Clear</button>
-            </div>
+            <form role="search" method="get">
+                <div class="input-group mb-3">
+                    <input class="form-control fs-3" name="searchSubscriber" type="search" aria-label="Search"
+                        aria-describedby="searchbutton" placeholder="Search...">
+                    <button class="btn btn-outline-primary fs-3 px-5" id="searchbutton" type="submit">Search</button>
+                    <a class="btn btn-outline-secondary fs-3 px-5" id="clearbutton" type="button"
+                        href="/subscriptions?searchSubscriber=">Clear</a>
+                </div>
+            </form>
 
-            <div class="table-responsive-lg fs-4">
+            <div class="table-responsive-lg fs-4" style="max-height: 68vh; min-height: 68vh; overflow-y:scroll;">
                 <table class="table table table-light table-hover mt-3 align-middle">
-                    <thead>
+                    <thead style="position: sticky; top: 0;">
                         <tr>
                             <th style="width: 15%" scope="col">Subscription #</th>
                             <th style="width: 60%" scope="col">Email</th>
@@ -52,6 +55,7 @@
                     </tbody>
                 </table>
             </div>
+            {{ $subscribers->links('pagination::bootstrap-5') }}
         </div>
 
     </div>

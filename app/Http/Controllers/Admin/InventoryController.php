@@ -42,7 +42,7 @@ class InventoryController extends Controller
         }
 
         $data['itemsCount'] = DB::table('tbl_items')->count();
-        $data['items'] = $items->get()->toArray();
+        $data['items'] = $items->orderByDesc('id')->paginate(15)->appends($request->all());
         $data['categories'] = $categories->get()->toArray();
         $data['qstring'] = $qstring;
 

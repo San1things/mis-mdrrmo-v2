@@ -15,7 +15,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('announcement_name');
             $table->string('announcement_description');
-            $table->string('announcement_link');
+            $table->string('announcement_link')->nullable()->default('#');
+            $table->string('announcement_type');
             $table->string('announcement_image');
             $table->timestamps();
         });

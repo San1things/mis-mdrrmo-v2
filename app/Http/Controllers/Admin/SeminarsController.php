@@ -11,7 +11,7 @@ use function Laravel\Prompts\select;
 
 class SeminarsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $data = [];
         $data['alerts'] = [
@@ -26,7 +26,7 @@ class SeminarsController extends Controller
 
         $seminars = DB::table('tbl_seminars');
 
-        $data['seminars'] = $seminars->get()->toArray();
+        $data['seminars'] = $seminars->orderByDesc('id')->paginate(7)->appends($request->all());
         $data['seminarCount'] = $seminars->count();
 
         return view('admin.adminseminars', $data);
