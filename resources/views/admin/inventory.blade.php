@@ -37,21 +37,25 @@
                                     All</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="{{ request('category') === 'ppe' ? 'nav-link active' : 'nav-link ' }}"
+                                <a class="{{ request('category') === 'Personal Protective Equipment' ? 'nav-link active' : 'nav-link ' }}"
                                     href="?category=Personal+Protective+Equipment&searchItem={{ $qstring['searchItem'] }}">PPE</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="{{ request('category') === 'supplies' ? 'nav-link active' : 'nav-link' }}"
+                                <a class="{{ request('category') === 'Disaster Supplies' ? 'nav-link active' : 'nav-link' }}"
                                     href="?category=Disaster+Supplies&searchItem={{ $qstring['searchItem'] }}">Disaster
                                     Supplies</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="{{ request('category') === 'vehicles' ? 'nav-link active' : 'nav-link' }}"
+                                <a class="{{ request('category') === 'Vehicles' ? 'nav-link active' : 'nav-link' }}"
                                     href="?category=Vehicles&searchItem={{ $qstring['searchItem'] }}">Vehicles</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="{{ request('category') === 'medicines' ? 'nav-link active' : 'nav-link' }}"
+                                <a class="{{ request('category') === 'Medicines' ? 'nav-link active' : 'nav-link' }}"
                                     href="?category=Medicines&searchItem={{ $qstring['searchItem'] }}">Medicines</a>
+                            </li>
+                            <li class="nav-item border border-start-0">
+                                <a class="{{ request('category') === 'other' ? 'nav-link active' : 'nav-link' }}"
+                                    href="?category=other&searchItem={{ $qstring['searchItem'] }}">Other</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="get">

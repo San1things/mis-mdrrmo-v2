@@ -21,13 +21,21 @@ class InventoryController extends Controller
         $items = DB::table('tbl_items');
         $categories = DB::table('tbl_categories');
 
+        $data['alerts'] = [
+            1 => ['Error! Please input all the needed information.', 'danger'],
+        ];
+
         $query = request()->query();
         $qstring['category'] = '';
         $qstring['searchItem'] = '';
 
         if (!empty($query['category'])) {
             $qstring['category'] = $query['category'];
-            $items->where('item_category', $query['category']);
+            if ($query['category'] == 'other') {
+                $items->whereNotIn('item_category', ['Personal Protective Equipment', 'Vehicles', 'Disaster Supplies', 'Medicines']);
+            } else {
+                $items->where('item_category', $query['category']);
+            }
         }
 
         if (!empty($query['searchItem'])) {
@@ -52,6 +60,8 @@ class InventoryController extends Controller
     public function itemAdd(Request $request)
     {
         $input = request()->input();
+
+
 
         $ctgnm = DB::table('tbl_categories')->where('id', $input['itemcategory'])->first();
         DB::table('tbl_items')

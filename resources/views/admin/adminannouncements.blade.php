@@ -126,17 +126,17 @@
                         <div class="mb-3">
                             <label class="form-label fs-4" for="announcementname">Announcement Name:</label>
                             <input class="form-control fs-3" id="announcementname" name="announcementname"
-                                type="text" placeholder="Announcement Name*">
+                                type="text" placeholder="Announcement Name*" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-4" for="announcementdescription">Description:</label>
                             <textarea class="form-control fs-3" id="announcementdescription" name="announcementdescription"
-                                placeholder="Announcement Description*"></textarea>
+                                placeholder="Announcement Description*" required></textarea>
                         </div>
                         <div class="announcement-image-container">
                             <div class="mb-3">
                                 <label class="form-label fs-4" for="formFile">Image Header:</label>
-                                <input class="form-control fs-3" id="formFile" name="announcementimage" type="file">
+                                <input class="form-control fs-3" id="formFile" name="announcementimage" type="file" required>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -146,7 +146,7 @@
                                 placeholder="ex. facebook link for extra information"></input>
                         </div>
                         <div class="mb-3">
-                            <select class="form-select fs-3" id="announcementtype" name="announcementtype">
+                            <select class="form-select fs-3" id="announcementtype" name="announcementtype" required>
                                 <option value="" hidden>Announcement type</option>
                                 <option value="Seminar">Seminar</option>
                                 <option value="Event">Event</option>

@@ -28,6 +28,7 @@ class AnnouncementsController extends Controller
             1 => ['Error! Please put an image haeder!', 'danger'],
             2 => ['Successful! Announcement has beeen updated', 'success'],
             3 => ['Well Done! Announcement has beeen posted publicly!', 'success'],
+            4 => ['Error! Please put the reqired input!', 'danger'],
         ];
 
         if(!empty($request->query('alert'))){
@@ -74,9 +75,12 @@ class AnnouncementsController extends Controller
             $imagename = $time . 'announcement' . $randomtext . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/uploadedpics'), $imagename);
         } else {
-            return redirect('adminannouncements?alert=1');
+            return redirect('/adminannouncements?alert=1');
         }
 
+        if(empty($input['announcementname']) || empty($input['announcementdescription']) || empty($input['announcementtype'])){
+            return redirect('/adminannouncements?alert=4');
+        }
 
         DB::table('tbl_announcements')
             ->insert([

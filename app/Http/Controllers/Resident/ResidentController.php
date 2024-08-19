@@ -45,14 +45,31 @@ class ResidentController extends Controller
         $data = [];
         $announcements = DB::table('tbl_announcements');
 
-        $data['announcements'] = $announcements->orderByDesc('id')->get()->toArray();
+        $data['announcements'] = $announcements
+            ->orderByDesc('id')
+            ->get()
+            ->toArray();
 
         return view('user.userannouncements', $data);
     }
     public function userseminars(Request $request)
     {
         $data = [];
-        $data['seminars'] = DB::table('tbl_seminars')->get()->toArray();
+
+        $data['alerts'] = [
+            1 => ['Good job! You are now registered. Please bring yourself in the given place that is posted. Thank you!', 'success'],
+            2 => ['Unregistered succesfully! If you change your mind, you can join us anytime!', 'primary'],
+            3 => ['Certificate has been requested! We will proccess it right away!', 'success'],
+        ];
+
+        if(!empty($request->query('alert'))){
+            $data['alert'] = $request->query('alert');
+        }
+
+        $data['seminars'] = DB::table('tbl_seminars')
+            ->orderByDesc('id')
+            ->get()
+            ->toArray();
         $data['attendeeCount'] = DB::table('tbl_attendees')->count();
         return view('user.userseminars', $data);
     }
@@ -68,7 +85,7 @@ class ResidentController extends Controller
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
-        return redirect('/userseminars');
+        return redirect('/userseminars?alert=1');
     }
     public function userUnregisterSeminar(Request $request)
     {
@@ -76,11 +93,11 @@ class ResidentController extends Controller
         $userinfo = $request->attributes->get('userinfo');
 
         DB::table('tbl_attendees')
-        ->where('user_id', $userinfo[0])
-        ->where('seminar_id', $seminarid)
-        ->delete();
+            ->where('user_id', $userinfo[0])
+            ->where('seminar_id', $seminarid)
+            ->delete();
 
-        return redirect('/userseminars');
+        return redirect('/userseminars?alert=2');
     }
     public function userprofile(Request $request)
     {

@@ -16,7 +16,6 @@ class CacheHandler
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
-
         // Add headers to the response
         $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
         $response->headers->set('Pragma', 'no-cache');

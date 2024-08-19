@@ -25,7 +25,7 @@
                     <div class="card-body categories-card-body">
                         <h3 class="card-title categories-card title ms-2">{{ $category->category_name }}</h3>
                         <p class="card-text categories-card-text ms-2">{{ $category->category_description }}</p>
-                        <a class="card-link categories-card-link" href="#">See {{ $category->item_count }} items in this
+                        <a class="card-link categories-card-link" href="/inventory?category={{ $category->category_name }}">See {{ $category->item_count }} items in this
                             category...</a>
                     </div>
                 </div>
