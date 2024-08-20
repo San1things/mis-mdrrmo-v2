@@ -208,6 +208,7 @@
 
 .pagination .page-item .page-link {
     padding: 10px 20px;
+    font-size: 1.5rem;
     /* Adjust padding to make the buttons larger */
     margin: 10px 2px;
     /* Adjust margin between buttons */
@@ -215,13 +216,12 @@
 
 .pagination .page-item.active .page-link {
     padding: 10px 20px;
+    font-size: 1.5rem;
     background-color: rgb(102, 188, 239);
     /* Active page background color */
     border-color: #e9ecef;
     /* Active page border color */
     color: white;
-    /* Active page text color */
-    font-size: 2.0rem;
 }
 
 .pagination .page-link {

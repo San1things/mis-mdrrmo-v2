@@ -28,6 +28,7 @@ body {
     border: none;
     color: black;
 }
+
 .san1-dropdown:hover {
     color: gray;
     background: none;
@@ -515,7 +516,7 @@ footer .footer-text {
     padding: 20px 0 0 0;
 }
 
-.announcements-container{
+.announcements-container {
     padding: 30px 0;
     border-bottom: gray 2px solid;
 }
@@ -530,31 +531,37 @@ footer .footer-text {
     border-bottom: 2px black solid;
     margin: 20px 0;
 }
-.userseminar-content .seminar-collapse{
+
+.userseminar-content .seminar-collapse {
     border-top: 2px gray solid;
     border-bottom: 2px gray solid;
     cursor: pointer;
     padding: 10px;
 }
-.userseminar-content .collapsed-div{
+
+.userseminar-content .collapsed-div {
     padding: 20px 20px 0 20px;
     position: relative;
 }
-.userseminar-content .collapsed-div p:nth-child(1){
+
+.userseminar-content .collapsed-div p:nth-child(1) {
     text-align: center;
     font-size: 2.0rem;
 }
-.userseminar-content .seminar-button{
+
+.userseminar-content .seminar-button {
     position: absolute;
     bottom: 0;
     right: 10px;
     align-items: center;
 }
-.userseminar-content .seminar-button a{
+
+.userseminar-content .seminar-button a {
     font-size: 2.0rem;
     padding: 10px 30px;
 }
-.userseminar-content .seminar-button p{
+
+.userseminar-content .seminar-button p {
     font-size: 1.5rem;
     text-align: center;
     color: gray;
@@ -564,29 +571,33 @@ footer .footer-text {
 
 /* =====USERPROFILE===== */
 
-.profile-content{
+.profile-content {
     padding: 40px 150px;
 }
 
-.profile-content .profile-title{
+.profile-content .profile-title {
     padding-bottom: 20px;
 }
-.san1-editprof-container{
+
+.san1-editprof-container {
     display: flex;
     justify-content: end;
     align-items: center;
 }
-.userprofilepasswords{
+
+.userprofilepasswords {
     position: relative;
 }
-#eye-logo1{
+
+#eye-logo1 {
     cursor: pointer;
     position: absolute;
     top: 90px;
     right: 10px;
     font-size: 2.5rem;
 }
-#eye-logo2{
+
+#eye-logo2 {
     cursor: pointer;
     position: absolute;
     top: 158px;
@@ -594,7 +605,55 @@ footer .footer-text {
     font-size: 2.5rem;
 }
 
+/* =====USERNOTIFICATION===== */
+.user-notif {
+    padding: 30px 0;
+}
 
+.user-notif-title {
+    padding: 5px;
+    border-bottom: 2px solid black;
+}
+
+.remove-design-notif {
+    text-decoration: none;
+    color: black;
+}
+
+.user-notif-content .notif-banner {
+    padding: 5px 20px;
+    border: 2px solid black;
+    border-top: none;
+    transition: ease-in-out 0.3s;
+    position: relative;
+}
+
+.user-notif-content .notif-banner:hover {
+    background-color: rgb(202, 202, 202);
+}
+
+.notif-banner .notif-date {
+    position: absolute;
+    font-size: 1.3rem;
+    bottom: 0;
+    right: 10px;
+    color: gray;
+}
+
+.notif-banner .san1-notif-settings {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.notif-banner .san1-notif-settings a {
+    border: none;
+    border-radius: 0;
+    transition: 0.3s ease-in-out;
+}
+.notif-banner .san1-notif-settings a:hover {
+    color: white;
+}
 
 
 @media only screen and (max-width: 1200px) {
@@ -713,6 +772,7 @@ footer .footer-text {
         border-radius: 15px;
         box-shadow: 20px 20px 50px grey;
     }
+
     .announcements-content img {
         max-width: 710px;
         height: 45vh;
@@ -873,7 +933,7 @@ footer .footer-text {
         padding: 20px 0 0 0;
     }
 
-    .profile-content{
+    .profile-content {
         padding: 40px 20px;
     }
 }
