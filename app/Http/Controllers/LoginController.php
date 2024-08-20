@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -117,6 +118,18 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        $userinfo = $request->attributes->get('userinfo');
+        if ($userinfo[4] == 'admin' || $userinfo[4] == 'staff') {
+            DB::table('tbl_logs')
+                ->insert([
+                    'user_id' => $userinfo[0],
+                    'log_title' => "Logged out.",
+                    'log_description' => "This user logged out from the system.",
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
+
         $request->session()->flush();
         return redirect('/');
     }

@@ -35,7 +35,7 @@
                         data-bs-target="#collapsed-div{{ $seminar->id }}" aria-expanded="false"
                         aria-controls="collapsed-div">
                         <h6>{{ $seminar->title }}</h6>
-                        <p>Start date: {{ $seminar->starts_at }}</p>
+                        <p>Start date: {{ Carbon\Carbon::create($seminar->starts_at)->format('M d, Y, h:m a') }}</p>
                         <p class="click-details-text">click for more details...</p>
                         <div class="adminseminar-btns" data-state="hide" style="display: none">
                             <button class="btn btn-primary fs-3 px-3 seminar-edit-btn" data-sid="{{ $seminar->id }}"

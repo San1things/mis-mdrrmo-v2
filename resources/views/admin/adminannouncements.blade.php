@@ -19,6 +19,17 @@
             </div>
         </div>
         <div class="admin-content">
+
+            @isset($alert)
+                <center>
+                    <div class="alert alert-dismissible fade show fs-3 alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                        role="alert">
+                        {{ !empty($alerts[$alert]) ? $alerts[$alert][0] : 'error' }}
+                        <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+                    </div>
+                </center>
+            @endisset
+
             <h3>All announcements({{ $annCount }})</h3>
             <nav class="navbar navbar-expand-lg bg-body-tertiary p-3">
                 <div class="container-xl">
@@ -30,18 +41,18 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item border">
-                                <a class="{{ request('category') === null ? 'nav-link active' : 'nav-link' }}"
+                                <a class="{{ request('type') === null ? 'nav-link active' : 'nav-link' }}"
                                     href="?type=&searchAnnouncement={{ $qstring['searchAnnouncement'] }}"
                                     aria-current="page">View
                                     All</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="{{ request('type') === 'seminars' ? 'nav-link active' : 'nav-link ' }}"
-                                    href="?type=seminars&searchAnnouncement={{ $qstring['searchAnnouncement'] }}">Seminars</a>
+                                <a class="{{ request('type') === 'Seminar' ? 'nav-link active' : 'nav-link ' }}"
+                                    href="?type=Seminar&searchAnnouncement={{ $qstring['searchAnnouncement'] }}">Seminars</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="{{ request('type') === 'events' ? 'nav-link active' : 'nav-link' }}"
-                                    href="?type=events&searchAnnouncement={{ $qstring['searchAnnouncement'] }}">Events</a>
+                                <a class="{{ request('type') === 'Event' ? 'nav-link active' : 'nav-link' }}"
+                                    href="?type=Event&searchAnnouncement={{ $qstring['searchAnnouncement'] }}">Events</a>
                             </li>
                             <li class="nav-item border border-start-0">
                                 <a class="{{ request('type') === 'other' ? 'nav-link active' : 'nav-link' }}"
@@ -58,17 +69,6 @@
                     </div>
                 </div>
             </nav>
-
-            @isset($alert)
-                <center>
-                    <div class="alert alert-dismissible fade show fs-3 alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
-                        role="alert">
-                        {{ !empty($alerts[$alert]) ? $alerts[$alert][0] : 'error' }}
-                        <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
-                    </div>
-                </center>
-            @endisset
-
             <div class="table-responsive-lg fs-4" style="max-height: 59vh; min-height: 59vh; overflow-y:scroll;">
                 <table class="table table table-light table-hover mt-3 align-middle">
                     <thead class="table">
@@ -86,7 +86,7 @@
                                 <td>{{ $announcement->announcement_type }}</td>
                                 <td>{{ $announcement->announcement_name }}</td>
                                 <td>{{ $announcement->announcement_description }}</td>
-                                <td>{{ $announcement->created_at }}</td>
+                                <td>{{ Carbon\Carbon::create($announcement->created_at)->format('M d, Y h:m a') }}</td>
                                 <td>
                                     <a class="btn btn-primary updateannouncement-btn" data-bs-toggle="modal"
                                         data-bs-target="#announcementAddUpdateModal" data-id="{{ $announcement->id }}"
@@ -136,7 +136,8 @@
                         <div class="announcement-image-container">
                             <div class="mb-3">
                                 <label class="form-label fs-4" for="formFile">Image Header:</label>
-                                <input class="form-control fs-3" id="formFile" name="announcementimage" type="file" required>
+                                <input class="form-control fs-3" id="formFile" name="announcementimage" type="file"
+                                    required>
                             </div>
                         </div>
                         <div class="mb-3">

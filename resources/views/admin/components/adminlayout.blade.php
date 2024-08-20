@@ -26,7 +26,7 @@
 
 <body class="bg-light">
     <div class="wrapper">
-        <aside id="sidebar" class="expand">
+        <aside class="expand" id="sidebar">
             <div class="d-flex">
                 <a class="toggle-btn" type="button">
                     <img src="{{ asset('images/publicpics/logo.png') }}" alt="">
@@ -35,8 +35,8 @@
                     @php
                         $userinfo = request()->attributes->get('userinfo');
                         $user = DB::table('tbl_users')
-                        ->where('id', $userinfo[0])
-                        ->first();
+                            ->where('id', $userinfo[0])
+                            ->first();
                     @endphp
                     <a href="/users">{{ $user->username }}</a>
                 </div>
@@ -99,7 +99,8 @@
                         <span>Notifications</span>
                     </a>
                 </li>
-                <li class="sidebar-item" style="{{ $path == 'categories' || $path == 'logs' || $path == 'adminprofile' ? 'background-color: #3b7ddd' : '' }}">
+                <li class="sidebar-item"
+                    style="{{ $path == 'categories' || $path == 'logs' || $path == 'adminprofile' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
                         data-bs-target="#collapsetest" href="#" aria-expanded="true" aria-controls="collapsetest">
                         <i class="bi bi-gear-fill"></i>
@@ -136,13 +137,22 @@
             document.querySelector("#sidebar").classList.toggle("expand");
         });
     </script>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     @stack('scripts')
+    <script>
+        $(window).resize(function() {
+            let width = $(window).width();
+            if (width < 992) {
+                $('#sidebar').attr('class', '');
+            } else {
+                $('#sidebar').attr('class', 'expand');
+            }
+        });
+        $(window).resize();
+    </script>
 
 
 </body>

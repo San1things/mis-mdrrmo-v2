@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,15 @@ class InventoryController extends Controller
 
         $data['alerts'] = [
             1 => ['Error! Please input all the needed information.', 'danger'],
+            2 => ['Succesful! An item has been added.', 'success'],
+            3 => ['Updated succesfully! Item has been updated.', 'primary'],
+            4 => ['Deleted succesfully! Item has been deleted.', 'danger'],
+            5 => ['Error! This item is in the inventory, search it and just update the item.', 'danger'],
         ];
+
+        if (!empty($request->query('alert'))) {
+            $data['alert'] = $request->query('alert');
+        }
 
         $query = request()->query();
         $qstring['category'] = '';
@@ -61,7 +70,20 @@ class InventoryController extends Controller
     {
         $input = request()->input();
 
+        if (empty($input['itemname']) || empty($input['itemdescription']) || empty($input['itemcategory']) || empty($input['itemquantity'])) {
+            return redirect('/inventory?alert=1');
+            die();
+        }
 
+        $itemcheck = DB::table('tbl_items')
+            ->where('item_name', $input['itemname'])
+            ->where('item_description', $input['itemdescription'])
+            ->count();
+
+        if ($itemcheck >= 1) {
+            return redirect('/inventory?alert=5');
+            die();
+        }
 
         $ctgnm = DB::table('tbl_categories')->where('id', $input['itemcategory'])->first();
         DB::table('tbl_items')
@@ -74,12 +96,26 @@ class InventoryController extends Controller
                 'expired_at' => $input['itemexpired']
             ]);
 
-        return redirect('/inventory');
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Added an item.',
+                'log_description' => "This user added an item on Inventory Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        return redirect('/inventory?alert=2');
     }
 
     public function itemUpdate(Request $request)
     {
         $input = request()->input();
+
+        if (empty($input['itemname']) || empty($input['itemdescription']) || empty($input['itemcategory']) || empty($input['itemquantity'])) {
+            return redirect('/inventory?alert=1');
+            die();
+        }
 
         $ctgnm = DB::table('tbl_categories')->where('id', $input['itemcategory'])->first();
         DB::table('tbl_items')->where('id', $input['id'])
@@ -92,14 +128,33 @@ class InventoryController extends Controller
                 'expired_at' => $input['itemexpired']
             ]);
 
-        return redirect('/inventory');
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Updated an item.',
+                'log_description' => "This user updated an item on Inventory Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        return redirect('/inventory?alert=3');
     }
 
     public function itemDelete(Request $request)
     {
         $input = request()->input();
         DB::table('tbl_items')->where('id', $input['id'])->delete();
-        return redirect('/inventory');
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Deleted an item.',
+                'log_description' => "This user deleted an item on Inventory Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        return redirect('/inventory?alert=4');
     }
 
     public function categoriesIndex()

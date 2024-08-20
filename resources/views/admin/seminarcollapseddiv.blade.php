@@ -35,12 +35,12 @@
                         <h6>{{ $attendee->firstname }} {{ $attendee->lastname }}</h6>
                         <p>lived in: {{ $attendee->address }}</p>
                         <p>registered at: {{ Carbon\Carbon::create($attendee->created_at)->format('M d, Y || h:ma') }}</p>
-                        <p class="position-absolute top-0 left-0 mt-1">user #: {{ $attendee->user_id }}</p>
+                        <p class="position-absolute top-0 left-0 mt-1">user id: {{ $attendee->user_id }}</p>
                         @if ($seminar->status == 'upcoming')
-                            <div class="btn btn-danger fs-2 position-absolute top-0 end-0 me-3 mt-3 remove-attendee-btn " id="{{ $attendee->user_id }}" data-u data-sid="{{ $seminarid }}" data-bs-toggle="modal"
+                            <button class="btn btn-danger fs-2 position-absolute top-0 end-0 me-3 mt-3 remove-attendee-btn " data-uid="{{ $attendee->user_id }}" data-sid="{{ $seminarid }}" data-bs-toggle="modal"
                                 data-bs-target="#attendeeRemoveModal">
                                 <i class="bi bi-person-x-fill"></i>
-                            </div>
+                            </button>
                         @endif
                     </div>
                 @endforeach
@@ -55,7 +55,7 @@
                 <div class="modal-header">
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
-                <form id="modalForm" action="" method="POST">
+                <form id="modalForm" action="" method="post">
                     @csrf
                     <div class="modal-body ms-2">
                         <h6>Are you sure you want to remove this attendee?</h6>
@@ -76,7 +76,7 @@
                 let uid = $(this).data('uid')
                 let sid = $(this).data('sid')
                 console.log(sid)
-                $('#modalForm').attr('action', '/adminremoveattendee?id=' + id + '&sid=' + sid)
+                $('#modalForm').attr('action', '/adminremoveattendee?uid=' + uid + '&sid=' + sid)
             })
         })
     </script>

@@ -21,6 +21,17 @@
         </div>
 
         <div class="admin-content">
+
+            @isset($alert)
+                <center>
+                    <div class="alert alert-dismissible fade show fs-3 alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                        role="alert">
+                        {{ !empty($alerts[$alert]) ? $alerts[$alert][0] : 'error' }}
+                        <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+                    </div>
+                </center>
+            @endisset
+
             <h3>All items({{ $itemsCount }})</h3>
             <nav class="navbar navbar-expand-lg bg-body-tertiary p-3">
                 <div class="container-xl">
@@ -196,6 +207,13 @@
                     $('#itemname').val($(this).data('itemname'))
                     $('#itemdescription').val($(this).data('itemdescription'))
                     $('#itemcategory').val($(this).data('category_id'))
+                    if ($('#itemcategory option:selected').text() === "Medicines") {
+                        $('#itemexpired').attr('type', 'date')
+                        $('#itemexpiredlabel').attr('style', '')
+                    } else {
+                        $('#itemexpired').attr('type', 'hidden')
+                        $('#itemexpiredlabel').attr('style', 'display: none')
+                    }
                     $('#itemexpired').val($(this).data('itemexpired'))
                     $('#itemquantity').val($(this).data('itemquantity'))
                     $('.btn-save').text('UPDATE')

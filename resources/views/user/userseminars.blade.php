@@ -63,7 +63,7 @@
 
                     <div class="collapse border border-top-0 collapsed-div" id="collapsed-div{{ $seminar->id }}">
                         <p class="pb-5">{{ $seminar->description }}</p>
-                        <p>Location: {{ $seminar->location }}</p>
+                        <p style="{{ $attendeeCheck >= 1 ? 'font-weight: bolder; color: #5cb85c;' : ''}}">Location: {{ $seminar->location }}</p>
                         <p>{{ $seminar->status == 'ongoing' || $seminar->status == 'finished' ? 'Seminar started at' : 'Starts at' }}:
                             {{ Carbon\Carbon::create($seminar->starts_at)->format('M d, Y || h:ma') }}</p>
                         @if ($seminar->status == 'upcoming')

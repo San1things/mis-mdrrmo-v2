@@ -134,6 +134,17 @@ class UsersController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Added a user.',
+                'log_description' => "This user created a user on the Users Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+
         return redirect('/users?alert=1');
     }
 
@@ -153,6 +164,16 @@ class UsersController extends Controller
                 'contact' => $input['contact'],
                 'team' => $input['team'],
                 'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Updated a user.',
+                'log_description' => "This user updated a user's info on the Users Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]);
         return redirect('/users?alert=2');
     }
@@ -176,6 +197,16 @@ class UsersController extends Controller
                 'password' => $input['updatepassword1'],
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Updated a user.',
+                'log_description' => "This user updated a user's password on the Users Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('/users?alert=3');
     }
 
@@ -187,6 +218,16 @@ class UsersController extends Controller
                 'status' => "inactive",
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Locked a user.',
+                'log_description' => "This user locked a user's account on the Users Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('/users?alert=6');
     }
 
@@ -197,6 +238,16 @@ class UsersController extends Controller
             ->update([
                 'status' => "active",
                 'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Unlocked a user.',
+                'log_description' => "This user unlocked a user's account on the Users Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]);
         return redirect('/users?alert=7');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class StaticPageController extends Controller
@@ -21,7 +22,7 @@ class StaticPageController extends Controller
         $subscribers = DB::table('tbl_subscriptions');
         if (!empty(request()->query('searchSubscriber'))) {
             $emailtyped = $query['searchSubscriber'];
-            $subscribers->where('email', 'like' ,"%$emailtyped%");
+            $subscribers->where('email', 'like', "%$emailtyped%");
         }
 
         $data['subCount'] = DB::table('tbl_subscriptions')->count();
@@ -42,9 +43,18 @@ class StaticPageController extends Controller
     {
         $data = [];
         $logs = DB::table('tbl_logs')
-            ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_logs.user_id');
+            ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_logs.user_id')
+            ->select('tbl_logs.created_at as log_created_at', 'tbl_users.created_at as user_created_at', 'tbl_logs.*', 'tbl_users.*');
 
-        $data['logs'] = $logs->get()->toArray();
+            $nameAction = $request->input('searchLogs');
+        if(!empty($request->query('searchLogs'))){
+            $logs
+            ->where('tbl_users.firstname', 'like', "%$nameAction%")
+            ->orWhere('tbl_users.lastname', 'like', "%$nameAction%")
+            ->orWhere('tbl_logs.log_title', 'like', "%$nameAction%");
+        }
+
+        $data['logs'] = $logs->orderByDesc('tbl_logs.id')->paginate(30)->appends($request->all());
 
         return view('admin.logs', $data);
     }
@@ -114,6 +124,15 @@ class StaticPageController extends Controller
                 'contact' => $input['contact'],
             ]);
 
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => "Updated it's profile",
+                'log_description' => "This user updated it's profile.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('/adminprofile?alert=5');
     }
 
@@ -138,6 +157,15 @@ class StaticPageController extends Controller
                 'password' => $input['profilepassword1']
             ]);
 
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => "Updated it's password",
+                'log_description' => "This user updated it's password.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('adminprofile?alert=6');
     }
 }

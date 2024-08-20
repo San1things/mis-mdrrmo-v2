@@ -51,6 +51,15 @@ class SeminarsController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Created a seminar.',
+                'log_description' => "This user created a seminar on Seminar Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('/adminseminars?alert=1');
     }
 
@@ -68,6 +77,15 @@ class SeminarsController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Updated a seminar.',
+                'log_description' => "This user updated a seminar on Seminar Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('/adminseminars?alert=2');
     }
 
@@ -79,6 +97,10 @@ class SeminarsController extends Controller
         $data['alerts'] = [
             1 => ['Successful! An attendee has been removed.', 'primary']
         ];
+
+        if (!empty($request->query('alert'))) {
+            $data['alert'] = $request->query('alert');
+        }
 
         $data['seminarid'] = $seminarid = $request->query('id');
 
@@ -94,14 +116,13 @@ class SeminarsController extends Controller
         if ($request->query('searchAttendee')) {
             $name = $request->query('searchAttendee');
             $attendees->where('tbl_users.firstname', 'like', "%$name%")
-            ->orWhere('tbl_users.lastname', 'like', "%$name%");
+                ->orWhere('tbl_users.lastname', 'like', "%$name%");
         }
 
         // Users
         $data['attendees'] = $attendees
             ->get()
             ->toArray();
-
 
         $data['attendeesCount'] = DB::table('tbl_attendees')
             ->where('seminar_id', $seminarid)->count();
@@ -111,17 +132,24 @@ class SeminarsController extends Controller
 
     public function adminRemoveAttendee(Request $request)
     {
-
-        $attendeeid = $request->query('id');
+        $attendeeid = $request->query('uid');
         $sid = $request->query('sid');
 
         // dd($request->query());
-
         DB::table('tbl_attendees')
             ->where('user_id', $attendeeid)
             ->where('seminar_id', $sid)
             ->delete();
 
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Removed a seminar attendee.',
+                'log_description' => "This user removed a seminar attendee on Seminar Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('/seminarcollapseddiv?alert=1&id=' . $sid);
     }
 }

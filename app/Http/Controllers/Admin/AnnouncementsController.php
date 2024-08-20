@@ -31,7 +31,7 @@ class AnnouncementsController extends Controller
             4 => ['Error! Please put the reqired input!', 'danger'],
         ];
 
-        if(!empty($request->query('alert'))){
+        if (!empty($request->query('alert'))) {
             $data['alert'] = request()->query('alert');
         }
 
@@ -78,7 +78,7 @@ class AnnouncementsController extends Controller
             return redirect('/adminannouncements?alert=1');
         }
 
-        if(empty($input['announcementname']) || empty($input['announcementdescription']) || empty($input['announcementtype'])){
+        if (empty($input['announcementname']) || empty($input['announcementdescription']) || empty($input['announcementtype'])) {
             return redirect('/adminannouncements?alert=4');
         }
 
@@ -93,6 +93,15 @@ class AnnouncementsController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Created an announcement.',
+                'log_description' => "This user creates an announcement on Announcement Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('/adminannouncements?alert=3');
     }
 
@@ -110,6 +119,15 @@ class AnnouncementsController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Updated an announcement.',
+                'log_description' => "This user updated an announcement on Announcement Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('/adminannouncements?alert=2');
     }
 }
