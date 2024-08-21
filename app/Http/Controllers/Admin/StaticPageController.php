@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Svg\Tag\Rect;
 
 class StaticPageController extends Controller
 {
@@ -35,10 +36,39 @@ class StaticPageController extends Controller
     {
         return view('admin.adminmessages');
     }
-    public function adminNotifIndex()
+
+    public function adminNotifIndex(Request $request)
     {
-        return view('admin.adminnotif');
+        $data = [];
+        $data['alerts'] = [
+            1 => ['Notification has been removed!', 'info']
+        ];
+        if (!empty($request->query('alert'))) {
+            $data['alert'] = $request->query('alert');
+        }
+
+        $userinfo = $request->attributes->get('userinfo');
+        $notifications = DB::table('tbl_notif')
+            ->where('user_id', $userinfo[0])
+            ->where('user_type', 'org');
+
+        $data['notifications'] = $notifications->orderByDesc('id')->paginate(30)->appends($request->all());
+
+        return view('admin.adminnotif', $data);
     }
+
+    public function adminRemoveNotif(Request $request)
+    {
+        $input = $request->input();
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_notif')
+            ->where('user_id', $userinfo[0])
+            ->where('id', $input['id'])
+            ->delete();
+        return redirect('/adminnotif?alert=1');
+    }
+
     public function logsIndex(Request $request)
     {
         $data = [];
@@ -46,12 +76,12 @@ class StaticPageController extends Controller
             ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_logs.user_id')
             ->select('tbl_logs.created_at as log_created_at', 'tbl_users.created_at as user_created_at', 'tbl_logs.*', 'tbl_users.*');
 
-            $nameAction = $request->input('searchLogs');
-        if(!empty($request->query('searchLogs'))){
+        $nameAction = $request->input('searchLogs');
+        if (!empty($request->query('searchLogs'))) {
             $logs
-            ->where('tbl_users.firstname', 'like', "%$nameAction%")
-            ->orWhere('tbl_users.lastname', 'like', "%$nameAction%")
-            ->orWhere('tbl_logs.log_title', 'like', "%$nameAction%");
+                ->where('tbl_users.firstname', 'like', "%$nameAction%")
+                ->orWhere('tbl_users.lastname', 'like', "%$nameAction%")
+                ->orWhere('tbl_logs.log_title', 'like', "%$nameAction%");
         }
 
         $data['logs'] = $logs->orderByDesc('tbl_logs.id')->paginate(30)->appends($request->all());

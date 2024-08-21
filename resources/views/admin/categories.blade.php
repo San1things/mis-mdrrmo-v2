@@ -4,13 +4,12 @@
 
         <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark">
             <div class="header-title p-2 flex-grow-1">
-                <h1>Categories</h1>
-                <p>All the item's category are here.</p>
+                <h3>Categories</h3>
             </div>
             <div class="header-export pe-3">
-                <a class="btn btn-primary px-4 py-2" href="#">
-                    <i class="bi bi-plus-lg fs-1"></i>
-                    <span></span>
+                <a class="btn btn-primary px-4 py-3" href="#">
+                    <i class="bi bi-card-list"></i>
+                    <span>Create Category</span>
                 </a>
             </div>
         </div>

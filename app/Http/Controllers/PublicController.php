@@ -42,6 +42,25 @@ class PublicController extends Controller
                 'updated_at' => Carbon::now('Asia/Manila')
             ]);
 
+        // ADDING NOTIFICATION
+        $orgusers = DB::table('tbl_users')
+            ->where('usertype', 'admin')
+            ->orWhere('usertype', 'staff')->get();
+
+        foreach ($orgusers as $orguser) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $orguser->id,
+                    'user_type' => 'org',
+                    'title' => 'An unknown public user subscribed to the Org.',
+                    'description' => 'New person subscribed to our org known as ' . $input['homeemail'] . '.',
+                    'link' => '/subscriptions',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
+
         return redirect('/?alert=2');
     }
 
@@ -86,6 +105,24 @@ class PublicController extends Controller
                 'updated_at' => Carbon::now('Asia/Manila')
             ]);
 
+        // ADDING NOTIFICATION
+        $orgusers = DB::table('tbl_users')
+            ->where('usertype', 'admin')
+            ->orWhere('usertype', 'staff')->get();
+
+        foreach ($orgusers as $orguser) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $orguser->id,
+                    'user_type' => 'org',
+                    'title' => 'An unknown public user subscribed to the Org.',
+                    'description' => 'New person subscribed to our org known as ' . $input['faqscollapseemail'] . '.',
+                    'link' => '/subscriptions',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
         return redirect('/faqs?alert=2');
     }
     public function announcements(Request $request)

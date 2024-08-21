@@ -2,12 +2,12 @@
 @section('content')
     <div class="container-xl mt-3">
 
-        <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark">
+        <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark" style="position: relative">
             <div class="header-title p-2 flex-grow-1">
                 <h1>Inventory</h1>
                 <p>All the items information is here.</p>
             </div>
-            <div class="header-export pe-3">
+            <div class="header-export">
                 <a class="btn btn-primary px-4 py-2" href="#">
                     <i class="bi bi-file-earmark-arrow-down-fill"></i>
                     <span>Export</span>
@@ -18,6 +18,7 @@
                     <span>Add</span>
                 </a>
             </div>
+            <a href="/categories" style="position: absolute; bottom: 0; right: 0; font-size:1.5rem;">Add Categories..</a>
         </div>
 
         <div class="admin-content">

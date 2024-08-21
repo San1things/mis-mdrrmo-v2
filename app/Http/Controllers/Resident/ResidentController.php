@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Resident;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Attribute;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -100,13 +101,31 @@ class ResidentController extends Controller
             ->insert([
                 'user_id' => $userinfo[0],
                 'user_type' => 'resident',
-                'title' => 'You have joined a seminar!',
+                'title' => 'You have joined a seminar.',
                 'description' => 'Thanks for joining our seminar(' . $seminarinfo->title . '). This will be held at ' . $seminarinfo->location . ' and will start at exactly ' . Carbon::create($seminarinfo->starts_at)->format('h:m a  M, d Y') . '. Please be ready and join us to be prepared and ready in time of emergency!',
-                'link' => 'userseminars',
+                'link' => '/userseminars',
                 'seen' => 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
+
+        $orgusers = DB::table('tbl_users')
+            ->where('usertype', 'admin')
+            ->orWhere('usertype', 'staff')->get();
+
+        foreach ($orgusers as $orguser) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $orguser->id,
+                    'user_type' => 'org',
+                    'title' => 'A resident joined our seminar.',
+                    'description' => $userinfo[1] . ' ' . $userinfo[2] . ' joined our seminar(' . $seminarinfo->title . ') that will be held at ' . $seminarinfo->location . '.',
+                    'link' => '/adminseminars',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
         return redirect('/userseminars?alert=1');
     }
 
@@ -130,11 +149,29 @@ class ResidentController extends Controller
                 'user_type' => 'resident',
                 'title' => 'You unregistered to our seminar!',
                 'description' => 'You remove your registration to our seminar(' . $seminarinfo->title . ') that will be held at ' . $seminarinfo->location . '. We hope that you reconsider your decision. Have a good life ahead!',
-                'link' => 'userseminars',
+                'link' => '/userseminars',
                 'seen' => 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
+
+        $orgusers = DB::table('tbl_users')
+            ->where('usertype', 'admin')
+            ->orWhere('usertype', 'staff')->get();
+
+        foreach ($orgusers as $orguser) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $orguser->id,
+                    'user_type' => 'org',
+                    'title' => 'A resident cancel its registration to our seminar.',
+                    'description' => $userinfo[1] . ' ' . $userinfo[2] . ' unregistered to our seminar(' . $seminarinfo->title . ').',
+                    'link' => '/adminseminars',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
         return redirect('/userseminars?alert=2');
     }
 
@@ -230,10 +267,33 @@ class ResidentController extends Controller
     public function usernotif(Request $request)
     {
         $data = [];
-        $notifications = DB::table('tbl_notif');
+        $data['alerts'] = [
+            1 => ['Notification has been removed!', 'info']
+        ];
+        if (!empty($request->query('alert'))) {
+            $data['alert'] = $request->query('alert');
+        }
+
+        $userinfo = $request->attributes->get('userinfo');
+        $notifications = DB::table('tbl_notif')
+            ->where('user_id', $userinfo[0])
+            ->where('user_type', 'resident');
 
         $data['notifications'] = $notifications->orderByDesc('id')->paginate(30)->appends($request->all());
 
         return view('user.usernotif', $data);
+    }
+
+    public function userRemoveNotif(Request $request)
+    {
+        $input = $request->input();
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_notif')
+            ->where('id', $input['id'])
+            ->where('user_id', $userinfo[0])
+            ->delete();
+
+        return redirect('/usernotif?alert=1');
     }
 }

@@ -23,16 +23,8 @@
                 <div class="col">
                     <div class="card text-bg-light mb-3">
                         <div class="card-body users-card-body">
-                            <h1 class="card-title users-card-title">{{ $adminCount }}</h1>
-                            <p class="card-text users-card-text">Admins.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card text-bg-light mb-3">
-                        <div class="card-body users-card-body">
-                            <h1 class="card-title users-card-title">{{ $staffCount }}</h1>
-                            <p class="card-text users-card-text">Staffs.</p>
+                            <h1 class="card-title users-card-title">{{ $OrgUserCount }}</h1>
+                            <p class="card-text users-card-text">Org Users.</p>
                         </div>
                     </div>
                 </div>
@@ -40,7 +32,15 @@
                     <div class="card text-bg-light mb-3">
                         <div class="card-body users-card-body">
                             <h1 class="card-title users-card-title">{{ $otherCount }}</h1>
-                            <p class="card-text users-card-text">Others.</p>
+                            <p class="card-text users-card-text">Resident Users.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-bg-light mb-3">
+                        <div class="card-body users-card-body">
+                            <h1 class="card-title users-card-title">{{ $subscriberCount }}</h1>
+                            <p class="card-text users-card-text">Subscribers.</p>
                         </div>
                     </div>
                 </div>

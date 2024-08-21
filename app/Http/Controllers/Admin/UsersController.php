@@ -63,18 +63,12 @@ class UsersController extends Controller
                     ->where('usertype', $query['usertype']);
             }
         };
-        // public $default_lpp = 2;
-        // public $default_sp = 1;
-        // $page = $this->default_sp;
-        // if (!empty($query['page'])) {
-        //     $qstring['page'] = $query['page'];
-        //     $page = $query['page'];
-        // }
 
-        $data['adminCount'] = DB::table('tbl_users')
-            ->where('usertype', 'admin')->count();
-        $data['staffCount'] = DB::table('tbl_users')
-            ->where('usertype', 'staff')->count();
+        $data['OrgUserCount'] = DB::table('tbl_users')
+            ->whereIn('usertype', ['admin', 'staff'])
+            ->count();
+        $data['subscriberCount'] = DB::table('tbl_subscriptions')
+            ->count();
         $data['otherCount'] = DB::table('tbl_users')
             ->where('usertype', 'not like', 'admin%')
             ->where('usertype', 'not like', 'staff%')
@@ -82,6 +76,9 @@ class UsersController extends Controller
         $data['allCount'] = DB::table('tbl_users')
             ->count();
 
+        // public $default_lpp = 2;
+        // public $default_sp = 1;
+        // $page = $this->default_sp;
         // $countdata = $users->count();
         // $totalpages = ceil($countdata / $this->default_lpp);
         // $dataoffset = ($page * $this->default_lpp) - $this->default_lpp;

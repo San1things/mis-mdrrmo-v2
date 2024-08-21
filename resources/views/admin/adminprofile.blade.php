@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="admin-content" style="max-height: 80vh; overflow-y:scroll;">
+        <div class="admin-content p-3" style="max-height: 80vh; overflow-y:scroll;">
             @isset($alert)
                 <center>
                     <div class="alert alert-dismissible fs-2 py-5 fade show alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"

@@ -51,7 +51,8 @@
                         <span>Users</span>
                     </a>
                 </li>
-                <li class="sidebar-item" style="{{ $path == 'inventory' ? 'background-color: #3b7ddd' : '' }}">
+                <li class="sidebar-item"
+                    style="{{ $path == 'inventory' || $path == 'categories' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link" href="/inventory">
                         <i class="bi bi-duffle-fill"></i>
                         <span>Inventory</span>
@@ -79,7 +80,7 @@
                     <a class="sidebar-link" href="/adminmessages">
                         <i class="bi bi-chat-left-text-fill position-relative">
                             <span
-                                class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                class="position-absolute fs-4 top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 99+
                                 <span class="visually-hidden">unread messages</span>
                             </span>
@@ -87,29 +88,35 @@
                         <span>Messages</span>
                     </a>
                 </li>
+                @php
+                    $userinfo = request()->attributes->get('userinfo');
+                    $adminnotifCount = DB::table('tbl_notif')
+                        ->where('user_id', $userinfo[0])
+                        ->where('user_type', 'org')
+                        ->where('seen', 0)
+                        ->count();
+                @endphp
                 <li class="sidebar-item" style="{{ $path == 'adminnotif' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link" href="/adminnotif">
                         <i class="bi bi-bell-fill position-relative">
-                            <span
-                                class="position-absolute fs-6 top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                99+
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
+                            @if ($adminnotifCount >= 1)
+                                <span
+                                    class="position-absolute fs-4 top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $adminnotifCount }}
+                                </span>
+                            @endif
                         </i>
                         <span>Notifications</span>
                     </a>
                 </li>
                 <li class="sidebar-item"
-                    style="{{ $path == 'categories' || $path == 'logs' || $path == 'adminprofile' ? 'background-color: #3b7ddd' : '' }}">
+                    style="{{ $path == 'logs' || $path == 'adminprofile' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
                         data-bs-target="#collapsetest" href="#" aria-expanded="true" aria-controls="collapsetest">
                         <i class="bi bi-gear-fill"></i>
                         <span>Settings</span>
                     </a>
                     <ul class="sidebar-dropdown list-unstyled collapse" id="collapsetest" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/categories">Categories</a>
-                        </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/logs">Logs</a>
                         </li>

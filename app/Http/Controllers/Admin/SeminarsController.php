@@ -159,7 +159,7 @@ class SeminarsController extends Controller
             ->insert([
                 'user_id' => $attendeeid,
                 'user_type' => 'resident',
-                'title' => 'You have been removed from the seminar.',
+                'title' => 'You have been removed from a seminar.',
                 'description' => 'An admin removed you from our seminar(' . $seminarinfo->title . ') Maybe it was just an accident, sign with us again!',
                 'link' => 'userseminars',
                 'seen' => 0,

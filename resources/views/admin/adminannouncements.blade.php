@@ -7,14 +7,10 @@
                 <p>Announce what is a seminar, events or anything on public.</p>
             </div>
             <div class="header-export pe-3">
-                <a class="btn btn-primary px-4 py-2 me-2" href="{{ route('generate-user-pdf', request()->query()) }}">
-                    <i class="bi bi-file-earmark-arrow-down-fill"></i>
-                    <span>Export</span>
-                </a>
-                <a class="btn btn-primary px-4 py-2 addannouncement-btn" data-bs-toggle="modal"
+                <a class="btn btn-primary px-4 py-3 addannouncement-btn" data-bs-toggle="modal"
                     data-bs-target="#announcementAddUpdateModal" href="#">
-                    <i class="bi bi-plus-lg"></i>
-                    <span>Add</span>
+                    <i class="bi bi-megaphone"></i>
+                    <span>Announce</span>
                 </a>
             </div>
         </div>

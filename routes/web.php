@@ -82,6 +82,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     //   Admin/Notifications
     // =======================
     Route::get('/adminnotif', [StaticPageController::class, 'adminNotifIndex'])->name('adminnotif');
+    Route::get('/adminremovenotif', [StaticPageController::class, 'adminRemoveNotif'])->name('adminremovenotif');
     // =======================
     //     Admin/Logs
     // =======================
@@ -111,4 +112,5 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::post('/userupdateprofile', [ResidentController::class, 'userUpdateProfile'])->name('userupdateprofile');
     Route::post('/userupdatepassword', [ResidentController::class, 'userUpdatePassword'])->name('userupdatepassword');
     Route::get('/usernotif', [ResidentController::class, 'usernotif'])->name('usernotif');
+    Route::get('/userremovenotif', [ResidentController::class, 'userRemoveNotif'])->name('userremovenotif');
 });
