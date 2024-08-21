@@ -70,16 +70,30 @@
                             $user = DB::table('tbl_users')
                                 ->where('id', $userinfo[0])
                                 ->first();
+
+                            $usernotifCount = DB::table('tbl_notif')
+                                ->where('user_id', $userinfo[0])
+                                ->where('seen', 0)
+                                ->count();
                         @endphp
-                        <button class="btn btn-lite dropdown-toggle fs-2 san1-dropdown" data-bs-toggle="dropdown"
-                            type="button" aria-expanded="false">
+                        <button class="btn btn-lite dropdown-toggle fs-2 san1-dropdown position-relative"
+                            data-bs-toggle="dropdown" type="button" aria-expanded="false">
                             {{ $user->username }}
+                            @if ($usernotifCount >= 1)
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-4">
+                                    {{ $usernotifCount }}
+                                </span>
+                            @endif
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lite">
                             <li><a class="dropdown-item py-3 px-5" href="/userprofile">User Profile</a></li>
                             <li>
                                 <a class="dropdown-item py-3 px-5" href="/usernotif">
-                                    Notifications <span class="badge text-bg-danger">4</span>
+                                    Notifications
+                                    @if ($usernotifCount >= 1)
+                                        <span class="badge text-bg-danger">{{ $usernotifCount }}</span>
+                                    @endif
                                 </a>
                             </li>
                             <li><a class="dropdown-item py-3 px-5" href="/logout">Logout</a></li>

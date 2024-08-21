@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('tbl_notif', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('user_type');
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->string('link')->nullable()->default('#');
             $table->boolean('seen')->default(false);
             $table->timestamps();

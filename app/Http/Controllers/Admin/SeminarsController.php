@@ -150,6 +150,22 @@ class SeminarsController extends Controller
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
+
+        //ADDING NOTIFICATION
+        $seminarinfo = DB::table('tbl_seminars')
+            ->where('id', $sid)
+            ->first();
+        DB::table('tbl_notif')
+            ->insert([
+                'user_id' => $attendeeid,
+                'user_type' => 'resident',
+                'title' => 'You have been removed from the seminar.',
+                'description' => 'An admin removed you from our seminar(' . $seminarinfo->title . ') Maybe it was just an accident, sign with us again!',
+                'link' => 'userseminars',
+                'seen' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
         return redirect('/seminarcollapseddiv?alert=1&id=' . $sid);
     }
 }

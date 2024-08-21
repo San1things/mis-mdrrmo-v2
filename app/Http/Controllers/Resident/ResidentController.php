@@ -23,14 +23,17 @@ class ResidentController extends Controller
 
         return view('user.userhome', $data);
     }
+
     public function userabout()
     {
         return view('user.userabout');
     }
+
     public function userservices()
     {
         return view('user.userservices');
     }
+
     public function userfaqs(Request $request)
     {
         $data = [];
@@ -40,6 +43,7 @@ class ResidentController extends Controller
 
         return view('user.userfaqs', $data);
     }
+
     public function userannouncements(Request $request)
     {
         $data = [];
@@ -52,6 +56,7 @@ class ResidentController extends Controller
 
         return view('user.userannouncements', $data);
     }
+
     public function userseminars(Request $request)
     {
         $data = [];
@@ -62,7 +67,7 @@ class ResidentController extends Controller
             3 => ['Certificate has been requested! We will proccess it right away!', 'success'],
         ];
 
-        if(!empty($request->query('alert'))){
+        if (!empty($request->query('alert'))) {
             $data['alert'] = $request->query('alert');
         }
 
@@ -73,6 +78,7 @@ class ResidentController extends Controller
         $data['attendeeCount'] = DB::table('tbl_attendees')->count();
         return view('user.userseminars', $data);
     }
+
     public function userJoinSeminar(Request $request)
     {
         $seminarid = $request->query('sid');
@@ -85,8 +91,25 @@ class ResidentController extends Controller
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
+
+        //ADDING NOTIFICATION
+        $seminarinfo = DB::table('tbl_seminars')
+            ->where('id', $seminarid)
+            ->first();
+        DB::table('tbl_notif')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'user_type' => 'resident',
+                'title' => 'You have joined a seminar!',
+                'description' => 'Thanks for joining our seminar(' . $seminarinfo->title . '). This will be held at ' . $seminarinfo->location . ' and will start at exactly ' . Carbon::create($seminarinfo->starts_at)->format('h:m a  M, d Y') . '. Please be ready and join us to be prepared and ready in time of emergency!',
+                'link' => 'userseminars',
+                'seen' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
         return redirect('/userseminars?alert=1');
     }
+
     public function userUnregisterSeminar(Request $request)
     {
         $seminarid = $request->query('sid');
@@ -97,8 +120,24 @@ class ResidentController extends Controller
             ->where('seminar_id', $seminarid)
             ->delete();
 
+        //ADDING NOTIFICATION
+        $seminarinfo = DB::table('tbl_seminars')
+            ->where('id', $seminarid)
+            ->first();
+        DB::table('tbl_notif')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'user_type' => 'resident',
+                'title' => 'You unregistered to our seminar!',
+                'description' => 'You remove your registration to our seminar(' . $seminarinfo->title . ') that will be held at ' . $seminarinfo->location . '. We hope that you reconsider your decision. Have a good life ahead!',
+                'link' => 'userseminars',
+                'seen' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
         return redirect('/userseminars?alert=2');
     }
+
     public function userprofile(Request $request)
     {
         $data = [];
@@ -163,6 +202,7 @@ class ResidentController extends Controller
 
         return redirect('/userprofile?alert=5');
     }
+
     public function userUpdatePassword(Request $request)
     {
         $input = $request->input();
@@ -187,8 +227,13 @@ class ResidentController extends Controller
         return redirect('userprofile?alert=6');
     }
 
-    public function usernotif()
+    public function usernotif(Request $request)
     {
-        return view('user.usernotif');
+        $data = [];
+        $notifications = DB::table('tbl_notif');
+
+        $data['notifications'] = $notifications->orderByDesc('id')->paginate(30)->appends($request->all());
+
+        return view('user.usernotif', $data);
     }
 }
