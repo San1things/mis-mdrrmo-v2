@@ -15,6 +15,16 @@
         </div>
 
         <div class="admin-content">
+            @isset($alert)
+                <center>
+                    <div class="alert alert-dismissible fade show fs-3 alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                        role="alert">
+                        {{ !empty($alerts[$alert]) ? $alerts[$alert][0] : 'error' }}
+                        <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+                    </div>
+                </center>
+            @endisset
+
             <form role="search" method="get">
                 <div class="input-group mb-3">
                     <input class="form-control fs-3" name="searchSubscriber" type="search" aria-label="Search"
@@ -42,7 +52,7 @@
                                 <td>{{ $subscriber->email }}</td>
                                 <td>{{ $subscriber->subscribed_at }}</td>
                                 <td>
-                                    <a class="btn btn-danger deleteitem-btn" data-bs-toggle="modal"
+                                    <a class="btn btn-danger unsubscribe-btn" data-bs-toggle="modal"
                                         data-bs-target="#subscriberDeleteModal" data-id="{{ $subscriber->id }}">
                                         <i class="bi bi-bell-slash-fill"></i></a>
                                 </td>
@@ -57,6 +67,36 @@
             </div>
             {{ $subscribers->links('pagination::bootstrap-5') }}
         </div>
+    </div>
 
+    <div class="modal fade" id="subscriberDeleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
+                </div>
+                <form id="modalForm" action="" method="post">
+                    @csrf
+                    <div class="modal-body ms-2">
+                        <h6>Are you sure you want to unsubscribe this subscriber?</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger fs-3 btn-delete py-2 px-5" type="submit">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.unsubscribe-btn').on('click', function() {
+                let id = $(this).data('id')
+                $('#modalForm').attr('action', '/adminunsubscribe?id=' + id)
+            })
+        })
+    </script>
+@endpush

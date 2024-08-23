@@ -14,6 +14,8 @@ use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('/testemaillayout', [PublicController::class, 'tryemail'])->name('testemaillayout');
+
 // =======================
 //        Public
 // =======================
@@ -74,6 +76,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     //   Admin/Subscriptions
     // =======================
     Route::get('/subscriptions', [StaticPageController::class, 'subscriptionsIndex'])->name('adminsubscription');
+    Route::post('/adminunsubscribe', [StaticPageController::class, 'adminUnsubscribe'])->name('adminunsubscribe');
     // =======================
     //     Admin/Messages
     // =======================

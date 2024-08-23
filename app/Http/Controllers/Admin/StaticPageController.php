@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\UnsubscribeMailer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Svg\Tag\Rect;
 
 class StaticPageController extends Controller
@@ -20,6 +22,14 @@ class StaticPageController extends Controller
         $data = [];
         $query = $request->query();
 
+        $data['alerts'] = [
+            1 => ['Succesful! You unsubscribe a subscriber.', 'success']
+        ];
+
+        if (!empty($request->query('alert'))) {
+            $data['alert'] = $request->query('alert');
+        }
+
         $subscribers = DB::table('tbl_subscriptions');
         if (!empty(request()->query('searchSubscriber'))) {
             $emailtyped = $query['searchSubscriber'];
@@ -30,6 +40,32 @@ class StaticPageController extends Controller
         $data['subscribers'] = $subscribers->orderByDesc('id')->paginate(15)->appends($request->all());
 
         return view('admin.subscriptions', $data);
+    }
+
+    public function adminUnsubscribe(Request $request)
+    {
+        $input = $request->input();
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => "Unsubscribed a subscriber",
+                'log_description' => "This user unsubscribed a subscriber at the Subscriptions Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+
+        $getEmail = DB::table('tbl_subscriptions')
+            ->where('id', $input['id'])
+            ->first();
+        Mail::to($getEmail->email)->send(new UnsubscribeMailer);
+
+        DB::table('tbl_subscriptions')
+            ->where('id', $input['id'])
+            ->delete();
+
+        return redirect('/subscriptions?alert=1');
     }
 
     public function adminMessagesIndex()

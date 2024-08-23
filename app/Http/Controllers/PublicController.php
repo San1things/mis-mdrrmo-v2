@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SubscriptionMailer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class PublicController extends Controller
 {
@@ -13,6 +15,7 @@ class PublicController extends Controller
         $data = [];
         $data['alerts'] = [
             1 => ['Error subscribing, the email you input has been subscribed.', 'danger'],
+            3 => ['Error subscribing, you havent put any email yet!', 'danger'],
             2 => ['You are now subscribed! You will receive all the updates from us.', 'success']
         ];
 
@@ -29,6 +32,11 @@ class PublicController extends Controller
         $checkEmail = DB::table('tbl_subscriptions')
             ->where('email', $input['homeemail'])->count();
 
+        if (empty($input['homeemail'])){
+            return redirect('/?alert=3');
+            die();
+        }
+
         if ($checkEmail >= 1) {
             return redirect('/?alert=1');
             die();
@@ -41,6 +49,8 @@ class PublicController extends Controller
                 'created_at' => Carbon::now('Asia/Manila'),
                 'updated_at' => Carbon::now('Asia/Manila')
             ]);
+
+            Mail::to($input['homeemail'])->send(new SubscriptionMailer);
 
         // ADDING NOTIFICATION
         $orgusers = DB::table('tbl_users')
@@ -133,5 +143,9 @@ class PublicController extends Controller
         $data['announcements'] = $announcements->orderByDesc('id')->get()->toArray();
 
         return view('announcements', $data);
+    }
+
+    public function tryemail(){
+        return view('email.subscribeview-mail');
     }
 }
