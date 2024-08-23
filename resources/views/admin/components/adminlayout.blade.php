@@ -123,6 +123,25 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/adminprofile">User Profile</a>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/adminprofile">Appearance:
+                                <label>
+                                    <input class="toggle-checkbox" type="checkbox">
+                                    <div class="toggle-slot">
+                                        <div class="sun-icon-wrapper">
+                                            <div class="iconify sun-icon" data-icon="feather-sun"
+                                                data-inline="false"></div>
+                                        </div>
+                                        <div class="toggle-button"></div>
+                                        <div class="moon-icon-wrapper">
+                                            <div class="iconify moon-icon" data-icon="feather-moon"
+                                                data-inline="false">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
