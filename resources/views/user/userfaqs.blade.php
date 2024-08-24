@@ -82,10 +82,10 @@
                         @csrf
                         <div class="input-group">
                             <input class="form-control" name="faqsquestionname" type="text" value="{{ $user->firstname }} {{ $user->lastname }}"
-                                aria-label="Name" placeholder="Name" required="required" disabled>
+                                aria-label="Name" placeholder="Name" required="required" readonly>
                             <input class="form-control" name="faqsquestionemail" type="email"
                                 value=" {{ $user->email }} " aria-label="Email" placeholder="Email" required="required"
-                                disabled>
+                                readonly>
                         </div>
                         <textarea class="form-control" id="" name="" rows="3" placeholder="Ask your question here..."
                             required="required"></textarea>

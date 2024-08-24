@@ -69,21 +69,24 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item border">
-                                <a class="{{ request('usertype') === null ? 'nav-link active' : 'nav-link' }}"
-                                    href="?usertype=&searchUser={{ $qstring['searchUser'] }}" aria-current="page">View
+                                <a class="nav-link" href="?usertype=&searchUser={{ $qstring['searchUser'] }}"
+                                    aria-current="page"
+                                    style="{{ request('usertype') === null ? 'font-weight: 700' : '' }}">View
                                     All</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="{{ request('usertype') === 'admin' ? 'nav-link active' : 'nav-link' }}"
-                                    href="?usertype=admin&searchUser={{ $qstring['searchUser'] }}">Admins</a>
+                                <a class="nav-link" href="?usertype=admin&searchUser={{ $qstring['searchUser'] }}"
+                                    style="{{ request('usertype') === 'admin' ? 'font-weight: 700' : '' }}">Admins</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="{{ request('usertype') === 'staff' ? 'nav-link active' : 'nav-link' }}"
-                                    href="?usertype=staff&searchUser={{ $qstring['searchUser'] }}">Staffs</a>
+                                <a class="nav-link"
+                                    href="?usertype=staff&searchUser={{ $qstring['searchUser'] }}"
+                                    style="{{ request('usertype') === 'staff' ? 'font-weight: 700' : '' }}">Staffs</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="{{ request('usertype') === 'other' ? 'nav-link active' : 'nav-link' }}"
-                                    href="?usertype=other&searchUser={{ $qstring['searchUser'] }}">Others</a>
+                                <a class="nav-link"
+                                    href="?usertype=other&searchUser={{ $qstring['searchUser'] }}"
+                                    style="{{ request('usertype') === 'other' ? 'font-weight: 700' : '' }}">Others</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="get">
@@ -97,7 +100,7 @@
                 </div>
             </nav>
             <div class="table-responsive-lg fs-4">
-                <table class="table table table-light table-hover mt-3 align-middle">
+                <table class="table table table-light table-hover align-middle">
                     <thead>
                         <tr>
                             <th scope="col-1">Email</th>

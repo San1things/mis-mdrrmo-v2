@@ -53,6 +53,11 @@
     border: none;
 }
 
+.btn-primary.dark-mode {
+    background-color: rgb(53, 92, 125);
+    transition: none !important;
+}
+
 .btn-danger {
     font-family: 'Poppins';
     border: none;
@@ -67,6 +72,7 @@
     font-family: 'Poppins';
     border: none;
 }
+
 
 /* USERS */
 
@@ -83,6 +89,11 @@
 
 .container-xl .users-card-body {
     background: radial-gradient(circle at 0.7% 1%, rgb(215, 248, 247) 0%, rgb(102, 188, 239) 100.2%);
+}
+
+.users-card-body.dark-mode {
+    background: rgb(53, 92, 125);
+    color: white;
 }
 
 /* CATEGORIES */
@@ -276,7 +287,10 @@
     /* Active page border color */
     color: white;
 }
-
+.pagination .page-item.active .page-link.dark-mode {
+    background-color: black;
+    border-color: gray;
+}
 .pagination .page-link {
     color: black;
     /* Default link color */

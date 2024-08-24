@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Management Information System</title>
+
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+
     <link type="image/x-icon" href="{{ asset('mddrmo_favicon.ico') }}" rel="icon">
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -124,9 +131,10 @@
                             <a class="sidebar-link" href="/adminprofile">User Profile</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="/adminprofile">Appearance:
-                                <label>
-                                    <input class="toggle-checkbox" type="checkbox">
+                            <a class="sidebar-link san1-apperance-button" href="#"
+                                style="color:black;">Appearance
+                                <label class="san1-appearance-content">
+                                    <input class="toggle-checkbox" id="darkModeToggle" type="checkbox">
                                     <div class="toggle-slot">
                                         <div class="sun-icon-wrapper">
                                             <div class="iconify sun-icon" data-icon="feather-sun"
@@ -156,7 +164,6 @@
             @yield('content')
         </div>
     </div>
-
     <script>
         let hamBurger = document.querySelector(".toggle-btn");
         hamBurger.addEventListener("click", function() {
@@ -178,6 +185,56 @@
             }
         });
         $(window).resize();
+
+        // DARKMODE
+        $(document).ready(function() {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                $('.main').addClass('dark-mode')
+                $('.btn-primary').addClass('dark-mode')
+                $('#sidebar').addClass('dark-mode')
+                $('.sidebar-dropdown').addClass('dark-mode')
+                $('.page-link').addClass('dark-mode')
+                $('.users-card-body').addClass('dark-mode')
+                $('.modal-content').addClass('dark-mode')
+                $('.admin-header').removeClass('border-dark').addClass('border-light');
+                $('.navbar').removeClass('bg-body-tertiary').addClass('bg-body-dark');
+                $('.nav-link').removeClass('text-dark').addClass('text-light');
+                $('.table').removeClass('table-light').addClass('table-dark');
+                $('#darkModeToggle').prop('checked', true);
+            } else {
+                $('.admin-header').removeClass('border-light').addClass('border-dark');
+                $('.navbar').removeClass('bg-body-dark').addClass('bg-body-tertiary');
+                $('.nav-link').removeClass('text-light').addClass('text-dark');
+                $('.table').removeClass('table-dark').addClass('table-light');
+                $('#darkModeToggle').prop('checked', false);
+            }
+
+            $('#darkModeToggle').on('change', function() {
+                $('.main').toggleClass('dark-mode')
+                $('.btn-primary').toggleClass('dark-mode')
+                $('.users-card-body').toggleClass('dark-mode')
+                $('.page-link').toggleClass('dark-mode')
+                $('.modal-content').toggleClass('dark-mode')
+                $('#sidebar').toggleClass('dark-mode')
+
+                if ($(this).is(':checked')) {
+                    $('.admin-header').removeClass('border-dark').addClass('border-light');
+                    $('.navbar').removeClass('bg-body-tertiary').addClass('bg-body-dark');
+                    $('.nav-link').removeClass('text-dark').addClass('text-light');
+                    $('.table').removeClass('table-light').addClass('table-dark');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    $('.admin-header').removeClass('border-light').addClass('border-dark');
+                    $('.navbar').removeClass('bg-body-dark').addClass('bg-body-tertiary');
+                    $('.nav-link').removeClass('text-light').addClass('text-dark');
+                    $('.table').removeClass('table-dark').addClass('table-light');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            })
+
+
+
+        })
     </script>
 
 

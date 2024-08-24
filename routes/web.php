@@ -6,6 +6,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\AnnouncementsController;
 use App\Http\Controllers\Admin\LogsController;
+use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\Admin\SeminarsController;
 use App\Http\Controllers\Admin\StaticPageController;
 use App\Http\Controllers\Resident\ResidentController;
@@ -80,7 +81,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     // =======================
     //     Admin/Messages
     // =======================
-    Route::get('/adminmessages', [StaticPageController::class, 'adminMessagesIndex'])->name('adminmessages');
+    Route::get('/adminmessages', [MessagesController::class, 'index'])->name('adminmessages');
     // =======================
     //   Admin/Notifications
     // =======================

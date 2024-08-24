@@ -68,14 +68,17 @@ a {
     background-color: rgb(102, 188, 239);
     border: none;
 }
+
 .btn-secondary {
     font-family: 'Poppins';
     border: none;
 }
+
 .btn-danger {
     font-family: 'Poppins';
     border: none;
 }
+
 .btn-dark {
     font-family: 'Poppins';
     border: none;
@@ -89,7 +92,11 @@ a {
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
 }
-.modal .modal-content{
+
+.modal .modal-content {
     background: linear-gradient(to top, #dfe9f3 0%, white 100%);
 }
 
+.modal .modal-content.dark-mode {
+    background: linear-gradient(89.7deg, rgb(0, 0, 0) -10.7%, rgb(53, 92, 125) 88.8%);
+}

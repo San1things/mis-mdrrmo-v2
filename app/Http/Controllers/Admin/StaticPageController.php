@@ -68,11 +68,6 @@ class StaticPageController extends Controller
         return redirect('/subscriptions?alert=1');
     }
 
-    public function adminMessagesIndex()
-    {
-        return view('admin.adminmessages');
-    }
-
     public function adminNotifIndex(Request $request)
     {
         $data = [];

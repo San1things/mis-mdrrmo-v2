@@ -52,11 +52,11 @@
     <section class="home-subscribe">
         <div class="container-xl">
             <center>
-                <h4>Since you have an account, you dont need to subscribe anymore! You will receive all update news about us on this email:</h4>
+                <h4>Since you have an account, you dont need to subscribe anymore! You will receive all the updated news about us on this email:</h4>
                 <div class="input-group">
                     <input class="form-control" name="homeemail" type="email" value="{{ $user->email }}"
                         aria-label="Email" aria-describedby="button-addon2" placeholder="Email" required="required"
-                        disabled>
+                        readonly>
                 </div>
             </center>
         </div>
