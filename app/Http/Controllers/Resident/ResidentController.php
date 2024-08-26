@@ -38,11 +38,53 @@ class ResidentController extends Controller
     public function userfaqs(Request $request)
     {
         $data = [];
+
+        $data['alerts'] = [
+            1 => ['Your message has been sent!', 'success'],
+            2 => ['Error! Please fill all the required input.', 'danger'],
+            3 => ['Sorry! You can only send 3 messages, Please wait for a respond to message again.', 'danger'],
+        ];
+
+        if(!empty($request->query('alert'))){
+            $data['alert'] = $request->query('alert');
+        }
+
         $userinfo = $request->attributes->get('userinfo');
         $data['user'] = DB::table('tbl_users')
             ->where('id', $userinfo[0])->first();
 
         return view('user.userfaqs', $data);
+    }
+
+    public function userFaqsMessage(Request $request)
+    {
+        $input = $request->input();
+
+        if (empty($input['faqsquestionname']) || empty($input['faqsquestionemail']) || empty($input['faqsquestionmessage'])) {
+            return redirect('/userfaqs?alert=2');
+            die();
+        }
+
+        $messageCheck = DB::table('tbl_messages')
+            ->where('email', $input['faqsquestionemail'])
+            ->where('replied', 0)->count();
+        if ($messageCheck >= 3) {
+            return redirect('/userfaqs?alert=3');
+            die();
+        }
+
+        DB::table('tbl_messages')
+            ->insert([
+                'name' => $input['faqsquestionname'],
+                'email' => $input['faqsquestionemail'],
+                'message' => $input['faqsquestionmessage'],
+                'replied' => 0,
+                'seen' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+        return redirect('/userfaqs?alert=1');
     }
 
     public function userannouncements(Request $request)

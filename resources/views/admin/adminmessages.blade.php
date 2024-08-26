@@ -73,7 +73,7 @@
                         <p style="position: absolute;top: 10px;right: 20px;font-size: 1.3rem;color: gray;">
                             {{ Carbon\Carbon::create($message->created_at)->format('D, h:ma. m/d/y') }}
                         </p>
-                        <h6>from: {{ $message->name }}.</h6>
+                        <p style="font-size: 1.7rem; color:gray;">email: {{ $message->email }}</p>
                         <p>{{ $message->message }}</p>
 
 

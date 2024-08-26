@@ -2,6 +2,7 @@
 @section('resident_content')
     <section class="home-title">
         <div class="container-xl">
+
             <div class="title-section">
                 <center>
                     <h1>Hi {{ $user->firstname }}! This is the official website of</h1>
@@ -52,7 +53,8 @@
     <section class="home-subscribe">
         <div class="container-xl">
             <center>
-                <h4>Since you have an account, you dont need to subscribe anymore! You will receive all the updated news about us on this email:</h4>
+                <h4>Since you have an account, you dont need to subscribe anymore! You will receive all the updated news
+                    about us on this email:</h4>
                 <div class="input-group">
                     <input class="form-control" name="homeemail" type="email" value="{{ $user->email }}"
                         aria-label="Email" aria-describedby="button-addon2" placeholder="Email" required="required"
