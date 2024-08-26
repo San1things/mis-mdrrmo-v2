@@ -1,11 +1,11 @@
 @extends('admin.components.adminlayout')
 @section('content')
 
-@php
-    DB::table('tbl_messages')->update([
-        'seen' => 1
-    ])
-@endphp
+    @php
+        DB::table('tbl_messages')->update([
+            'seen' => 1,
+        ]);
+    @endphp
 
     <div class="container-xl mt-3">
         <div class="admin-header d-flex align-items-center border-bottom border-dark">
@@ -58,14 +58,46 @@
                 </div>
             </nav>
 
-            <div class="admin-messages-container" style="max-height:70vh; min-height:70vh; overflow-y:scroll;">
+            <div class="admin-messages-container" style="max-height:67vh; min-height:67vh; overflow-y:scroll;">
                 @foreach ($messages as $message)
                     <div class="message-collapse" data-bs-toggle="collapse"
                         data-bs-target="#collapsed-div{{ $message->id }}" data-collapse-show="true" aria-expanded="false"
                         aria-controls="collapsed-div">
                         <h6>{{ $message->name }}</h6>
                         <p class="mc-cut-text">{{ Illuminate\Support\Str::limit($message->message, 100) }}...</p>
-                        <p class="mc-date-time">{{ Carbon\Carbon::create($message->created_at)->format('D, h:ma.') }}</p>
+                        <p class="mc-date-time">
+                            @php
+                                $sent = Carbon\Carbon::parse($message->created_at);
+                                $now = Carbon\Carbon::now();
+                                $daysPassed = $sent->diffInDays($now);
+                                $hoursPassed = $sent->diffInHours($now);
+                                $minutesPassed = $sent->diffInMinutes($now);
+                            @endphp
+
+                            @if ($daysPassed === 0)
+                                @if ($hoursPassed === 0)
+                                    @if ($minutesPassed === 0)
+                                        Just now
+                                    @elseif ($minutesPassed === 1)
+                                        A minute ago
+                                    @else
+                                        {{ $minutesPassed }} minutes ago
+                                    @endif
+                                @elseif ($hoursPassed === 1)
+                                    An hour ago
+                                @else
+                                    {{ $hoursPassed }} hours ago
+                                @endif
+                            @elseif ($daysPassed === 1)
+                                Yesterday
+                            @elseif ($daysPassed <= 7)
+                                {{ $daysPassed }} days ago
+                            @elseif ($daysPassed > 7)
+                                A week ago
+                            @elseif ($daysPassed > 14)
+                                {{ $sent->format('M d, Y') }}
+                            @endif
+                        </p>
                     </div>
 
                     <div class="collapse border border-top-0 px-5 pb-2" id="collapsed-div{{ $message->id }}"
@@ -80,8 +112,9 @@
                         <div class="reply-container position-relative mb-3" style="display: none">
                             <form action="/adminmessagereply" method="POST">
                                 <p style="color: gray">Reply: </p>
-                                <textarea class="form-control" id="" name="messagereply" style="width: 100%;font-size: 1.7rem;"></textarea>
-                                <button class="btn btn-success fs-3 px-4 py-3 mt-3 position-absolute end-0" type="submit">
+                                <textarea class="form-control" id="" name="messagereply" style="width: 100%;font-size: 1.7rem;"
+                                    placeholder="Write something..."></textarea>
+                                <button class="btn btn-success fs-3 px-5 py-3 mt-3 position-absolute end-0" type="submit">
                                     <i class="bi bi-reply-fill"></i> Reply
                                 </button>
                             </form>
@@ -92,10 +125,9 @@
                         </button>
                     </div>
                 @endforeach
-
             </div>
         </div>
-
+        {{ $messages->links('pagination::bootstrap-5') }}
     </div>
 @endsection
 
@@ -118,7 +150,6 @@
 
             $('.san1-message-reply').on('click', function() {
                 let show = $(this).data('reply-show')
-
                 if (show === 'false') {
                     $(this).prev('.reply-container ').attr('style', 'display: none');
                     $(this).text('Reply');

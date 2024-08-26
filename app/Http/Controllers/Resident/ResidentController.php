@@ -45,7 +45,7 @@ class ResidentController extends Controller
             3 => ['Sorry! You can only send 3 messages, Please wait for a respond to message again.', 'danger'],
         ];
 
-        if(!empty($request->query('alert'))){
+        if (!empty($request->query('alert'))) {
             $data['alert'] = $request->query('alert');
         }
 
@@ -59,6 +59,7 @@ class ResidentController extends Controller
     public function userFaqsMessage(Request $request)
     {
         $input = $request->input();
+        $userinfo = $request->attributes->get('userinfo');
 
         if (empty($input['faqsquestionname']) || empty($input['faqsquestionemail']) || empty($input['faqsquestionmessage'])) {
             return redirect('/userfaqs?alert=2');
@@ -75,6 +76,7 @@ class ResidentController extends Controller
 
         DB::table('tbl_messages')
             ->insert([
+                'user_id' => $userinfo[0],
                 'name' => $input['faqsquestionname'],
                 'email' => $input['faqsquestionemail'],
                 'message' => $input['faqsquestionmessage'],
@@ -84,6 +86,24 @@ class ResidentController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
+        // ADDING NOTIFICATION
+        $orgusers = DB::table('tbl_users')
+            ->where('usertype', 'admin')
+            ->orWhere('usertype', 'staff')->get();
+
+        foreach ($orgusers as $orguser) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $orguser->id,
+                    'user_type' => 'org',
+                    'title' => $input['faqsquestionname'] . ' sent a message.',
+                    'description' => 'This user (' . $input['faqsquestionname'] . ') sent a message/question.',
+                    'link' => '/adminmessages',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
         return redirect('/userfaqs?alert=1');
     }
 

@@ -33,7 +33,7 @@ class PublicController extends Controller
         $checkEmail = DB::table('tbl_subscriptions')
             ->where('email', $input['homeemail'])->count();
 
-        if (empty($input['homeemail'])){
+        if (empty($input['homeemail'])) {
             return redirect('/?alert=3');
             die();
         }
@@ -51,7 +51,7 @@ class PublicController extends Controller
                 'updated_at' => Carbon::now('Asia/Manila')
             ]);
 
-            Mail::to($input['homeemail'])->send(new SubscriptionMailer);
+        Mail::to($input['homeemail'])->send(new SubscriptionMailer);
 
         // ADDING NOTIFICATION
         $orgusers = DB::table('tbl_users')
@@ -108,7 +108,7 @@ class PublicController extends Controller
     {
         $input = $request->input();
 
-        if(empty($input['faqscollapseemail'])){
+        if (empty($input['faqscollapseemail'])) {
             return redirect('/faqs?alert=4');
             die();
         }
@@ -150,33 +150,52 @@ class PublicController extends Controller
         return redirect('/faqs?alert=2');
     }
 
-    public function publicFaqsMessage(Request $request){
+    public function publicFaqsMessage(Request $request)
+    {
         $input = $request->input();
 
-        if(empty($input['faqsquestionname']) || empty($input['faqsquestionemail']) || empty($input['faqsquestionmessage'])){
+        if (empty($input['faqsquestionname']) || empty($input['faqsquestionemail']) || empty($input['faqsquestionmessage'])) {
             return redirect('/faqs?alert=5');
             die();
         }
 
         $messageCheck = DB::table('tbl_messages')
-        ->where('email', $input['faqsquestionemail'])
-        ->where('replied', 0)->count();
-        if($messageCheck >= 3){
+            ->where('email', $input['faqsquestionemail'])
+            ->where('replied', 0)->count();
+        if ($messageCheck >= 3) {
             return redirect('/faqs?alert=6');
             die();
         }
 
         DB::table('tbl_messages')
-        ->insert([
-            'name' => $input['faqsquestionname'],
-            'email' => $input['faqsquestionemail'],
-            'message' => $input['faqsquestionmessage'],
-            'replied' => 0,
-            'seen' => 0,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+            ->insert([
+                'name' => $input['faqsquestionname'],
+                'email' => $input['faqsquestionemail'],
+                'message' => $input['faqsquestionmessage'],
+                'replied' => 0,
+                'seen' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
 
+        // ADDING NOTIFICATION
+        $orgusers = DB::table('tbl_users')
+            ->where('usertype', 'admin')
+            ->orWhere('usertype', 'staff')->get();
+
+        foreach ($orgusers as $orguser) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $orguser->id,
+                    'user_type' => 'org',
+                    'title' => $input['faqsquestionname'] . ' sent a message.',
+                    'description' => 'This public person (' . $input['faqsquestionname'] . ') sent a message/question.',
+                    'link' => '/adminmessages',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
         return redirect('/faqs?alert=3');
     }
 
@@ -190,7 +209,8 @@ class PublicController extends Controller
         return view('announcements', $data);
     }
 
-    public function tryemail(){
+    public function tryemail()
+    {
         return view('email.subscribeview-mail');
     }
 }
