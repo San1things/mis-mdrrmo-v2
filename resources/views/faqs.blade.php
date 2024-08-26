@@ -109,7 +109,7 @@
                 <center>
                     <h4>If you stil dont have your answer, you can ask us here!</h4>
 
-                    <form action="" method="">
+                    <form action="/publicfaqsmessage" method="post">
                         @csrf
                         <div class="input-group">
                             <input class="form-control" name="faqsquestionname" type="text" aria-label="Name"
@@ -117,7 +117,7 @@
                             <input class="form-control" name="faqsquestionemail" type="email" aria-label="Email"
                                 placeholder="Email" required="required">
                         </div>
-                        <textarea class="form-control" id="" name="" rows="3" placeholder="Ask your question here..."
+                        <textarea class="form-control" id="" name="faqsquestionmessage" rows="3" placeholder="Ask your question here..."
                             required="required"></textarea>
                         <button class="btn btn-primary" type="submit">Send</button>
                     </form>

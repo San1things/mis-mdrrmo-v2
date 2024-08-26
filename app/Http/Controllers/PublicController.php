@@ -16,7 +16,8 @@ class PublicController extends Controller
         $data['alerts'] = [
             1 => ['Error subscribing, the email you input has been subscribed.', 'danger'],
             3 => ['Error subscribing, you havent put any email yet!', 'danger'],
-            2 => ['You are now subscribed! You will receive all the updates from us.', 'success']
+            2 => ['You are now subscribed! You will receive all the updates from us.', 'success'],
+
         ];
 
         if (!empty(request()->input('alert'))) {
@@ -78,16 +79,22 @@ class PublicController extends Controller
     {
         return view('about');
     }
+
     public function services()
     {
         return view('services');
     }
+
     public function faqs()
     {
         $data = [];
         $data['alerts'] = [
             1 => ['Error subscribing, the email you input has been subscribed.', 'danger'],
-            2 => ['You are now subscribed! You will receive all the updates from us.', 'success']
+            2 => ['You are now subscribed! You will receive all the updates from us.', 'success'],
+            3 => ['Successful! your message has been saved!', 'success'],
+            4 => ['Error! Please put an email in the input!', 'danger'],
+            5 => ['Error! Please put the corresponding input!', 'danger'],
+            6 => ['Sorry! You can only send 3 messages, Please wait for a respond to message again.', 'danger'],
         ];
 
         if (!empty(request()->input('alert'))) {
@@ -96,9 +103,16 @@ class PublicController extends Controller
 
         return view('faqs', $data);
     }
+
     public function publicFaqsSubscribe(Request $request)
     {
         $input = $request->input();
+
+        if(empty($input['faqscollapseemail'])){
+            return redirect('/faqs?alert=4');
+            die();
+        }
+
         $checkEmail = DB::table('tbl_subscriptions')
             ->where('email', $input['faqscollapseemail'])->count();
 
@@ -135,6 +149,37 @@ class PublicController extends Controller
         }
         return redirect('/faqs?alert=2');
     }
+
+    public function publicFaqsMessage(Request $request){
+        $input = $request->input();
+
+        if(empty($input['faqsquestionname']) || empty($input['faqsquestionemail']) || empty($input['faqsquestionmessage'])){
+            return redirect('/faqs?alert=5');
+            die();
+        }
+
+        $messageCheck = DB::table('tbl_messages')
+        ->where('email', $input['faqsquestionemail'])
+        ->where('replied', 0)->count();
+        if($messageCheck >= 3){
+            return redirect('/faqs?alert=6');
+            die();
+        }
+
+        DB::table('tbl_messages')
+        ->insert([
+            'name' => $input['faqsquestionname'],
+            'email' => $input['faqsquestionemail'],
+            'message' => $input['faqsquestionmessage'],
+            'replied' => 0,
+            'seen' => 0,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return redirect('/faqs?alert=3');
+    }
+
     public function announcements(Request $request)
     {
         $data = [];

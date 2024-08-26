@@ -48,7 +48,7 @@ class MessagesController extends Controller
 
         $data['qstring'] = $qstring;
         $data['messageCount'] = DB::table('tbl_messages')->count();
-        $data['messages'] = $messages->orderBy('id')->paginate(5)->appends($request->all());
+        $data['messages'] = $messages->orderByDesc('id')->paginate(5)->appends($request->all());
 
         return view('admin.adminmessages', $data);
     }

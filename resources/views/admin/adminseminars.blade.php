@@ -31,7 +31,7 @@
             <h5>All seminars({{ $seminarCount }})</h5>
             <div class="admin-seminar-container" style="max-height:65vh; min-height:65vh; overflow-y:scroll;">
                 @foreach ($seminars as $seminar)
-                    <div class="seminar-collapse border border-dark" data-bs-toggle="collapse"
+                    <div class="seminar-collapse" data-bs-toggle="collapse"
                         data-bs-target="#collapsed-div{{ $seminar->id }}" aria-expanded="false"
                         aria-controls="collapsed-div">
                         <h6>{{ $seminar->title }}</h6>

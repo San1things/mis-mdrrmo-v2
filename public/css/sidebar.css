@@ -48,7 +48,7 @@ h1 {
 }
 
 #sidebar.dark-mode {
-    background: linear-gradient(89.7deg, rgb(53, 92, 125) -10.7%, rgb(0, 0, 0) 88.8%);
+    background: linear-gradient(89.7deg, rgb(53, 92, 125) -10.7%, #212529 88.8%);
 }
 
 #sidebar.expand {

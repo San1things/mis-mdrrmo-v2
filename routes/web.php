@@ -26,6 +26,7 @@ Route::group(['middleware' => 'havesessionkey'], function () {
     Route::get('/about', [PublicController::class, 'about'])->name('about');
     Route::get('/services', [PublicController::class, 'services'])->name('services');
     Route::get('/faqs', [PublicController::class, 'faqs'])->name('faqs');
+    Route::post('/publicfaqsmessage', [PublicController::class, 'publicFaqsMessage'])->name('publicfaqsmessage');
     Route::post('/publicfaqssubscribe', [PublicController::class, 'publicFaqsSubscribe'])->name('publicfaqssubscribe');
     Route::get('/announcements', [PublicController::class, 'announcements'])->name('announcements');
     Route::get('/login', [LoginController::class, 'login'])->name('loginpage')->middleware('havesessionkey');

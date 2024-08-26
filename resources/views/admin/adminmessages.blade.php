@@ -1,5 +1,12 @@
 @extends('admin.components.adminlayout')
 @section('content')
+
+@php
+    DB::table('tbl_messages')->update([
+        'seen' => 1
+    ])
+@endphp
+
     <div class="container-xl mt-3">
         <div class="admin-header d-flex align-items-center border-bottom border-dark">
             <div class="header-title p-2 flex-grow-1">
@@ -36,7 +43,7 @@
                             </li>
                             <li class="nav-item border border-start-0">
                                 <a class="nav-link" href="?sender=unknown&searchMessage={{ $qstring['searchMessage'] }}"
-                                    style="{{ request('sender') === 'unknown' ? 'font-weight: 700;' : '' }}">Unknown
+                                    style="{{ request('sender') === 'unknown' ? 'font-weight: 700;' : '' }}">Public
                                     Messages</a>
                             </li>
                         </ul>
@@ -50,7 +57,78 @@
                     </div>
                 </div>
             </nav>
+
+            <div class="admin-messages-container" style="max-height:70vh; min-height:70vh; overflow-y:scroll;">
+                @foreach ($messages as $message)
+                    <div class="message-collapse" data-bs-toggle="collapse"
+                        data-bs-target="#collapsed-div{{ $message->id }}" data-collapse-show="true" aria-expanded="false"
+                        aria-controls="collapsed-div">
+                        <h6>{{ $message->name }}</h6>
+                        <p class="mc-cut-text">{{ Illuminate\Support\Str::limit($message->message, 100) }}...</p>
+                        <p class="mc-date-time">{{ Carbon\Carbon::create($message->created_at)->format('D, h:ma.') }}</p>
+                    </div>
+
+                    <div class="collapse border border-top-0 px-5 pb-2" id="collapsed-div{{ $message->id }}"
+                        style="position: relative;">
+                        <p style="position: absolute;top: 10px;right: 20px;font-size: 1.3rem;color: gray;">
+                            {{ Carbon\Carbon::create($message->created_at)->format('D, h:ma. m/d/y') }}
+                        </p>
+                        <h6>from: {{ $message->name }}.</h6>
+                        <p>{{ $message->message }}</p>
+
+
+                        <div class="reply-container position-relative mb-3" style="display: none">
+                            <form action="/adminmessagereply" method="POST">
+                                <p style="color: gray">Reply: </p>
+                                <textarea class="form-control" id="" name="messagereply" style="width: 100%;font-size: 1.7rem;"></textarea>
+                                <button class="btn btn-success fs-3 px-4 py-3 mt-3 position-absolute end-0" type="submit">
+                                    <i class="bi bi-reply-fill"></i> Reply
+                                </button>
+                            </form>
+                        </div>
+
+                        <button class="btn btn-primary fs-3 px-5 py-3 mb-3 san1-message-reply" data-reply-show="false">
+                            Reply
+                        </button>
+                    </div>
+                @endforeach
+
+            </div>
         </div>
 
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+
+            $('.message-collapse').on('click', function() {
+                let collapseShow = $(this).data('collapse-show')
+                if (collapseShow === 'true') {
+                    $(this).find('.mc-cut-text').show()
+                    $(this).find('.mc-date-time').show()
+                    $(this).data('collapse-show', 'false')
+                } else {
+                    $(this).find('.mc-cut-text').hide()
+                    $(this).find('.mc-date-time').hide()
+                    $(this).data('collapse-show', 'true')
+                }
+            })
+
+            $('.san1-message-reply').on('click', function() {
+                let show = $(this).data('reply-show')
+
+                if (show === 'false') {
+                    $(this).prev('.reply-container ').attr('style', 'display: none');
+                    $(this).text('Reply');
+                    $(this).data('reply-show', 'true')
+                } else {
+                    $(this).prev('.reply-container ').attr('style', 'display: block');
+                    $(this).text('Cancel');
+                    $(this).data('reply-show', 'false')
+                }
+            })
+        })
+    </script>
+@endpush

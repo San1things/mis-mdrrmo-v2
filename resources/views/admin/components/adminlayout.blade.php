@@ -83,14 +83,19 @@
                         <span>Subscriptions</span>
                     </a>
                 </li>
+                @php
+                    $adminmessageCount = DB::table('tbl_messages')->where('seen', 0)->count();
+                @endphp
                 <li class="sidebar-item" style="{{ $path == 'adminmessages' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link" href="/adminmessages">
                         <i class="bi bi-chat-left-text-fill position-relative">
-                            <span
-                                class="position-absolute fs-4 top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                99+
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
+                            @if ($adminmessageCount >= 1)
+                                <span
+                                    class="position-absolute fs-4 top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $adminmessageCount }}
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
+                            @endif
                         </i>
                         <span>Messages</span>
                     </a>
