@@ -34,7 +34,36 @@
                         <h6>{{ $notification->title }}</h6>
                         <p>{{ $notification->description }}</p>
                         <p class="notif-date">
-                            {{ \Carbon\Carbon::create($notification->created_at)->format('D h:ma - m/d/y') }}</p>
+                            @php
+                                $sent = Carbon\Carbon::parse($notification->created_at);
+                                $now = Carbon\Carbon::now();
+                                $daysPassed = $sent->diffInDays($now);
+                                $hoursPassed = $sent->diffInHours($now);
+                                $minutesPassed = $sent->diffInMinutes($now);
+                            @endphp
+
+                            @if ($daysPassed === 0)
+                                @if ($hoursPassed === 0)
+                                    @if ($minutesPassed === 0)
+                                        Just now
+                                    @elseif ($minutesPassed === 1)
+                                        A minute ago
+                                    @else
+                                        {{ $minutesPassed }} minutes ago
+                                    @endif
+                                @elseif ($hoursPassed === 1)
+                                    An hour ago
+                                @else
+                                    {{ $hoursPassed }} hours ago
+                                @endif
+                            @elseif ($daysPassed === 1)
+                                Yesterday
+                            @elseif ($daysPassed <= 7)
+                                {{ $daysPassed }} days ago
+                            @else
+                                {{ $sent->format('h:i a, M d, Y') }}
+                            @endif
+                        </p>
 
                         <div class="btn-group san1-notif-settings">
                             <a class="btn dropdown-toggle fs-3 pe-3" data-bs-toggle="dropdown" type="button"

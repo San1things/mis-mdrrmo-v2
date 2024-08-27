@@ -201,6 +201,7 @@
                 $('.page-link').addClass('dark-mode')
                 $('.users-card-body').addClass('dark-mode')
                 $('.modal-content').addClass('dark-mode')
+                $('.notif-remove-design').addClass('dark-mode')
                 $('.admin-header').removeClass('border-dark').addClass('border-light');
                 $('.navbar').removeClass('bg-body-tertiary').addClass('bg-body-dark');
                 $('.nav-link').removeClass('text-dark').addClass('text-light');
@@ -220,6 +221,7 @@
                 $('.users-card-body').toggleClass('dark-mode')
                 $('.page-link').toggleClass('dark-mode')
                 $('.modal-content').toggleClass('dark-mode')
+                $('.notif-remove-design').toggleClass('dark-mode')
                 $('#sidebar').toggleClass('dark-mode')
 
                 if ($(this).is(':checked')) {
