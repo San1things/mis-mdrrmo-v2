@@ -73,8 +73,11 @@
                         </select>
                         <input class="form-control mb-4 fs-3" id="Address" name="address" type="text"
                             placeholder="ex. Morong, Rizal">
-                        <input class="form-control mb-4 fs-3" id="Contact" name="contact" type="number"
-                            placeholder="Contact #*">
+                        <div class="input-group mb-4">
+                            <span class="input-group-text fs-3" id="basic-addon1">Phillippines (+63)</span>
+                            <input class="form-control fs-3" type="number" name="contact" aria-label="Username"
+                                aria-describedby="basic-addon1" placeholder="Contact #*">
+                        </div>
                         <button class="btn btn-primary" type="submit">Register</button>
                     </form>
                 </div>

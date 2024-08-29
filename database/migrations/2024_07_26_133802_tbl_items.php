@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('item_description')->nullable();
             $table->string('item_category');
             $table->integer('item_quantity');
+            $table->string('item_status')->nullable();
             $table->date('expired_at')->nullable();
             $table->timestamps();
 

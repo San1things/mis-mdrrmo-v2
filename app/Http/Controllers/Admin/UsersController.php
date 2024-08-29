@@ -35,7 +35,7 @@ class UsersController extends Controller
             6 => ['Succesful! The user has been locked and the account is now inactive.', 'warning'],
             7 => ['Succesful! The user has been unlocked and the account is ready to use again.', 'success'],
             8 => ['Failed! Email is taken please put another one.', 'danger'],
-            9 => ['Failed! Contact number must be 11 digits.', 'danger'],
+            9 => ['Failed! Contact number must be 10 digits. Please remove the first 0 because there is an integrated +63 input.', 'danger'],
         ];
 
         if (!empty(request()->input('alert'))) {
@@ -110,7 +110,7 @@ class UsersController extends Controller
             die();
         }
 
-        if (strlen($input['contact']) != 11) {
+        if (strlen($input['contact']) != 10) {
             return redirect('/users?alert=9');
             die();
         }

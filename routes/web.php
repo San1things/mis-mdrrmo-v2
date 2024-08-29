@@ -83,6 +83,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     //     Admin/Messages
     // =======================
     Route::get('/adminmessages', [MessagesController::class, 'index'])->name('adminmessages');
+    Route::post('/adminmessagereply', [MessagesController::class, 'adminMessageReply'])->name('adminmessagereply');
     // =======================
     //   Admin/Notifications
     // =======================
@@ -98,7 +99,6 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::get('/adminprofile', [StaticPageController::class, 'adminprofileIndex'])->name('adminprofile');
     Route::post('/adminupdateprofile', [StaticPageController::class, 'adminUpdateProfile'])->name('adminupdateprofile');
     Route::post('/adminupdatepassword', [StaticPageController::class, 'adminUpdatePassword'])->name('adminupdatepasword');
-
 
 
 

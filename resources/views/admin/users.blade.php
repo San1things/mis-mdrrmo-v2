@@ -228,10 +228,11 @@
                             <input class="form-control fs-4" id="birthday" name="birthday" type="date"></input>
 
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fs-5" for="floatingInput">Contact:</label>
-                            <input class="form-control fs-4" id="contact" name="contact" placeholder="Mobile Number*"
-                                required></input>
+                        <label class="form-label fs-5" for="floatingInput">Contact:</label>
+                        <div class="input-group mb-4">
+                            <span class="input-group-text fs-3" id="basic-addon1">Phillippines (+63)</span>
+                            <input class="form-control fs-3" type="number" id="contact" name="contact" aria-label="Username"
+                                aria-describedby="basic-addon1" placeholder="Mobile #*">
                         </div>
                         <div class="mb-3">
                             <select class="form-select fs-4" id="team" name="team">

@@ -22,6 +22,17 @@
         </div>
 
         <div class="admin-content">
+
+            @isset($alert)
+                <center>
+                    <div class="alert alert-dismissible fade show fs-3 alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                        role="alert">
+                        {{ !empty($alerts[$alert]) ? $alerts[$alert][0] : 'error' }}
+                        <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+                    </div>
+                </center>
+            @endisset
+
             <nav class="navbar navbar-expand-lg bg-body-light p-3">
                 <div class="container-xl">
                     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -62,8 +73,9 @@
                 @foreach ($messages as $message)
                     <div class="message-collapse" data-bs-toggle="collapse"
                         data-bs-target="#collapsed-div{{ $message->id }}" data-collapse-show="true" aria-expanded="false"
-                        aria-controls="collapsed-div">
-                        <h6>{{ $message->name }}</h6>
+                        aria-controls="collapsed-div"
+                        style="{{ $message->replied == 1 ? 'background-color: #8cddb7' : '' }}">
+                        <h6>{{ $message->name }} {{ $message->replied == 1 ? '(replied)' : '' }}</h6>
                         <p class="mc-cut-text">{{ Illuminate\Support\Str::limit($message->message, 100) }}...</p>
                         <p class="mc-date-time">
                             @php
@@ -103,26 +115,33 @@
                     <div class="collapse border border-top-0 px-5 pb-2" id="collapsed-div{{ $message->id }}"
                         style="position: relative;">
                         <p style="position: absolute;top: 10px;right: 20px;font-size: 1.3rem;color: gray;">
-                            {{ Carbon\Carbon::create($message->created_at)->format('D, h:ma. m/d/y') }}
+                            @if ($message->replied == 1)
+                                admin replied at: {{ Carbon\Carbon::create($message->updated_at)->format('h:ma. m/d/y') }}
+                            @else
+                                {{ Carbon\Carbon::create($message->created_at)->format('D, h:ma. m/d/y') }}
+                            @endif
                         </p>
                         <p style="font-size: 1.7rem; color:gray;">email: {{ $message->email }}</p>
                         <p>{{ $message->message }}</p>
 
+                        @if ($message->replied == 0)
+                            <div class="reply-container position-relative mb-3" style="display: none">
+                                <form action="/adminmessagereply?id={{ $message->id }}" method="POST">
+                                    @csrf
+                                    <p style="color: gray">Reply: </p>
+                                    <textarea class="form-control" id="" name="messagereply" style="width: 100%;font-size: 1.7rem;"
+                                        placeholder="Write something..." required></textarea>
+                                    <button class="btn btn-success fs-3 px-5 py-3 mt-3 position-absolute end-0"
+                                        type="submit">
+                                        <i class="bi bi-reply-fill"></i> Reply
+                                    </button>
+                                </form>
+                            </div>
 
-                        <div class="reply-container position-relative mb-3" style="display: none">
-                            <form action="/adminmessagereply" method="POST">
-                                <p style="color: gray">Reply: </p>
-                                <textarea class="form-control" id="" name="messagereply" style="width: 100%;font-size: 1.7rem;"
-                                    placeholder="Write something..."></textarea>
-                                <button class="btn btn-success fs-3 px-5 py-3 mt-3 position-absolute end-0" type="submit">
-                                    <i class="bi bi-reply-fill"></i> Reply
-                                </button>
-                            </form>
-                        </div>
-
-                        <button class="btn btn-primary fs-3 px-5 py-3 mb-3 san1-message-reply" data-reply-show="false">
-                            Reply
-                        </button>
+                            <button class="btn btn-primary fs-3 px-5 py-3 mb-3 san1-message-reply" data-reply-show="false">
+                                Reply
+                            </button>
+                        @endif
                     </div>
                 @endforeach
             </div>

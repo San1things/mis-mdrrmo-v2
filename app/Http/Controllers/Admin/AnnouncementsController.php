@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AnnouncementMailer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AnnouncementsController extends Controller
@@ -93,6 +95,38 @@ class AnnouncementsController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
+        // ADDING NOTIFICATION
+        $users = DB::table('tbl_users')
+            ->where('usertype', 'resident')->get();
+
+        foreach ($users as $user) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $user->id,
+                    'user_type' => 'resident',
+                    'title' => 'An announcement (' . $input['announcementname'] . ') has been posted',
+                    'description' => $input['announcementname'] . ': ' . $input['announcementdescription'],
+                    'link' => '/userannouncements',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+            $announcement = $input['announcementname'];
+            $announcementtype = $input['announcementtype'];
+            $announcementposted = Carbon::now('Asia/Manila')->format('h:ia, m/d/Y');
+            Mail::to($user->email)->send(new AnnouncementMailer($announcement, $announcementtype, $announcementposted));
+        }
+
+        // ===== UNCOMMENT IF GOODS NA SUBS =====
+        // $subscribers = DB::table('tbl_subscriptions')
+        //     ->get();
+        // foreach ($subscribers as $subscriber) {
+        //     $announcement = $input['announcementname'];
+        //     $announcementposted = Carbon::now('Asia/Manila')->format('h:ia, m/d/Y');
+        //     Mail::to($subscriber->email)->send(new AnnouncementMailer($announcement, $announcementposted));
+        // }
+
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
             ->insert([
@@ -119,6 +153,7 @@ class AnnouncementsController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
+        // ADDING LOGS
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
             ->insert([

@@ -33,7 +33,17 @@
                 </center>
             @endisset
 
-            <h3>All items({{ $itemsCount }})</h3>
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <h3>All items({{ $itemsCount }})</h3>
+                </div>
+                <div class="item-infos">
+                    <p class="fs-5">Low stock: <span class="badge text-bg-warning"> light yellow</span></p>
+                    <p class="fs-5">Expired: <span class="badge text-bg-danger"> light red</span></p>
+                </div>
+            </div>
+
+
             <nav class="navbar navbar-expand-lg bg-body-light p-3">
                 <div class="container-xl">
                     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -97,7 +107,13 @@
                     </thead>
                     <tbody>
                         @forelse ($items as $item)
-                            <tr>
+                            <tr class="
+                                @if ($item->item_status == 'expired')
+                                table-danger
+                                @elseif ($item->item_quantity <= 10)
+                                table-warning
+                                @endif
+                            ">
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->item_name }}</td>
                                 <td>{{ $item->item_description }}</td>
@@ -186,7 +202,7 @@
                 <form id="modalForm" action="" method="post">
                     @csrf
                     <div class="modal-body ms-2">
-                        <h2>Are you sure you want to delete this item?</h2>
+                        <h6>Are you sure you want to delete this item?</h6>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-danger fs-3 btn-delete" type="submit">Delete</button>
