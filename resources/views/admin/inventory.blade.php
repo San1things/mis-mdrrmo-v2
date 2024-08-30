@@ -219,6 +219,11 @@
                 $('.additem-btn').on('click', function() {
                     $('.btn-save').text('ADD')
                     $('#modalTitle').text('ADD ITEM')
+                    $('#itemname').val('')
+                    $('#itemdescription').val('')
+                    $('#itemcategory').val('')
+                    $('#itemexpired').val('')
+                    $('#itemquantity').val('')
                     $('#modalForm').attr('action', '/additem')
                 })
 

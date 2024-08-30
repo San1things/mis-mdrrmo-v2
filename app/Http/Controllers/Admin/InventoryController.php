@@ -169,4 +169,43 @@ class InventoryController extends Controller
 
         return view('admin.categories', $data);
     }
+
+    public function createCategory(Request $request)
+    {
+        $input = $request->input();
+
+        DB::table('tbl_categories')
+            ->insert([
+                'category_name' => $input['categoryname'],
+                'category_description' => $input['categorydescription'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+
+        return redirect('/categories');
+    }
+    public function updateCategory(Request $request)
+    {
+        $input = $request->input();
+
+        DB::table('tbl_categories')
+        ->where('id', $input['id'])
+            ->update([
+                'category_name' => $input['categoryname'],
+                'category_description' => $input['categorydescription'],
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+
+        return redirect('/categories');
+    }
+    public function deleteCategory(Request $request)
+    {
+        $input = $request->input();
+
+        DB::table('tbl_categories')
+        ->where('id', $input['id'])
+            ->delete();
+
+        return redirect('/categories');
+    }
 }

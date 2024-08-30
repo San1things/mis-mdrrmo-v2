@@ -66,6 +66,9 @@ Route::group(['middleware' => 'loginhandler'], function () {
     //     Admin/Categories
     // =======================
     Route::get('/categories', [InventoryController::class, 'categoriesIndex'])->name('admincategories');
+    Route::post('/createcategory', [InventoryController::class, 'createCategory'])->name('createcategory');
+    Route::post('/updatecategory', [InventoryController::class, 'updateCategory'])->name('updatecategory');
+    Route::post('/deletecategory', [InventoryController::class, 'deleteCategory'])->name('deletecategory');
     // =======================
     //     Admin/Seminars
     // =======================
