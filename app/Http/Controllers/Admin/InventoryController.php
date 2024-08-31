@@ -157,10 +157,22 @@ class InventoryController extends Controller
         return redirect('/inventory?alert=4');
     }
 
-    public function categoriesIndex()
+    public function categoriesIndex(Request $request)
     {
         $data = [];
-        $categories = DB::table('tbl_categories')->leftJoin('tbl_items', 'tbl_categories.id', '=', 'tbl_items.category_id')
+
+        $data['alerts'] = [
+            1 => ['Successful! Category has beeen added.', 'success'],
+            2 => ['Successful! A category has been updated!', 'primary'],
+            3 => ['Category has been deleted.', 'danger'],
+        ];
+
+        if(!empty($request->query('alert'))){
+            $data['alert'] = $request->query('alert');
+        }
+
+        $categories = DB::table('tbl_categories')
+            ->leftJoin('tbl_items', 'tbl_categories.id', '=', 'tbl_items.category_id')
             ->select('tbl_categories.*', DB::raw('COUNT(tbl_items.id) as item_count'))
             ->groupBy('tbl_categories.id')
             ->get()->toArray();
@@ -182,30 +194,32 @@ class InventoryController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
-        return redirect('/categories');
+        return redirect('/categories?alert=1');
     }
+
     public function updateCategory(Request $request)
     {
         $input = $request->input();
 
         DB::table('tbl_categories')
-        ->where('id', $input['id'])
+            ->where('id', $input['id'])
             ->update([
                 'category_name' => $input['categoryname'],
                 'category_description' => $input['categorydescription'],
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
-        return redirect('/categories');
+        return redirect('/categories?alert=2');
     }
+
     public function deleteCategory(Request $request)
     {
         $input = $request->input();
 
         DB::table('tbl_categories')
-        ->where('id', $input['id'])
+            ->where('id', $input['id'])
             ->delete();
 
-        return redirect('/categories');
+        return redirect('/categories?alert=3');
     }
 }

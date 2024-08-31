@@ -32,7 +32,7 @@
                     <a class="remove-design-notif" href="{{ $notification->link }}">
                         <div class="notif-banner">
                             <h6>{{ $notification->title }}</h6>
-                            <p>{{ Illuminate\Support\Str::limit($notification->description, 100) }}...</p>
+                            <p>{{ $notification->description }}</p>
                             <p class="notif-date">
                                 {{ \Carbon\Carbon::create($notification->created_at)->format('D h:ma - m/d/y') }}</p>
 

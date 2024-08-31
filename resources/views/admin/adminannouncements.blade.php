@@ -37,8 +37,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item border">
-                                <a class="nav-link"
-                                    href="?type=&searchAnnouncement={{ $qstring['searchAnnouncement'] }}"
+                                <a class="nav-link" href="?type=&searchAnnouncement={{ $qstring['searchAnnouncement'] }}"
                                     aria-current="page"
                                     style="{{ request('type') === null ? 'font-weight: 700;' : '' }}">View
                                     All</a>
@@ -95,8 +94,8 @@
                                         data-announcementlink="{{ $announcement->announcement_link }}"
                                         data-announcementtype="{{ $announcement->announcement_type }}" href="#">
                                         <i class="bi bi-pencil-square"></i></a>
-                                    <a class="btn btn-danger deleteitem-btn" data-bs-toggle="modal"
-                                        data-bs-target="#inventoryDeleteModal" data-id=""><i
+                                    <a class="btn btn-danger deleteannouncement-btn" data-bs-toggle="modal"
+                                        data-bs-target="#announcementDeleteModal" data-id="{{ $announcement->id }}"><i
                                             class="bi bi-trash3-fill"></i></a>
                                 </td>
                             </tr>
@@ -162,6 +161,26 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="announcementDeleteModal" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
+                </div>
+                <form id="deletemodalForm" action="" method="post">
+                    @csrf
+                    <div class="modal-body ms-2">
+                        <h6>Are you sure you want to delete this announcement?</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger fs-3 btn-delete" type="submit">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -187,6 +206,11 @@
                 $('.announcement-image-container').css("display", "none")
                 $('.btn-save').text('Update Announcement')
                 $('#modalForm').attr('action', '/adminupdateannouncement?id=' + id)
+            })
+
+            $('.deleteannouncement-btn').on('click', function() {
+                let id = $(this).data('id')
+                $('#deletemodalForm').attr('action', '/admindeleteannouncement?id=' + id)
             })
         })
     </script>

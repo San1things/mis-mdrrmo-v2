@@ -199,7 +199,7 @@
                 <div class="modal-header">
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
-                <form id="modalForm" action="" method="post">
+                <form id="deletemodalForm" action="" method="post">
                     @csrf
                     <div class="modal-body ms-2">
                         <h6>Are you sure you want to delete this item?</h6>
@@ -243,7 +243,7 @@
                     $('#itemquantity').val($(this).data('itemquantity'))
                     $('.btn-save').text('UPDATE')
                     $('#modalTitle').text('UPDATE ITEM')
-                    $('#modalForm').attr('action', '/updateitem')
+                    $('#modalForm').attr('action', '/updateitem?id=' + id)
 
                 })
 
@@ -260,7 +260,7 @@
 
                 $('.deleteitem-btn').on('click', function() {
                     let id = $(this).data('id');
-                    $('#modalForm').attr('action', '/deleteitem?id=' + id)
+                    $('#deletemodalForm').attr('action', '/deleteitem?id=' + id)
                 })
             })
         </script>

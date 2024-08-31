@@ -62,6 +62,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::get('/adminannouncements', [AnnouncementsController::class, 'index'])->name('adminannouncement');
     Route::post('/adminpostannouncement', [AnnouncementsController::class, 'announcementAdd'])->name('adminpostannouncement');
     Route::post('/adminupdateannouncement', [AnnouncementsController::class, 'announcementUpdate'])->name('adminupdateannouncement');
+    Route::post('/admindeleteannouncement', [AnnouncementsController::class, 'announcementDelete'])->name('admindeleteannouncement');
     // =======================
     //     Admin/Categories
     // =======================

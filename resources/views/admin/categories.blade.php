@@ -16,15 +16,26 @@
         </div>
 
         <div class="admin-content">
+            @isset($alert)
+                <center>
+                    <div class="alert alert-dismissible fade show fs-3 alert-{{ !empty($alerts[$alert]) ? $alerts[$alert][1] : '' }}"
+                        role="alert">
+                        {{ !empty($alerts[$alert]) ? $alerts[$alert][0] : 'error' }}
+                        <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+                    </div>
+                </center>
+            @endisset
+
             @foreach ($categories as $category)
                 <div class="card mb-3 position-relative">
                     <div class="position-absolute top-0 end-0 pe-3 pt-2">
-                        <a class="updatecategory-btn" data-bs-toggle="modal" data-bs-target="#categoryAddUpdateModal" type="button" href="#"
-                            data-id="{{ $category->id }}"
-                            data-category-name="{{ $category->category_name }}" data-category-description="{{ $category->category_description }}"><i
-                                class="bi bi-pencil-square me-3 jl-card-edit-btn"></i></a>
-                        <a class="deletecategory-btn" data-bs-toggle="modal" data-bs-target="#categoryDeleteModal" data-id="{{ $category->id }}"
-                            type="button" href="#"><i class="bi bi-x-lg jl-card-x-btn"></i></a>
+                        <a class="updatecategory-btn" data-bs-toggle="modal" data-bs-target="#categoryAddUpdateModal"
+                            data-id="{{ $category->id }}" data-category-name="{{ $category->category_name }}"
+                            data-category-description="{{ $category->category_description }}" type="button"
+                            href="#"><i class="bi bi-pencil-square me-3 jl-card-edit-btn"></i></a>
+                        <a class="deletecategory-btn" data-bs-toggle="modal" data-bs-target="#categoryDeleteModal"
+                            data-id="{{ $category->id }}" type="button" href="#"><i
+                                class="bi bi-x-lg jl-card-x-btn"></i></a>
                     </div>
                     <div class="card-body categories-card-body">
                         <h6 class="card-title categories-card title ms-2">{{ $category->category_name }}</h6>
@@ -56,7 +67,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="fomr-label fs-3" for="floatingInput">Category Description:</label>
-                                <textarea class="form-control fs-3" id="categorydescription" name="categorydescription" placeholder="Category Description"></textarea>
+                                <textarea class="form-control fs-3" id="categorydescription" name="categorydescription"
+                                    placeholder="Category Description"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -74,7 +86,7 @@
                     <div class="modal-header">
                         <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                     </div>
-                    <form id="modalForm" action="" method="post">
+                    <form id="deletemodalForm" action="" method="post">
                         @csrf
                         <div class="modal-body ms-2">
                             <h6 class="fs-2">Are you sure you want to delete this category?</h6>
@@ -93,7 +105,6 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-
             $('.addcategory-btn').on('click', function() {
                 $('.btn-save').text('Add Category')
                 $('#categoryname').val('')
@@ -112,7 +123,7 @@
 
             $('.deletecategory-btn').on('click', function() {
                 let id = $(this).data('id')
-                $('#modalForm').attr('action', '/deletecategory?id=' + id)
+                $('#deletemodalForm').attr('action', '/deletecategory?id=' + id)
             })
         })
     </script>

@@ -31,6 +31,7 @@ class AnnouncementsController extends Controller
             2 => ['Successful! Announcement has beeen updated', 'success'],
             3 => ['Well Done! Announcement has beeen posted publicly!', 'success'],
             4 => ['Error! Please put the reqired input!', 'danger'],
+            5 => ['Deleted. An announcement has been deleted.', 'danger'],
         ];
 
         if (!empty($request->query('alert'))) {
@@ -164,5 +165,15 @@ class AnnouncementsController extends Controller
                 'updated_at' => Carbon::now()
             ]);
         return redirect('/adminannouncements?alert=2');
+    }
+
+    public function announcementDelete(Request $request) {
+        $input = $request->input();
+
+        DB::table('tbl_announcements')
+        ->where('id', $input['id'])
+        ->delete();
+
+        return redirect('/adminannouncements?alert=5');
     }
 }
