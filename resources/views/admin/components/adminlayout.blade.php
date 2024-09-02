@@ -71,11 +71,21 @@
                         <span>Announcements</span>
                     </a>
                 </li>
-                <li class="sidebar-item" style="{{ $path == 'adminseminars' ? 'background-color: #3b7ddd' : '' }}">
-                    <a class="sidebar-link" href="/adminseminars">
+                <li class="sidebar-item"
+                    style="{{ $path == 'adminseminars' || $path == 'adminhistory' ? 'background-color: #3b7ddd' : '' }}">
+                    <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
+                        data-bs-target="#collapsetest1" href="#" aria-expanded="true" aria-controls="collapsetest">
                         <i class="bi bi-person-video3"></i>
                         <span>Seminars</span>
                     </a>
+                    <ul class="sidebar-dropdown list-unstyled collapse" id="collapsetest1" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/adminseminars">Upcoming</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/adminhistory">History</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="sidebar-item" style="{{ $path == 'subscriptions' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link" href="/subscriptions">
@@ -124,11 +134,11 @@
                 <li class="sidebar-item"
                     style="{{ $path == 'logs' || $path == 'adminprofile' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#collapsetest" href="#" aria-expanded="true" aria-controls="collapsetest">
+                        data-bs-target="#collapsetest2" href="#" aria-expanded="true" aria-controls="collapsetest">
                         <i class="bi bi-gear-fill"></i>
                         <span>Settings</span>
                     </a>
-                    <ul class="sidebar-dropdown list-unstyled collapse" id="collapsetest" data-bs-parent="#sidebar">
+                    <ul class="sidebar-dropdown list-unstyled collapse" id="collapsetest2" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/logs">Logs</a>
                         </li>
@@ -238,9 +248,6 @@
                     localStorage.setItem('darkMode', 'disabled');
                 }
             })
-
-
-
         })
     </script>
 

@@ -4,7 +4,7 @@
         <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark">
             <div class="header-title p-2 flex-grow-1">
                 <h1>Seminars</h1>
-                <p>This are all upcoming seminars. ({{ $seminarCount }})</p>
+                <p>This is where all of the seminar's history. ({{ $seminarCount }})</p>
             </div>
             <div class="header-export pe-3">
 
@@ -28,11 +28,11 @@
             @endisset
 
             <div class="admin-seminar-container" style="max-height:74vh; min-height:74vh; overflow-y:scroll;">
-                @foreach ($seminars as $seminar)
+                @foreach ($historyseminars as $hseminar)
                     <div class="seminar-collapse" data-bs-toggle="collapse"
-                        data-bs-target="#collapsed-div{{ $seminar->id }}" aria-expanded="false"
+                        data-bs-target="#collapsed-div{{ $hseminar->id }}" aria-expanded="false"
                         aria-controls="collapsed-div">
-                        <h6>{{ $seminar->title }}</h6>
+                        <h6>{{ $hseminar->title }}</h6>
                         <p>Start date: {{ Carbon\Carbon::create($seminar->starts_at)->format('M d, Y, h:m a') }}</p>
                         <p class="click-details-text">click for more details...</p>
                         <div class="adminseminar-btns" data-state="hide" style="display: none">
@@ -91,45 +91,4 @@
             </div>
         </div>
     </div>
-    @push('scripts')
-        <script>
-            $(document).ready(function() {
-
-                $('.createseminar-btn').on('click', function() {
-                    $('#seminartitle').val('')
-                    $('#seminardescription').val('')
-                    $('#seminarlocation').val('')
-                    $('#startdate').val('')
-                    $('.btn-save').text('Create Seminar')
-                    $('#modalForm').attr('action', 'admincreateseminar')
-                })
-
-                $('.seminar-edit-btn').on('click', function() {
-                    let id = $(this).data('sid');
-                    $('#seminartitle').val($(this).data('stitle'))
-                    $('#seminardescription').val($(this).data('sdescription'))
-                    $('#seminarlocation').val($(this).data('slocation'))
-                    $('#startdate').val($(this).data('sstart'))
-                    $('.btn-save').text('Update Seminar')
-                    $('#modalForm').attr('action', 'adminupdateseminar?sid=' + id)
-                })
-
-                $(".seminar-collapse").on('click', function() {
-                    let child = $(this).find('.adminseminar-btns');
-                    let childtext = $(this).find('.click-details-text');
-
-                    let state = child.data('state')
-                    if (state == 'hide') {
-                        childtext.text('')
-                        child.attr('style', 'display: block')
-                        child.data('state', 'show')
-                    } else {
-                        childtext.text('Click for more details...')
-                        child.attr('style', 'display: none')
-                        child.data('state', 'hide')
-                    }
-                })
-            })
-        </script>
-    @endpush
 @endsection

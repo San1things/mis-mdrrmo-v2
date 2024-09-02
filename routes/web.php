@@ -73,11 +73,12 @@ Route::group(['middleware' => 'loginhandler'], function () {
     // =======================
     //     Admin/Seminars
     // =======================
-    Route::get('/adminseminars', [SeminarsController::class, 'index'])->name('adminseminars');
+    Route::get('/adminseminars', [SeminarsController::class, 'upcomingIndex'])->name('adminseminars');
     Route::post('/admincreateseminar', [SeminarsController::class, 'createSeminar'])->name('createseminar');
     Route::post('/adminupdateseminar', [SeminarsController::class, 'updateSeminar'])->name('adminupdateseminar');
     Route::get('/seminarcollapseddiv', [SeminarsController::class, 'collapsedDiv'])->name('seminarcollapseddiv');
     Route::post('/adminremoveattendee', [SeminarsController::class, 'adminRemoveAttendee'])->name('adminremoveattendee');
+    Route::get('/adminhistory', [SeminarsController::class, 'historyIndex'])->name('adminhistory');
     // =======================
     //   Admin/Subscriptions
     // =======================

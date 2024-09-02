@@ -11,7 +11,7 @@ use function Laravel\Prompts\select;
 
 class SeminarsController extends Controller
 {
-    public function index(Request $request)
+    public function upcomingIndex(Request $request)
     {
         $data = [];
         $data['alerts'] = [
@@ -24,7 +24,8 @@ class SeminarsController extends Controller
             $data['alert'] = request()->query('alert');
         }
 
-        $seminars = DB::table('tbl_seminars');
+        $seminars = DB::table('tbl_seminars')
+        ->where('status', 'upcoming');
 
         $data['seminars'] = $seminars->orderByDesc('id')->paginate(7)->appends($request->all());
         $data['seminarCount'] = $seminars->count();
@@ -167,5 +168,18 @@ class SeminarsController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
         return redirect('/seminarcollapseddiv?alert=1&id=' . $sid);
+    }
+
+    public function historyIndex(Request $request) {
+        $data = [];
+
+        $seminars = DB::table('tbl_seminars')
+        ->where('status', 'ongoing')
+        ->orWhere('status', 'finished')
+        ->orWhere('status', 'canceled');
+
+        $data['historyseminars'] = $seminars->orderBy('updated_at')->paginate()->appends($request->all());
+        
+        return view('admin.adminhistory', $data);
     }
 }
