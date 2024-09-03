@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('seminar_id');
+            $table->string('cert_request')->default('not');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('tbl_users')->onDelete('cascade');

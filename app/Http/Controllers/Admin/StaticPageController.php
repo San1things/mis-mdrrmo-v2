@@ -59,6 +59,7 @@ class StaticPageController extends Controller
         $getEmail = DB::table('tbl_subscriptions')
             ->where('id', $input['id'])
             ->first();
+            
         Mail::to($getEmail->email)->send(new UnsubscribeMailer);
 
         DB::table('tbl_subscriptions')

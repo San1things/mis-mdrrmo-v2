@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Svg\Tag\Rect;
 
 use function Laravel\Prompts\select;
 
@@ -25,7 +26,7 @@ class SeminarsController extends Controller
         }
 
         $seminars = DB::table('tbl_seminars')
-        ->where('status', 'upcoming');
+            ->where('status', 'upcoming');
 
         $data['seminars'] = $seminars->orderByDesc('id')->paginate(7)->appends($request->all());
         $data['seminarCount'] = $seminars->count();
@@ -90,7 +91,7 @@ class SeminarsController extends Controller
         return redirect('/adminseminars?alert=2');
     }
 
-    public function collapsedDiv(Request $request)
+    public function seminarCollapsedDiv(Request $request)
     {
         $data = [];
         $qstring = [];
@@ -170,16 +171,77 @@ class SeminarsController extends Controller
         return redirect('/seminarcollapseddiv?alert=1&id=' . $sid);
     }
 
-    public function historyIndex(Request $request) {
+    public function historyIndex(Request $request)
+    {
         $data = [];
 
         $seminars = DB::table('tbl_seminars')
-        ->where('status', 'ongoing')
-        ->orWhere('status', 'finished')
-        ->orWhere('status', 'canceled');
+            ->where('status', 'ongoing')
+            ->orWhere('status', 'finished')
+            ->orWhere('status', 'cancelled');
+
+        $data['hseminarCount'] = DB::table('tbl_seminars')
+            ->where('status', 'ongoing')
+            ->orWhere('status', 'finished')
+            ->orWhere('status', 'cancelled')
+            ->count();
 
         $data['historyseminars'] = $seminars->orderBy('updated_at')->paginate()->appends($request->all());
-        
+
         return view('admin.adminhistory', $data);
+    }
+
+    public function historyCollapsedDiv(Request $request)
+    {
+        $data = [];
+        $data['alerts'] = [
+            1 => ['Successful! Certificate has been sent', 'success']
+        ];
+
+        if(!empty($request->query('alert'))){
+            $data['alert'] = $request->query('alert');
+        }
+
+        $sid = $request->query('id');
+
+        $data['seminar'] = $seminar = DB::table('tbl_seminars')
+            ->where('id', $sid)->first();
+
+        $attendees = DB::table('tbl_attendees')
+            ->where('seminar_id', $sid)
+            ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_attendees.user_id');
+
+        if ($request->query('searchAttendee')) {
+            $name = $request->query('searchAttendee');
+            $attendees->where('tbl_users.firstname', 'like', "%$name%")
+                ->orWhere('tbl_users.lastname', 'like', "%$name%");
+        }
+
+        $data['attendeesCount'] = DB::table('tbl_attendees')
+            ->where('seminar_id', $sid)->count();
+
+        $data['attendees'] = $attendees->get()->toArray();
+
+        return view('admin.historycollapseddiv', $data);
+    }
+
+    public function sendCertificate(Request $request)
+    {
+        $sid = $request->query('sid');
+        $uid = $request->query('uid');
+
+        $user = DB::table('tbl_users')
+        ->where('id', $uid)
+        ->first();
+
+        DB::table('tbl_attendees')
+        ->where('seminar_id', $sid)
+        ->where('user_id', $uid)
+        ->update([
+            'cert_request' => 'sent',
+            'updated_at' => Carbon::now()
+        ]);
+
+        return redirect('/historycollapseddiv?alert=1&id=' . $sid);
     }
 }

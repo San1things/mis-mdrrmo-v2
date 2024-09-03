@@ -4,7 +4,7 @@
         <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark">
             <div class="header-title p-2 flex-grow-1">
                 <h1>Seminars</h1>
-                <p>This is where all of the seminar's history. ({{ $seminarCount }})</p>
+                <p>This is where all of the seminar's history. ({{ $hseminarCount }})</p>
             </div>
             <div class="header-export pe-3">
 
@@ -31,64 +31,30 @@
                 @foreach ($historyseminars as $hseminar)
                     <div class="seminar-collapse" data-bs-toggle="collapse"
                         data-bs-target="#collapsed-div{{ $hseminar->id }}" aria-expanded="false"
-                        aria-controls="collapsed-div">
-                        <h6>{{ $hseminar->title }}</h6>
-                        <p>Start date: {{ Carbon\Carbon::create($seminar->starts_at)->format('M d, Y, h:m a') }}</p>
-                        <p class="click-details-text">click for more details...</p>
-                        <div class="adminseminar-btns" data-state="hide" style="display: none">
-                            <button class="btn btn-primary fs-3 px-3 seminar-edit-btn" data-sid="{{ $seminar->id }}"
-                                data-stitle="{{ $seminar->title }}" data-sdescription="{{ $seminar->description }}"
-                                data-slocation="{{ $seminar->location }}" data-sstart="{{ $seminar->starts_at }}"
-                                data-bs-toggle="modal" data-bs-target="#seminarsAddUpdateModal">Edit Seminar</button>
-                            <button class="btn btn-success fs-3 px-3">Start Seminar</button>
-                        </div>
+                        aria-controls="collapsed-div"
+                        style="
+                        @if ($hseminar->status == 'finished')
+                        background-color: #ceffd8;
+                        color: black;
+                        @elseif($hseminar->status == 'cancelled')
+                        background-color: #ff9595;
+                        @endif">
+                        <h6>{{ $hseminar->title }}
+                            @if ($hseminar->status == 'finished')
+                                (finished)
+                            @elseif ($hseminar->status == 'cancelled')
+                                (cancelled)
+                            @endif
+                        </h6>
+                        <p>{{ Carbon\Carbon::create($hseminar->updated_at)->format('M d, Y') }}</p>
                     </div>
-                    <div class="collapse border border-top-0 p-5" id="collapsed-div{{ $seminar->id }}">
-                        <iframe src="/seminarcollapseddiv?id={{ $seminar->id }}" style="border: none" width="100%"
+                    <div class="collapse border border-top-0" id="collapsed-div{{ $hseminar->id }}">
+                        <iframe src="/historycollapseddiv?id={{ $hseminar->id }}" style="border: none" width="100%"
                             height="400px"></iframe>
                     </div>
                 @endforeach
             </div>
-            {{ $seminars->links('pagination::bootstrap-5') }}
-        </div>
-    </div>
-
-    <div class="modal fade" id="seminarsAddUpdateModal" aria-labelledby="exampleModalLabel" aria-hidden="true"
-        tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalTitle"></h1>
-                    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
-                </div>
-                <form id="modalForm" action="/admincreateseminar" method="post">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label fs-3" for="form-label fs-4">Seminar Title:</label>
-                            <input class="form-control fs-3" id="seminartitle" name="seminartitle" type="text"
-                                placeholder="Seminar Title">
-                        </div>
-                        <div class="mb-3">
-                            <label class="fomr-label fs-3" for="floatingInput">Seminar Description:</label>
-                            <textarea class="form-control fs-3" id="seminardescription" name="seminardescription" style="height: 150px"
-                                placeholder="Seminar Description"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fs-3" for="form-label fs-4">Seminar Location:</label>
-                            <input class="form-control fs-3" id="seminarlocation" name="seminarlocation" type="text"
-                                placeholder="Seminar Location">
-                        </div>
-                        <div class="mb-3">
-                            <span class="fs-4" id="itemexpiredlabel">Start Date:</span>
-                            <input class="form-control fs-3" id="startdate" name="startdate" type="datetime-local"></input>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary fs-3 px-5 btn-save" type="submit">Create Seminar</button>
-                    </div>
-                </form>
-            </div>
+            {{ $historyseminars->links('pagination::bootstrap-5') }}
         </div>
     </div>
 @endsection
