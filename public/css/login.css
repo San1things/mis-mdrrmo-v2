@@ -155,3 +155,60 @@ body {
     right: 10px;
     font-size: 2.5rem
 }
+
+
+/* =====VERIFICATION===== */
+
+.verification-content {
+    padding: 6vh 0;
+}
+
+.verification-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+    padding: 40px 40px;
+    border-radius: 10px;
+    background: linear-gradient(67.6deg, rgb(19, 116, 197) -2.8%, rgb(193, 224, 250) 44.6%, rgb(225, 242, 254) 102.4%);
+}
+
+.verification-container a:nth-child(2) {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'poppins';
+    transition: all ease-in-out 0.2s;
+}
+
+.verification-container a:nth-child(2):hover {
+    color: white;
+}
+
+.verification-image{
+    padding-bottom: 30px;
+}
+
+.verification-image img {
+    height: 15vh;
+    border-radius: 100%;
+}
+
+.verification-inputs button {
+    width: 100%;
+    font-size: 1.7rem;
+    padding: 8px;
+}
+
+.verification-inputs .jl-label {
+    text-align: left !important;
+    display: block;
+    width: 100%;
+}
+
+
+

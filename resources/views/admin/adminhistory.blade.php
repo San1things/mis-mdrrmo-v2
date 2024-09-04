@@ -3,7 +3,7 @@
     <div class="container-xl mt-3">
         <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark">
             <div class="header-title p-2 flex-grow-1">
-                <h1>Seminars</h1>
+                <h1>Seminar History</h1>
                 <p>This is where all of the seminar's history. ({{ $hseminarCount }})</p>
             </div>
             <div class="header-export pe-3">
@@ -34,7 +34,7 @@
                         aria-controls="collapsed-div"
                         style="
                         @if ($hseminar->status == 'finished')
-                        background-color: #ceffd8;
+                        background-color: #D1E7DD;
                         color: black;
                         @elseif($hseminar->status == 'cancelled')
                         background-color: #ff9595;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -113,6 +114,81 @@ class LoginController extends Controller
             return redirect('/register?alert=5');
             die();
         }
+
+        //OTP
+        $otpcode = Str::upper(Str::random(6));
+        $otptoken = Str::random(12);
+
+        DB::table('tbl_users')
+            ->insert([
+                'firstname' => $input['firstname'],
+                'lastname' => $input['lastname'],
+                'email' => $input['email'],
+                'usertype' => $input['usertype'],
+                'username' => $input['username'],
+                'password' => md5($input['password']),
+                'gender' => $input['gender'],
+                'address' => $input['address'],
+                'bday' => $input['bday'],
+                'contact' => $input['contact'],
+                'team' => $input['team'],
+                'otp' => $otpcode,
+                'otp_token' => $otptoken,
+                'otp_added_at' => Carbon::now()->toDateTimeString(),
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+
+        return redirect('/verification?otp_token=' . $otptoken);
+    }
+
+    public function verification(Request $request)
+    {
+        $data = [];
+        $query = $request->query();
+
+        // if (empty($query)) {
+        //     return redirect('/login?alert=3');
+        //     die();
+        // }
+
+        $checktoken = DB::table('tbl_users')
+            ->where('otp_token', $query['otp_token'])
+            ->count();
+
+        if ($checktoken == 0) {
+            return redirect('/login?alert=3');
+            die();
+        }
+
+        $checkverified = DB::table('tbl_users')
+        ->where('otp_token', $query['otp_token'])
+        ->first();
+
+        if ($checkverified->verified == 1){
+            return redirect('/login');
+        }
+
+        if(!$query['alert']){
+            $newotp = Str::upper(Str::random(6));
+
+            DB::table('tbl_users')
+            ->where('otp_token', $query['otp_token'])
+            ->update([
+                'otp' => $newotp,
+                'otp_added_at' => Carbon::now(),
+            ]);
+
+            $user = DB::table('tbl_users')
+            ->where('id', $checkverified->id)
+            ->first();
+
+            $otpcode = $newotp;
+            $fullname = $user->firstname . ' ' . $user->lastname;
+            // MAIL HERE
+        }
+
+        return view('verification', $data);
     }
 
 

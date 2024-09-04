@@ -560,6 +560,10 @@ footer .footer-text {
     font-size: 2.0rem;
     padding: 10px 30px;
 }
+.userseminar-content .seminar-button button {
+    font-size: 2.0rem;
+    padding: 10px 20px;
+}
 
 .userseminar-content .seminar-button p {
     font-size: 1.5rem;

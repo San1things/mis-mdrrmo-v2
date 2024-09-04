@@ -5,7 +5,8 @@
             <div class="userseminar-title">
                 <center>
                     <h1>Seminars:</h1>
-                    <p>This are the upcoming seminars from our organization. Join us and learn different knowledge from our org.</p>
+                    <p>This are the upcoming seminars from our organization. Join us and learn different knowledge from our
+                        org.</p>
                 </center>
             </div>
 
@@ -27,6 +28,10 @@
                             ->where('user_id', $userinfo[0])
                             ->where('seminar_id', $seminar->id)
                             ->count();
+
+                            $attendeeCount = DB::table('tbl_attendees')
+                            ->where('seminar_id', $seminar->id)
+                            ->count();
                     @endphp
 
                     @if ($seminar->status == 'finished')
@@ -41,7 +46,8 @@
                             <div class="seminar-collapse bg-success bg-gradient text-white bg-opacity-75"
                                 style="cursor: default">
                                 <h4>{{ $seminar->title }} (Finished)</h4>
-                                <p>It's so sad you didn't make it. Better join us next time and let's learn be safe and
+                                <p>It
+                                    's so sad you didn't make it. Better join us next time and let's learn be safe and
                                     ready all the time!</p>
                             </div>
                         @endif
@@ -63,7 +69,8 @@
 
                     <div class="collapse border border-top-0 collapsed-div" id="collapsed-div{{ $seminar->id }}">
                         <p class="pb-5">{{ $seminar->description }}</p>
-                        <p style="{{ $attendeeCheck >= 1 ? 'font-weight: bolder; color: #5cb85c;' : ''}}">Location: {{ $seminar->location }}</p>
+                        <p style="{{ $attendeeCheck >= 1 ? 'font-weight: bolder; color: #5cb85c;' : '' }}">Location:
+                            {{ $seminar->location }}</p>
                         <p>{{ $seminar->status == 'ongoing' || $seminar->status == 'finished' ? 'Seminar started at' : 'Starts at' }}:
                             {{ Carbon\Carbon::create($seminar->starts_at)->format('M d, Y || h:ma') }}</p>
                         @if ($seminar->status == 'upcoming')
@@ -86,13 +93,25 @@
                         @elseif ($seminar->status == 'finished')
                             <div class="seminar-button">
                                 <center>
-                                    <a class="btn btn-success" href="/userseminarreqcert?sid={{ $seminar->id }}">Request
-                                        Certificate</a>
-                                    <p>Congratualtions! Get your certificate now!</p>
+                                    @php
+                                        $requestcheck = DB::table('tbl_attendees')
+                                            ->where('seminar_id', $seminar->id)
+                                            ->where('user_id', $userinfo[0])
+                                            ->first();
+                                    @endphp
+                                    @if ($requestcheck->cert_request == 'req')
+                                        <p>Certificate has been requested!</p>
+                                    @elseif ($requestcheck->cert_request == 'sent')
+                                        <p style="color: #5cb85c">Certificate has been sent!</p>
+                                    @else
+                                        <a class="btn btn-success"
+                                            href="/userseminarreqcert?sid={{ $seminar->id }}&uid={{ $userinfo[0] }}">Request
+                                            Certificate</a>
+                                        <p>Congratualtions! Get your certificate now!</p>
+                                    @endif
                                 </center>
                             </div>
                         @endif
-
                     </div>
                 @endforeach
             </div>

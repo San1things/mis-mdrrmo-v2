@@ -220,7 +220,7 @@ class SeminarsController extends Controller
         $data['attendeesCount'] = DB::table('tbl_attendees')
             ->where('seminar_id', $sid)->count();
 
-        $data['attendees'] = $attendees->get()->toArray();
+        $data['attendees'] = $attendees->orderByDesc('updated_at')->paginate(30)->appends($request->all());
 
         return view('admin.historycollapseddiv', $data);
     }

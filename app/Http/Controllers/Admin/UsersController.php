@@ -122,7 +122,7 @@ class UsersController extends Controller
                 'email' => $input['email'],
                 'usertype' => $input['usertype'],
                 'username' => $input['username'],
-                'password' => $input['addpassword1'],
+                'password' => md5($input['addpassword1']),
                 'gender' => $input['gender'],
                 'address' => $input['address'],
                 'bday' => $input['birthday'],

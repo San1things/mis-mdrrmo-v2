@@ -59,9 +59,9 @@
                             <i class="bi bi-eye-fill" id="eye-logo2"></i>
                         </div>
                         <div class="input-group mb-3">
-                            <input class="form-control fs-3" id="Fullname" name="fname" type="text"
+                            <input class="form-control fs-3" id="Fullname" name="firstname" type="text"
                                 placeholder="First Name*">
-                            <input class="form-control fs-3" name="lname" type="text" placeholder="Last Name*">
+                            <input class="form-control fs-3" name="lastname" type="text" placeholder="Last Name*">
                         </div>
                         <label class="fs-5 jl-label" for="Birthday">Birthday:</label>
                         <input class="form-control mb-4 fs-3" id="Birthday" name="bday" type="date">

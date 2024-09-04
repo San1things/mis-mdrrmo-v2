@@ -138,7 +138,7 @@ class ResidentController extends Controller
             ->orderByDesc('id')
             ->get()
             ->toArray();
-        $data['attendeeCount'] = DB::table('tbl_attendees')->count();
+
         return view('user.userseminars', $data);
     }
 
@@ -217,6 +217,7 @@ class ResidentController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
+        //ADDING NOTIF
         $orgusers = DB::table('tbl_users')
             ->where('usertype', 'admin')
             ->orWhere('usertype', 'staff')->get();
@@ -235,6 +236,43 @@ class ResidentController extends Controller
                 ]);
         }
         return redirect('/userseminars?alert=2');
+    }
+
+    public function userSeminarReqCert(Request $request)
+    {
+        $sid = $request->query('sid');
+        $uid = $request->query('uid');
+        $userinfo = $request->attributes->get('userinfo');
+
+        DB::table('tbl_attendees')
+            ->where('user_id', $uid)
+            ->where('seminar_id', $sid)
+            ->update([
+                'cert_request' => 'req'
+            ]);
+
+        $seminarinfo = DB::table('tbl_seminars')
+            ->where('id', $sid)
+            ->first();
+
+        $orgusers = DB::table('tbl_users')
+            ->where('usertype', 'admin')
+            ->orWhere('usertype', 'staff')->get();
+
+        foreach ($orgusers as $orguser) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $orguser->id,
+                    'user_type' => 'org',
+                    'title' => 'A resident request a certificate from our seminar.',
+                    'description' => $userinfo[1] . ' ' . $userinfo[2] . ' requested a certificate from our seminar(' . $seminarinfo->title . ').',
+                    'link' => '/adminseminars',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
+        return redirect('/userseminars?alert=3');
     }
 
     public function userprofile(Request $request)

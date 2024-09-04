@@ -33,6 +33,7 @@ Route::group(['middleware' => 'havesessionkey'], function () {
     Route::post('/loginprocess', [LoginController::class, 'loginProcess'])->name('loginprocess');
     Route::get('/register', [LoginController::class, 'register'])->name('registerpage');
     Route::post('/registerprocess', [LoginController::class, 'registerProcess'])->name('registerprocess');
+    Route::get('/verification', [LoginController::class, 'verification'])->name('verification');
 });
 
 
@@ -121,6 +122,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::get('/userseminars', [ResidentController::class, 'userseminars'])->name('userseminars');
     Route::get('/userjoinseminar', [ResidentController::class, 'userJoinSeminar'])->name('userjoinseminar');
     Route::get('/userunregisterseminar', [ResidentController::class, 'userUnregisterSeminar'])->name('userunregisterseminar');
+    Route::get('/userseminarreqcert', [ResidentController::class, 'userSeminarReqCert'])->name('userseminarreqcert');
     Route::get('/userprofile', [ResidentController::class, 'userprofile'])->name('userprofile');
     Route::post('/userupdateprofile', [ResidentController::class, 'userUpdateProfile'])->name('userupdateprofile');
     Route::post('/userupdatepassword', [ResidentController::class, 'userUpdatePassword'])->name('userupdatepassword');
