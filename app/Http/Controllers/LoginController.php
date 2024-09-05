@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OTPMailer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class LoginController extends Controller
@@ -17,6 +19,7 @@ class LoginController extends Controller
             1 => ['Wrong email or pasword or the account is inactive, try again.', 'danger', 'Error!'],
             2 => ['Session expired.', 'warning', 'Error!'],
             3 => ['You have no permission to access.', 'danger', 'Error!'],
+            4 => ['You are now verified, please try to log in now.', 'success', 'Succesful!'],
         ];
         if (!empty(request()->input('alert'))) {
             $data['alert'] = request()->input('alert');
@@ -62,7 +65,17 @@ class LoginController extends Controller
         $request->session()->put('sessionkey', $userid);
         session(['sessionkey' => $userid]);
 
+
+
         if ($user->usertype == 'admin' || $user->usertype == 'staff') {
+            DB::table('tbl_logs')
+                ->insert([
+                    'user_id' => $user->id,
+                    'log_title' => "Logged in.",
+                    'log_description' => $user->firstname . ' ' . $user->lastname . ' logged in the system.',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
             return  redirect('/users');
         } else if ($user->usertype == 'resident') {
             return redirect('/userhome');
@@ -142,10 +155,20 @@ class LoginController extends Controller
         return redirect('/verification?otp_token=' . $otptoken);
     }
 
-    public function verification(Request $request)
+    public function verificationIndex(Request $request)
     {
         $data = [];
         $query = $request->query();
+
+        $data['alerts'] = [
+            1 => ['Error! Please input an OTP Code.', 'danger'],
+            2 => ['Error! OTP is incorrect', 'danger'],
+            3 => ['Error! OTP has been expired, please request again.', 'danger'],
+        ];
+
+        if (!empty($request->query('alert'))) {
+            $data['alert'] = $request->query('alert');
+        }
 
         // if (empty($query)) {
         //     return redirect('/login?alert=3');
@@ -162,35 +185,74 @@ class LoginController extends Controller
         }
 
         $checkverified = DB::table('tbl_users')
-        ->where('otp_token', $query['otp_token'])
-        ->first();
+            ->where('otp_token', $query['otp_token'])
+            ->first();
 
-        if ($checkverified->verified == 1){
+        if ($checkverified->verified == 1) {
             return redirect('/login');
         }
 
-        if(!$query['alert']){
+        if (!$request->query('alert')) {
             $newotp = Str::upper(Str::random(6));
 
             DB::table('tbl_users')
-            ->where('otp_token', $query['otp_token'])
-            ->update([
-                'otp' => $newotp,
-                'otp_added_at' => Carbon::now(),
-            ]);
+                ->where('otp_token', $query['otp_token'])
+                ->update([
+                    'otp' => $newotp,
+                    'otp_added_at' => Carbon::now(),
+                ]);
 
             $user = DB::table('tbl_users')
-            ->where('id', $checkverified->id)
-            ->first();
+                ->where('id', $checkverified->id)
+                ->first();
 
             $otpcode = $newotp;
             $fullname = $user->firstname . ' ' . $user->lastname;
             // MAIL HERE
+            Mail::to($checkverified->email)->send(new OTPMailer($otpcode, $fullname));
         }
+        $data['otptoken'] = $query['otp_token'];
 
         return view('verification', $data);
     }
 
+    public function verificationProcess(Request $request)
+    {
+        $input = $request->input();
+
+        if (empty($input['otp'])) {
+            return redirect('/verification?otp_token=' . $input['otp_token'] . '&alert=1');
+            die();
+        }
+
+        $checkOTP = DB::table('tbl_users')
+            ->where('otp_token', $input['otp_token'])
+            ->first();
+
+        if ($input['otp'] != $checkOTP->otp) {
+            return redirect('/verification?otp_token=' . $input['otp_token'] . '&alert=2');
+            die();
+        }
+
+        $otp_created = Carbon::parse($checkOTP->otp_added_at);
+        $now = Carbon::now();
+        $minutesPassed = $otp_created->diffInMinutes($now);
+
+        if ($minutesPassed >= 3) {
+            return redirect('/verification?otp_token=' . $input['otp_token'] . '&alert=3');
+            die();
+        }
+
+        if ($input['otp'] == $checkOTP->otp) {
+            DB::table('tbl_users')
+                ->where('otp_token', $input['otp_token'])
+                ->update([
+                    'verified' => 1,
+                ]);
+
+            return redirect('/login?alert=4');
+        }
+    }
 
     public function logout(Request $request)
     {

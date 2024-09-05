@@ -44,12 +44,16 @@
 
                     <form action="/verificationprocess" method="POST">
                         @csrf
-                        <input class="form-control mb-4 fs-3" id="Username" name="username" type="text"
-                            placeholder="OTP Code*">
+                        <input class="form-control mb-4 fs-3" id="otp" name="otp" type="text"
+                            placeholder="OTP Code*" required>
+                        <input class="form-control mb-4 fs-3" id="otp_token" name="otp_token" type="text" value="{{ $otptoken }}"
+                            hidden>
                         <button class="btn btn-primary" type="submit">Confirm</button>
                     </form>
                 </div>
-                <p>Didn't receive a code? <a href="/login">Request</a> here.</p>
+                <div class="request-otp-container">
+                    <p>Didn't receive a code? <a href="#" id="request-link">Request</a> here.</p>
+                </div>
             </center>
         </div>
     </div>
