@@ -52,7 +52,7 @@
                     </form>
                 </div>
                 <div class="request-otp-container">
-                    <p>Didn't receive a code? <a id="request-link" href="#">Request</a> here.</p>
+                    <p>Didn't receive a code? <a id="request-link" href="#">Request</a></p>
                 </div>
             </center>
         </div>
@@ -63,25 +63,27 @@
     </script>
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
-            let timer = 30;
+            let countDown = 60;
             let otptoken = $('#otp_token').val();
             var timer;
 
+            console.log('#otp_token');
+
             function startCountdown() {
-                $('#request-link').text('Request(' + countDown + ')');
-                $('#request-link').addClass('disabled');
+                $('#request-link').text('Request sent(' + countDown + ')');
+                $('#request-link').addClass('disable-link');
                 $('#request-link').off('click');
 
                 timer = setInterval(() => {
                     countDown--;
-                    $('#request-link').text('Request(' + countDown + ')');
+                    $('#request-link').text('Request sent(' + countDown + ')');
 
                     if (countDown === 0) {
-                        countDown = 30;
+                        countDown = 60;
                         clearInterval(timer);
-                        $('#request-link').removeClass('disabled');
+                        $('#request-link').removeClass('disable-link');
                         $('#request-link').text('Request');
                         $('#request-link').on('click', handleRequest);
                     }
@@ -93,7 +95,7 @@
                 startCountdown();
 
                 $.ajax({
-                    url: '/requestOTP?otp_token=' + otptoken,
+                    url: '/requestotp?otp_token=' + otptoken,
                     type: 'GET',
                     success: function(response) {
                         $('#ajaxResult').html(response);
@@ -104,7 +106,7 @@
                 });
             }
 
-            requestLink.on('click', handleRequest);
+            $('#request-link').on('click', handleRequest);
         })
     </script>
 </body>

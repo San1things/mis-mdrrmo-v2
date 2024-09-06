@@ -35,6 +35,7 @@ Route::group(['middleware' => 'havesessionkey'], function () {
     Route::post('/registerprocess', [LoginController::class, 'registerProcess'])->name('registerprocess');
     Route::get('/verification', [LoginController::class, 'verificationIndex'])->name('verification');
     Route::post('/verificationprocess', [LoginController::class, 'verificationProcess'])->name('verificationprocess');
+    Route::get('/requestotp', [LoginController::class, 'requestOTP'])->name('requestotp');
 });
 
 

@@ -79,13 +79,11 @@
                                     style="{{ request('usertype') === 'admin' ? 'font-weight: 700' : '' }}">Admins</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="nav-link"
-                                    href="?usertype=staff&searchUser={{ $qstring['searchUser'] }}"
+                                <a class="nav-link" href="?usertype=staff&searchUser={{ $qstring['searchUser'] }}"
                                     style="{{ request('usertype') === 'staff' ? 'font-weight: 700' : '' }}">Staffs</a>
                             </li>
                             <li class="nav-item border border-start-0">
-                                <a class="nav-link"
-                                    href="?usertype=other&searchUser={{ $qstring['searchUser'] }}"
+                                <a class="nav-link" href="?usertype=other&searchUser={{ $qstring['searchUser'] }}"
                                     style="{{ request('usertype') === 'other' ? 'font-weight: 700' : '' }}">Others</a>
                             </li>
                         </ul>
@@ -231,8 +229,8 @@
                         <label class="form-label fs-5" for="floatingInput">Contact:</label>
                         <div class="input-group mb-4">
                             <span class="input-group-text fs-3" id="basic-addon1">Phillippines (+63)</span>
-                            <input class="form-control fs-3" type="number" id="contact" name="contact" aria-label="Username"
-                                aria-describedby="basic-addon1" placeholder="Mobile #*">
+                            <input class="form-control fs-3" id="contact" name="contact" type="number"
+                                aria-label="Username" aria-describedby="basic-addon1" placeholder="Mobile #*">
                         </div>
                         <div class="mb-3">
                             <select class="form-select fs-4" id="team" name="team">
@@ -247,8 +245,8 @@
                             changes</button>
                     </div>
                 </form>
-                <div class="modal-body">
-                    <form id="modalForm2" action="" method="post">
+                <form id="modalForm2" action="" method="post">
+                    <div class="modal-body">
                         @csrf
                         <div class="updatepasswords eye-update-pass border-top border-black">
                             <div class="mb-3">
@@ -265,9 +263,8 @@
                             <button class="btn btn-primary fs-3 btn-save-password px-5 py-2" type="submit">Change
                                 Password</button>
                         </div>
-                    </form>
-                </div>
-
+                    </div>
+                </form>
             </div>
         </div>
     </div>

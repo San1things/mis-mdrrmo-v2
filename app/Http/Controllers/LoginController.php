@@ -161,24 +161,24 @@ class LoginController extends Controller
         $query = $request->query();
 
         $data['alerts'] = [
-            1 => ['Error! Please input an OTP Code.', 'danger'],
-            2 => ['Error! OTP is incorrect', 'danger'],
-            3 => ['Error! OTP has been expired, please request again.', 'danger'],
+            1 => ['Please input an OTP Code.', 'danger', 'Error!'],
+            2 => ['OTP is incorrect', 'danger', 'Error!'],
+            3 => ['OTP has been expired, please request again.', 'danger', 'Error!'],
         ];
 
         if (!empty($request->query('alert'))) {
             $data['alert'] = $request->query('alert');
         }
 
-        // if (empty($query)) {
-        //     return redirect('/login?alert=3');
-        //     die();
-        // }
+        if (empty($query)) {
+            return redirect('/login?alert=3');
+            die();
+        }
 
-        // if ($query['otp_token'] == null) {
-        //     return redirect('/login?alert=3');
-        //     die();
-        // }
+        if ($query['otp_token'] == null) {
+            return redirect('/login?alert=3');
+            die();
+        }
 
         $checktoken = DB::table('tbl_users')
             ->where('otp_token', $query['otp_token'])
@@ -213,7 +213,6 @@ class LoginController extends Controller
 
             $otpcode = $newotp;
             $fullname = $user->firstname . ' ' . $user->lastname;
-            // MAIL HERE
             Mail::to($account->email)->send(new OTPMailer($otpcode, $fullname));
         }
         $data['otptoken'] = $query['otp_token'];
@@ -257,6 +256,27 @@ class LoginController extends Controller
 
             return redirect('/login?alert=4');
         }
+    }
+
+    public function requestOTP(Request $request)
+    {
+        $query = $request->query();
+        $newrequestedOTP = Str::upper(Str::random(6));
+
+        DB::table('tbl_users')
+        ->where('otp_token', $query['otp_token'])
+        ->update([
+            'otp' => $newrequestedOTP,
+            'otp_added_at' => Carbon::now()
+        ]);
+
+        $user = DB::table('tbl_users')
+        ->where('otp_token', $query['otp_token'])
+        ->first();
+
+        $otpcode = $newrequestedOTP;
+        $fullname = $user->firstname . ' ' . $user->lastname;
+        Mail::to($user->email)->send(new OTPMailer($otpcode, $fullname));
     }
 
     public function logout(Request $request)

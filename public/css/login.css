@@ -202,12 +202,20 @@ body {
     width: 100%;
     font-size: 1.7rem;
     padding: 8px;
+    margin-bottom: 10px;
 }
 
 .verification-inputs .jl-label {
     text-align: left !important;
     display: block;
     width: 100%;
+}
+
+.request-otp-container .disable-link{
+    pointer-events: none;
+    color: gray;
+    text-decoration: none;
+    cursor: not-allowed;
 }
 
 
