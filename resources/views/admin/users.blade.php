@@ -163,9 +163,9 @@
                     <h1 class="modal-title fs-3" id="modalTitle"></h1>
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
-                <form id="modalForm1" action="" method="post">
-                    @csrf
-                    <div class="modal-body">
+                <div class="modal-body">
+                    <form id="modalForm1" action="" method="post">
+                        @csrf
                         <div class="mb-3">
                             <label class="form-label fs-5" for="floatingInput">Email:</label>
                             <input class="form-control fs-4" id="email" name="email" type="email"
@@ -243,10 +243,8 @@
                         </div>
                         <button class="btn btn-primary fs-3 btn-save px-5 py-2" type="submit">Save
                             changes</button>
-                    </div>
-                </form>
-                <form id="modalForm2" action="" method="post">
-                    <div class="modal-body">
+                    </form>
+                    <form id="modalForm2" action="" method="post">
                         @csrf
                         <div class="updatepasswords eye-update-pass border-top border-black">
                             <div class="mb-3">
@@ -263,8 +261,8 @@
                             <button class="btn btn-primary fs-3 btn-save-password px-5 py-2" type="submit">Change
                                 Password</button>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -300,6 +298,7 @@
                 $('#usertype').val('')
                 $('#username').val('')
                 $('.addpasswords').css("display", "block")
+                $('#addpassword1, #addpassword2').attr('required', true)
                 $('.updatepasswords').css("display", "none")
                 $('#addpassword1').val('')
                 $('#addpassword2').val('')
@@ -321,6 +320,7 @@
                 $('#usertype').val($(this).data('usertype'))
                 $('#username').val($(this).data('username'))
                 $('.addpasswords').css("display", "none")
+                $('#addpassword1, #addpassword2').removeAttr('required')
                 $('.updatepasswords').css("display", "block")
                 $('#gender').val($(this).data('gender'))
                 $('#birthday').val($(this).data('birthday'))
