@@ -19,7 +19,7 @@ class LoginController extends Controller
             1 => ['Wrong email or pasword or the account is inactive, try again.', 'danger', 'Error!'],
             2 => ['Session expired.', 'warning', 'Error!'],
             3 => ['You have no permission to access.', 'danger', 'Error!'],
-            4 => ['You are now verified, please try to log in now.', 'success', 'Succesful!'],
+            4 => ['You are now verified.', 'success', 'Succesful!'],
         ];
         if (!empty(request()->input('alert'))) {
             $data['alert'] = request()->input('alert');
@@ -38,7 +38,7 @@ class LoginController extends Controller
         $input = request()->input();
         $user = DB::table('tbl_users')
             ->where('email', $input['email'])
-            ->where('password', $input['password'])
+            ->where('password', md5($input['password']))
             ->where('status', 'active')
             ->first();
         if (empty($user)) {
@@ -91,7 +91,7 @@ class LoginController extends Controller
             2 => ['Password must be 8 characters long.', 'danger', 'Error!'],
             3 => ['Password not match, try again.', 'danger', 'Error!'],
             4 => ['Please fill out all the requirements!', 'danger', 'Error!'],
-            5 => ['Contact number must be 11 digits long.', 'danger', 'Error!'],
+            5 => ['Contact number must be 10 digits long. Please remove the extra 0 on the front', 'danger', 'Error!'],
         ];
         if (!empty(request()->input('alert'))) {
             $data['alert'] = request()->input('alert');
@@ -105,7 +105,7 @@ class LoginController extends Controller
         $input = $request->input();
 
         // ERROR TRAPPING
-        if ($input['email'] == null || $input['username'] == null || $input['password'] == null || $input['confirmpassword'] == null || $input['fname'] == null || $input['lname'] == null || $input['bday'] == null || $input['gender'] == null || $input['address'] == null || $input['contact'] == null) {
+        if ($input['email'] == null || $input['username'] == null || $input['password'] == null || $input['confirmpassword'] == null || $input['firstname'] == null || $input['lastname'] == null || $input['bday'] == null || $input['gender'] == null || $input['address'] == null || $input['contact'] == null) {
             return redirect('/register?alert=4');
             die();
         }
@@ -118,12 +118,12 @@ class LoginController extends Controller
             die();
         }
         $tableemail = DB::table('tbl_users')
-            ->where('email', $input['email'])->get();
-        if ($tableemail != null) {
+            ->where('email', $input['email'])->count();
+        if ($tableemail >= 1) {
             return redirect('/register?alert=1');
             die();
         }
-        if (strlen($input['contact']) != 11) {
+        if (strlen($input['contact']) != 10) {
             return redirect('/register?alert=5');
             die();
         }
@@ -137,14 +137,14 @@ class LoginController extends Controller
                 'firstname' => $input['firstname'],
                 'lastname' => $input['lastname'],
                 'email' => $input['email'],
-                'usertype' => $input['usertype'],
+                'usertype' => 'resident',
                 'username' => $input['username'],
                 'password' => md5($input['password']),
                 'gender' => $input['gender'],
                 'address' => $input['address'],
                 'bday' => $input['bday'],
                 'contact' => $input['contact'],
-                'team' => $input['team'],
+                'team' => 'undefined',
                 'otp' => $otpcode,
                 'otp_token' => $otptoken,
                 'otp_added_at' => Carbon::now()->toDateTimeString(),
@@ -175,6 +175,11 @@ class LoginController extends Controller
         //     die();
         // }
 
+        // if ($query['otp_token'] == null) {
+        //     return redirect('/login?alert=3');
+        //     die();
+        // }
+
         $checktoken = DB::table('tbl_users')
             ->where('otp_token', $query['otp_token'])
             ->count();
@@ -184,11 +189,11 @@ class LoginController extends Controller
             die();
         }
 
-        $checkverified = DB::table('tbl_users')
+        $account = DB::table('tbl_users')
             ->where('otp_token', $query['otp_token'])
             ->first();
 
-        if ($checkverified->verified == 1) {
+        if ($account->verified == 1) {
             return redirect('/login');
         }
 
@@ -203,13 +208,13 @@ class LoginController extends Controller
                 ]);
 
             $user = DB::table('tbl_users')
-                ->where('id', $checkverified->id)
+                ->where('id', $account->id)
                 ->first();
 
             $otpcode = $newotp;
             $fullname = $user->firstname . ' ' . $user->lastname;
             // MAIL HERE
-            Mail::to($checkverified->email)->send(new OTPMailer($otpcode, $fullname));
+            Mail::to($account->email)->send(new OTPMailer($otpcode, $fullname));
         }
         $data['otptoken'] = $query['otp_token'];
 

@@ -29,7 +29,7 @@
                             ->where('seminar_id', $seminar->id)
                             ->count();
 
-                            $attendeeCount = DB::table('tbl_attendees')
+                        $attendeeCount = DB::table('tbl_attendees')
                             ->where('seminar_id', $seminar->id)
                             ->count();
                     @endphp
@@ -43,11 +43,10 @@
                                 <p>Get your certificate here now!</p>
                             </div>
                         @else
-                            <div class="seminar-collapse bg-success bg-gradient text-white bg-opacity-75"
+                            <div class="seminar-collapse bg-secondary bg-gradient text-white bg-opacity-75"
                                 style="cursor: default">
                                 <h4>{{ $seminar->title }} (Finished)</h4>
-                                <p>It
-                                    's so sad you didn't make it. Better join us next time and let's learn be safe and
+                                <p>It's so sad you didn't make it. Better join us next time and let's learn be safe and
                                     ready all the time!</p>
                             </div>
                         @endif
@@ -99,16 +98,20 @@
                                             ->where('user_id', $userinfo[0])
                                             ->first();
                                     @endphp
-                                    @if ($requestcheck->cert_request == 'req')
-                                        <p>Certificate has been requested!</p>
-                                    @elseif ($requestcheck->cert_request == 'sent')
-                                        <p style="color: #5cb85c">Certificate has been sent!</p>
-                                    @else
-                                        <a class="btn btn-success"
-                                            href="/userseminarreqcert?sid={{ $seminar->id }}&uid={{ $userinfo[0] }}">Request
-                                            Certificate</a>
-                                        <p>Congratualtions! Get your certificate now!</p>
+
+                                    @if ($requestcheck != null)
+                                        @if ($requestcheck->cert_request == 'req')
+                                            <p>Certificate has been requested!</p>
+                                        @elseif ($requestcheck->cert_request == 'sent')
+                                            <p style="color: #5cb85c">Certificate has been sent!</p>
+                                        @else
+                                            <a class="btn btn-success"
+                                                href="/userseminarreqcert?sid={{ $seminar->id }}&uid={{ $userinfo[0] }}">Request
+                                                Certificate</a>
+                                            <p>Congratualtions! Get your certificate now!</p>
+                                        @endif
                                     @endif
+
                                 </center>
                             </div>
                         @endif

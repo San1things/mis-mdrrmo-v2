@@ -135,7 +135,7 @@ class ResidentController extends Controller
         }
 
         $data['seminars'] = DB::table('tbl_seminars')
-            ->orderByDesc('id')
+            ->orderByDesc('updated_at')
             ->get()
             ->toArray();
 
@@ -358,7 +358,7 @@ class ResidentController extends Controller
 
         $users->where('id', $userinfo[0])
             ->update([
-                'password' => $input['profilepassword1']
+                'password' => md5($input['profilepassword1'])
             ]);
 
         return redirect('userprofile?alert=6');

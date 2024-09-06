@@ -191,7 +191,7 @@ class UsersController extends Controller
 
         DB::table('tbl_users')->where('id', $input['id'])
             ->update([
-                'password' => $input['updatepassword1'],
+                'password' => md5($input['updatepassword1']),
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 

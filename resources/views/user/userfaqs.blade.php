@@ -42,7 +42,7 @@
             </div>
             <div class="collapse" id="collapseExample2">
                 <div class="faqs-collapse">
-                    <p><i class="bi bi-pin-fill"></i> Kindly check our <a href="/services">services</a> page to check our
+                    <p><i class="bi bi-pin-fill"></i> Kindly check our <a href="/userservices">services</a> page to check our
                         services.</p>
                 </div>
             </div>

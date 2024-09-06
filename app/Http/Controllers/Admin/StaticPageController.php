@@ -59,7 +59,7 @@ class StaticPageController extends Controller
         $getEmail = DB::table('tbl_subscriptions')
             ->where('id', $input['id'])
             ->first();
-            
+
         Mail::to($getEmail->email)->send(new UnsubscribeMailer);
 
         DB::table('tbl_subscriptions')
@@ -216,7 +216,7 @@ class StaticPageController extends Controller
 
         $users->where('id', $userinfo[0])
             ->update([
-                'password' => $input['profilepassword1']
+                'password' => md5($input['profilepassword1'])
             ]);
 
         $userinfo = $request->attributes->get('userinfo');

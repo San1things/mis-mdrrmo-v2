@@ -46,13 +46,13 @@
                         @csrf
                         <input class="form-control mb-4 fs-3" id="otp" name="otp" type="text"
                             placeholder="OTP Code*" required>
-                        <input class="form-control mb-4 fs-3" id="otp_token" name="otp_token" type="text" value="{{ $otptoken }}"
-                            hidden>
+                        <input class="form-control mb-4 fs-3" id="otp_token" name="otp_token" type="text"
+                            value="{{ $otptoken }}" hidden>
                         <button class="btn btn-primary" type="submit">Confirm</button>
                     </form>
                 </div>
                 <div class="request-otp-container">
-                    <p>Didn't receive a code? <a href="#" id="request-link">Request</a> here.</p>
+                    <p>Didn't receive a code? <a id="request-link" href="#">Request</a> here.</p>
                 </div>
             </center>
         </div>
@@ -65,7 +65,46 @@
 
     <script>
         $(document).ready(function() {
+            let timer = 30;
+            let otptoken = $('#otp_token').val();
+            var timer;
 
+            function startCountdown() {
+                $('#request-link').text('Request(' + countDown + ')');
+                $('#request-link').addClass('disabled');
+                $('#request-link').off('click');
+
+                timer = setInterval(() => {
+                    countDown--;
+                    $('#request-link').text('Request(' + countDown + ')');
+
+                    if (countDown === 0) {
+                        countDown = 30;
+                        clearInterval(timer);
+                        $('#request-link').removeClass('disabled');
+                        $('#request-link').text('Request');
+                        $('#request-link').on('click', handleRequest);
+                    }
+                }, 1000);
+            }
+
+            function handleRequest(event) {
+                event.preventDefault();
+                startCountdown();
+
+                $.ajax({
+                    url: '/requestOTP?otp_token=' + otptoken,
+                    type: 'GET',
+                    success: function(response) {
+                        $('#ajaxResult').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        $('#ajaxResult').html('An error occurred while processing your request.');
+                    }
+                });
+            }
+
+            requestLink.on('click', handleRequest);
         })
     </script>
 </body>

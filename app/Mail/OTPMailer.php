@@ -12,14 +12,14 @@ use Illuminate\Queue\SerializesModels;
 class OTPMailer extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $fullname;
     public $otpcode;
+    public $fullname;
+
 
     /**
      * Create a new message instance.
      */
-    public function __construct($fullname, $otpcode)
+    public function __construct($otpcode, $fullname)
     {
         $this->otpcode = $otpcode;
         $this->fullname = $fullname;
