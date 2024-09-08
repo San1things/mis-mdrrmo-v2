@@ -164,11 +164,14 @@ class UsersController extends Controller
             ]);
 
         $userinfo = $request->attributes->get('userinfo');
+        $getName = DB::table('tbl_users')
+            ->where('id', $input['id'])
+            ->first();
         DB::table('tbl_logs')
             ->insert([
                 'user_id' => $userinfo[0],
                 'log_title' => 'Updated a user.',
-                'log_description' => "This user updated a user's info on the Users Page.",
+                'log_description' => "This user updated " . $getName->firstname . " " . $getName->lastname . "'s info on the Users Page.",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
@@ -189,18 +192,22 @@ class UsersController extends Controller
             die();
         }
 
-        DB::table('tbl_users')->where('id', $input['id'])
+        DB::table('tbl_users')
+            ->where('id', $input['id'])
             ->update([
                 'password' => md5($input['updatepassword1']),
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
         $userinfo = $request->attributes->get('userinfo');
+        $getName = DB::table('tbl_users')
+            ->where('id', $input['id'])
+            ->first();
         DB::table('tbl_logs')
             ->insert([
                 'user_id' => $userinfo[0],
                 'log_title' => 'Updated a user.',
-                'log_description' => "This user updated a user's password on the Users Page.",
+                'log_description' => "This user updated " . $getName->firstname . " " . $getName->lastname . "'s password on the Users Page.",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);

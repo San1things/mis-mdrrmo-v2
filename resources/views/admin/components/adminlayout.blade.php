@@ -74,7 +74,8 @@
                 <li class="sidebar-item"
                     style="{{ $path == 'adminseminars' || $path == 'adminhistory' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#collapsetest1" href="#" aria-expanded="true" aria-controls="collapsetest">
+                        data-bs-target="#collapsetest1" href="#" aria-expanded="true"
+                        aria-controls="collapsetest">
                         <i class="bi bi-person-video3"></i>
                         <span>Seminars</span>
                     </a>
@@ -103,7 +104,6 @@
                                 <span
                                     class="position-absolute fs-4 top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {{ $adminmessageCount }}
-                                    <span class="visually-hidden">unread messages</span>
                                 </span>
                             @endif
                         </i>
@@ -131,10 +131,27 @@
                         <span>Notifications</span>
                     </a>
                 </li>
+                @php
+                    $adminreportCount = DB::table('tbl_reports')->where('seen', 0)->count();
+                @endphp
+                <li class="sidebar-item" style="{{ $path == 'adminreports' ? 'background-color: #3b7ddd' : '' }}">
+                    <a class="sidebar-link" href="/adminreports">
+                        <i class="bi bi-exclamation-circle-fill position-relative"></i>
+                            @if ($adminreportCount >= 1)
+                                <span
+                                    class="position-absolute fs-4 top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $adminreportCount }}
+                                </span>
+                            @endif
+                        </i>
+                        <span>Reports</span>
+                    </a>
+                </li>
                 <li class="sidebar-item"
                     style="{{ $path == 'logs' || $path == 'adminprofile' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#collapsetest2" href="#" aria-expanded="true" aria-controls="collapsetest">
+                        data-bs-target="#collapsetest2" href="#" aria-expanded="true"
+                        aria-controls="collapsetest">
                         <i class="bi bi-gear-fill"></i>
                         <span>Settings</span>
                     </a>

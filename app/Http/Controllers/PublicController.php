@@ -72,7 +72,7 @@ class PublicController extends Controller
                 ]);
         }
 
-        return redirect('/?alert=2');
+    return redirect('/?alert=2');
     }
 
     public function about()
@@ -209,8 +209,41 @@ class PublicController extends Controller
         return view('announcements', $data);
     }
 
-    public function tryemail()
-    {
-        return view('email.subscribeview-mail');
+    public function report(Request $request){
+        $data = [];
+
+        $data['alerts'] = [
+            1 => ['Successful! Your reporthas been sent. Please standby for calls and updates.', 'success'],
+        ];
+
+        if(!empty($request->query('alert'))){
+            $data['alert'] = $request->query('alert');
+        }
+
+        return view('report', $data);
     }
+
+    public function publicReportProcess(Request $request){
+        $input = $request->input();
+
+        DB::table('tbl_reports')
+        ->insert([
+            'name' => $input['name'],
+            'contact' => $input['contact'],
+            'barangay' => $input['barangay'],
+            'description' => $input['description'],
+            'latitude' => $input['latitude'],
+            'longitude' => $input['longitude'],
+            'signed_disclaimer' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return redirect('/report?alert=1');
+    }
+
+    // public function tryemail()
+    // {
+    //     return view('email.subscribeview-mail');
+    // }
 }

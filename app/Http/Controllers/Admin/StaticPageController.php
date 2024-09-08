@@ -101,6 +101,12 @@ class StaticPageController extends Controller
         return redirect('/adminnotif?alert=1');
     }
 
+    public function adminReportsIndex(){
+        $data = [];
+
+        return view('admin.adminreports', $data);
+    }
+
     public function logsIndex(Request $request)
     {
         $data = [];

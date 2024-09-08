@@ -523,6 +523,38 @@ footer .footer-text {
     border-bottom: gray 2px solid;
 }
 
+.report-title {
+    padding: 20px 0;
+    border-bottom: 2px black solid;
+    margin-bottom: 10px;
+}
+
+
+
+.report-map {
+    position: relative;
+}
+
+.report-map .report-undo-btn {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    z-index: 100;
+}
+.report-checkbox{
+    width: 100%;
+    max-width: 500px;
+}
+
+.report-submit-btn {
+    width: 100%;
+    max-width: 500px;
+    margin: 10px 0 20px 0;
+    padding: 10px 0;
+    font-size: 1.8rem;
+}
+
+
 
 
 @media only screen and (max-width: 1200px) {

@@ -14,12 +14,12 @@ class TblUsersTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('tbl_users')->delete();
-
+        
         \DB::table('tbl_users')->insert(array (
-            0 =>
+            0 => 
             array (
                 'id' => 1,
                 'firstname' => 'Main',
@@ -27,7 +27,7 @@ class TblUsersTableSeeder extends Seeder
                 'email' => 'masteradmin@mdrrmo.org',
                 'usertype' => 'admin',
                 'username' => 'mainadmin11',
-                'password' => 'password',
+                'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
                 'status' => 'active',
                 'otp' => NULL,
                 'otp_added_at' => NULL,
@@ -41,7 +41,7 @@ class TblUsersTableSeeder extends Seeder
                 'created_at' => '2024-08-17 11:45:54',
                 'updated_at' => '2024-08-17 03:48:37',
             ),
-            1 =>
+            1 => 
             array (
                 'id' => 2,
                 'firstname' => 'Bertong',
@@ -49,7 +49,7 @@ class TblUsersTableSeeder extends Seeder
                 'email' => 'testuser@mdrrmo.org',
                 'usertype' => 'resident',
                 'username' => 'testresident',
-                'password' => 'password',
+                'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
                 'status' => 'active',
                 'otp' => NULL,
                 'otp_added_at' => NULL,
@@ -61,10 +61,10 @@ class TblUsersTableSeeder extends Seeder
                 'contact' => '99999999999',
                 'team' => 'undefined',
                 'created_at' => '2024-08-17 04:07:29',
-                'updated_at' => '2024-08-17 04:07:29',
+                'updated_at' => '2024-09-08 19:30:58',
             ),
         ));
-
-    
+        
+        
     }
 }

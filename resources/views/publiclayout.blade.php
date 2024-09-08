@@ -16,6 +16,8 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"
         integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/publicstyle.css') }}" rel="stylesheet">
 </head>
@@ -57,6 +59,10 @@
                         <a class="nav-link" href="/announcements"
                             style="{{ $path == 'announcements' ? 'font-weight: bolder;' : '' }}">Announcements</a>
                     </li>
+                    <li class="nav-item p-3 {{ $path == 'report' ? 'border-end border-start' : '' }}">
+                        <a class="nav-link" href="/report"
+                            style="{{ $path == 'report' ? 'font-weight: bolder;' : '' }}">Report</a>
+                    </li>
                 </ul>
 
                 <div class="p-2">
@@ -84,6 +90,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+    @stack('public_scripts')
 </body>
 
 </html>

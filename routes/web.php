@@ -15,7 +15,7 @@ use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/testemaillayout', [PublicController::class, 'tryemail'])->name('testemaillayout');
+// Route::get('/testemaillayout', [PublicController::class, 'tryemail'])->name('testemaillayout');
 
 // =======================
 //        Public
@@ -29,6 +29,8 @@ Route::group(['middleware' => 'havesessionkey'], function () {
     Route::post('/publicfaqsmessage', [PublicController::class, 'publicFaqsMessage'])->name('publicfaqsmessage');
     Route::post('/publicfaqssubscribe', [PublicController::class, 'publicFaqsSubscribe'])->name('publicfaqssubscribe');
     Route::get('/announcements', [PublicController::class, 'announcements'])->name('announcements');
+    Route::get('/report', [PublicController::class, 'report'])->name('report');
+    Route::post('/publicreportprocess', [PublicController::class, 'publicReportProcess'])->name('publicreportprocess');
     Route::get('/login', [LoginController::class, 'login'])->name('loginpage')->middleware('havesessionkey');
     Route::post('/loginprocess', [LoginController::class, 'loginProcess'])->name('loginprocess');
     Route::get('/register', [LoginController::class, 'register'])->name('registerpage');
@@ -99,6 +101,10 @@ Route::group(['middleware' => 'loginhandler'], function () {
     // =======================
     Route::get('/adminnotif', [StaticPageController::class, 'adminNotifIndex'])->name('adminnotif');
     Route::get('/adminremovenotif', [StaticPageController::class, 'adminRemoveNotif'])->name('adminremovenotif');
+    // =======================
+    //   Admin/Reports
+    // =======================
+    Route::get('/adminreports', [StaticPageController::class, 'adminReportsIndex'])->name('adminreports');
     // =======================
     //     Admin/Logs
     // =======================
