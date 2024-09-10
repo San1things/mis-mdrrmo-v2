@@ -1,17 +1,16 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\AnnouncementsController;
-use App\Http\Controllers\Admin\LogsController;
 use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\Admin\SeminarsController;
 use App\Http\Controllers\Admin\StaticPageController;
 use App\Http\Controllers\Resident\ResidentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\Admin\ReportsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -104,7 +103,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     // =======================
     //   Admin/Reports
     // =======================
-    Route::get('/adminreports', [StaticPageController::class, 'adminReportsIndex'])->name('adminreports');
+    Route::get('/adminreports', [ReportsController::class, 'index'])->name('adminreports');
     // =======================
     //     Admin/Logs
     // =======================
@@ -127,6 +126,8 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::get('/userfaqs', [ResidentController::class, 'userfaqs'])->name('userfaqs');
     Route::post('/userfaqsmessage', [ResidentController::class, 'userFaqsMessage'])->name('userfaqsmessage');
     Route::get('/userannouncements', [ResidentController::class, 'userannouncements'])->name('userannouncements');
+    Route::get('/userreport', [ResidentController::class, 'userreport'])->name('userreport');
+    Route::post('/userreportprocess', [ResidentController::class, 'userReportProcess'])->name('userreportprocess');
     Route::get('/userseminars', [ResidentController::class, 'userseminars'])->name('userseminars');
     Route::get('/userjoinseminar', [ResidentController::class, 'userJoinSeminar'])->name('userjoinseminar');
     Route::get('/userunregisterseminar', [ResidentController::class, 'userUnregisterSeminar'])->name('userunregisterseminar');

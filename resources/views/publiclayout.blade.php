@@ -18,6 +18,7 @@
         integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
     <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/publicstyle.css') }}" rel="stylesheet">
 </head>

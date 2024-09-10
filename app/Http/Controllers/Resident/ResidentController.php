@@ -120,6 +120,40 @@ class ResidentController extends Controller
         return view('user.userannouncements', $data);
     }
 
+    public function userreport(Request $request)
+    {
+        $data = [];
+        $data['alerts'] = [
+            1 => ['Report has been sent! Please wait for a call or updates.', 'success']
+        ];
+
+        if(!empty($request->query('alert'))){
+            $data['alert'] = $request->query('alert');
+        }
+
+        return view('user.userreport', $data);
+    }
+
+    public function userReportProcess(Request $request)
+    {
+        $input = $request->input();
+
+        DB::table('tbl_reports')
+            ->insert([
+                'name' => $input['name'],
+                'contact' => $input['contact'],
+                'barangay' => $input['barangay'],
+                'description' => $input['description'],
+                'latitude' => $input['latitude'],
+                'longitude' => $input['longitude'],
+                'signed_disclaimer' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+        return redirect('/userreport?alert=1');
+    }
+
     public function userseminars(Request $request)
     {
         $data = [];

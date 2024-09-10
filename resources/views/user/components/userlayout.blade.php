@@ -16,6 +16,9 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"
         integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/userstyle.css') }}" rel="stylesheet">
 </head>
@@ -56,6 +59,10 @@
                     <li class="nav-item p-3 {{ $path == 'userannouncements' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/userannouncements"
                             style="{{ $path == 'userannouncements' ? 'font-weight: bolder;' : '' }}">Announcements</a>
+                    </li>
+                    <li class="nav-item p-3 {{ $path == 'userreport' ? 'border-end border-start' : '' }}">
+                        <a class="nav-link" href="/userreport"
+                            style="{{ $path == 'userannouncements' ? 'font-weight: bolder;' : '' }}">Report</a>
                     </li>
                     <li class="nav-item p-3 {{ $path == 'userseminars' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/userseminars"

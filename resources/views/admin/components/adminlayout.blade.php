@@ -23,6 +23,8 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"
         integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
@@ -136,13 +138,13 @@
                 @endphp
                 <li class="sidebar-item" style="{{ $path == 'adminreports' ? 'background-color: #3b7ddd' : '' }}">
                     <a class="sidebar-link" href="/adminreports">
-                        <i class="bi bi-exclamation-circle-fill position-relative"></i>
-                            @if ($adminreportCount >= 1)
-                                <span
-                                    class="position-absolute fs-4 top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ $adminreportCount }}
-                                </span>
-                            @endif
+                        <i class="bi bi-exclamation-circle-fill position-relative">
+                        @if ($adminreportCount >= 1)
+                            <span
+                                class="position-absolute fs-4 top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ $adminreportCount }}
+                            </span>
+                        @endif
                         </i>
                         <span>Reports</span>
                     </a>

@@ -2,7 +2,8 @@
 @section('content')
 
     @php
-        DB::table('tbl_messages')->update([
+        DB::table('tbl_messages')
+        ->update([
             'seen' => 1,
         ]);
     @endphp

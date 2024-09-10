@@ -213,8 +213,9 @@ class PublicController extends Controller
         $data = [];
 
         $data['alerts'] = [
-            1 => ['Successful! Your reporthas been sent. Please standby for calls and updates.', 'success'],
+            1 => ['Successful! Your report has been sent. Please standby for calls and updates.', 'success'],
         ];
+
 
         if(!empty($request->query('alert'))){
             $data['alert'] = $request->query('alert');

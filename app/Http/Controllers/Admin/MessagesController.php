@@ -12,6 +12,11 @@ use Symfony\Component\Console\Input\Input;
 
 class MessagesController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware('adminhandler');
+    }
+
     public function index(Request $request)
     {
         $data = [];
@@ -86,11 +91,11 @@ class MessagesController extends Controller
         Mail::to($messageinfo->email)->send(new MessageReplyMailer($reply, $usermessage));
 
         db::table('tbl_messages')
-        ->where('id', $input['id'])
-        ->update([
-            'replied' => 1,
-            'updated_at' => Carbon::now(),
-        ]);
+            ->where('id', $input['id'])
+            ->update([
+                'replied' => 1,
+                'updated_at' => Carbon::now(),
+            ]);
 
         // ADDING NOTIFICATION
         $orgusers = DB::table('tbl_users')
@@ -123,7 +128,7 @@ class MessagesController extends Controller
                 'updated_at' => Carbon::now()
             ]);
 
-            // ADDING LOGS
+        // ADDING LOGS
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
             ->insert([

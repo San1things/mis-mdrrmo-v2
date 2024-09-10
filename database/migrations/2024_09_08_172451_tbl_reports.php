@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->boolean('signed_disclaimer')->default(false);
+            $table->boolean('finished')->default(false);
             $table->boolean('seen')->default(false);
             $table->timestamps();
         });

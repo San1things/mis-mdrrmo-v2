@@ -12,6 +12,11 @@ use function Laravel\Prompts\select;
 
 class SeminarsController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware('adminhandler');
+    }
+
     public function upcomingIndex(Request $request)
     {
         $data = [];
@@ -198,7 +203,7 @@ class SeminarsController extends Controller
             1 => ['Successful! Certificate has been sent', 'success']
         ];
 
-        if(!empty($request->query('alert'))){
+        if (!empty($request->query('alert'))) {
             $data['alert'] = $request->query('alert');
         }
 
@@ -231,16 +236,16 @@ class SeminarsController extends Controller
         $uid = $request->query('uid');
 
         $user = DB::table('tbl_users')
-        ->where('id', $uid)
-        ->first();
+            ->where('id', $uid)
+            ->first();
 
         DB::table('tbl_attendees')
-        ->where('seminar_id', $sid)
-        ->where('user_id', $uid)
-        ->update([
-            'cert_request' => 'sent',
-            'updated_at' => Carbon::now()
-        ]);
+            ->where('seminar_id', $sid)
+            ->where('user_id', $uid)
+            ->update([
+                'cert_request' => 'sent',
+                'updated_at' => Carbon::now()
+            ]);
 
         return redirect('/historycollapseddiv?alert=1&id=' . $sid);
     }
