@@ -180,6 +180,7 @@ class ResidentController extends Controller
         }
 
         $data['seminars'] = DB::table('tbl_seminars')
+            ->where('status', '!=', 'cancelled')
             ->orderByDesc('updated_at')
             ->get()
             ->toArray();

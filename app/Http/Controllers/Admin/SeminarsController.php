@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SeminarMailer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Svg\Tag\Rect;
 
 use function Laravel\Prompts\select;
@@ -60,6 +62,37 @@ class SeminarsController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
+        // $subscribers = DB::table('tbl_subscriptions')
+        //     ->get();
+
+        // foreach ($subscribers as $subscriber) {
+        //     $seminartitle = $input['announcementname'];
+        //     $seminarposted = Carbon::now('Asia/Manila')->format('h:ia, m/d/Y');
+        //     Mail::to($subscriber->email)->send(new SeminarMailer($seminartitle, $seminarposted));
+        // }
+
+        $residents = DB::table('tbl_users')
+            ->where('usertype', 'resident')
+            ->get();
+
+        foreach ($residents as $resident) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $resident->id,
+                    'user_type' => 'resident',
+                    'title' => 'A new seminar has been posted',
+                    'description' => $input['seminartitle'] . ': ' . $input['seminardescription'],
+                    'link' => '/userseminars',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+            $seminartitle = $input['announcementname'];
+            $seminarposted = Carbon::now('Asia/Manila')->format('h:ia, m/d/Y');
+            Mail::to($resident->email)->send(new SeminarMailer($seminartitle, $seminarposted));
+        }
+
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
             ->insert([
@@ -86,6 +119,29 @@ class SeminarsController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
+        //ADDING NOTIFICATION
+        $seminarinfo = DB::table('tbl_seminars')
+            ->where('id', $input['sid'])
+            ->first();
+
+        $attendees = DB::table('tbl_attendees')
+            ->where('seminar_id', $input['sid'])
+            ->get();
+
+        foreach ($attendees as $attendee) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $attendee->id,
+                    'user_type' => 'resident',
+                    'title' => 'An admin updated a seminar.',
+                    'description' => 'Our admin updated the seminar(' . $seminarinfo->title . '). Check it to get the updated info.',
+                    'link' => 'userseminars',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+        }
+
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
             ->insert([
@@ -108,6 +164,29 @@ class SeminarsController extends Controller
                 'status' => 'ongoing',
                 'updated_at' => Carbon::now()
             ]);
+
+        //ADDING NOTIFICATION
+        $seminarinfo = DB::table('tbl_seminars')
+            ->where('id', $input['sid'])
+            ->first();
+
+        $attendees = DB::table('tbl_attendees')
+            ->where('seminar_id', $input['sid'])
+            ->get();
+
+        foreach ($attendees as $attendee) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $attendee->id,
+                    'user_type' => 'resident',
+                    'title' => 'A seminar has been started.',
+                    'description' => 'Our seminar(' . $seminarinfo->title . ') has been started.',
+                    'link' => 'userseminars',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+        }
 
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
@@ -132,6 +211,29 @@ class SeminarsController extends Controller
                 'updated_at' => Carbon::now()
             ]);
 
+        //ADDING NOTIFICATION
+        $seminarinfo = DB::table('tbl_seminars')
+            ->where('id', $input['sid'])
+            ->first();
+
+        $attendees = DB::table('tbl_attendees')
+            ->where('seminar_id', $input['sid'])
+            ->get();
+
+        foreach ($attendees as $attendee) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $attendee->id,
+                    'user_type' => 'resident',
+                    'title' => 'Seminar has been ended.',
+                    'description' => 'The seminar(' . $seminarinfo->title . ') has been ended, you can request your certificate now and ge it.',
+                    'link' => 'userseminars',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+        }
+
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
             ->insert([
@@ -154,6 +256,29 @@ class SeminarsController extends Controller
                 'status' => 'cancelled',
                 'updated_at' => Carbon::now()
             ]);
+
+        //ADDING NOTIFICATION
+        $seminarinfo = DB::table('tbl_seminars')
+            ->where('id', $input['sid'])
+            ->first();
+
+        $attendees = DB::table('tbl_attendees')
+            ->where('seminar_id', $input['sid'])
+            ->get();
+
+        foreach ($attendees as $attendee) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $attendee->id,
+                    'user_type' => 'resident',
+                    'title' => 'Seminar has been cancelled.',
+                    'description' => 'We are sorry, the seminar(' . $seminarinfo->title . ') you have joined in has been cancelled. You can browse other seminars on the seminars page.',
+                    'link' => 'userseminars',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+        }
 
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
@@ -256,7 +381,7 @@ class SeminarsController extends Controller
             2 => ['Done. Seminar has been cancelled.', 'danger'],
         ];
 
-        if(!empty($request->query('alert'))){
+        if (!empty($request->query('alert'))) {
             $data['alert'] = $request->query('alert');
         }
 
@@ -322,6 +447,32 @@ class SeminarsController extends Controller
             ->where('user_id', $uid)
             ->update([
                 'cert_request' => 'sent',
+                'updated_at' => Carbon::now()
+            ]);
+
+        //ADDING NOTIFICATION
+        $seminarinfo = DB::table('tbl_seminars')
+            ->where('id', $sid)
+            ->first();
+        DB::table('tbl_notif')
+            ->insert([
+                'user_id' => $uid,
+                'user_type' => 'resident',
+                'title' => 'Yout certificate request has been approved.',
+                'description' => 'Your certificate request on our seminar(' . $seminarinfo->title . ') has been approved. Please check your email for the copy!',
+                'link' => 'userseminars',
+                'seen' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Approved an attendee certificate request.',
+                'log_description' => "This user approved a certificate request on Seminar History Page.",
+                'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
 

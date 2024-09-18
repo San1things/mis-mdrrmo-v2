@@ -154,6 +154,23 @@ class AnnouncementsController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
+        $users = DB::table('tbl_users')
+            ->where('usertype', 'resident')->get();
+
+        foreach ($users as $user) {
+            DB::table('tbl_notif')
+                ->insert([
+                    'user_id' => $user->id,
+                    'user_type' => 'resident',
+                    'title' => 'An announcement (' . $input['announcementname'] . ') has been updated',
+                    'description' => $input['announcementname'] . ' has been updated, you can check for it for new infos.',
+                    'link' => '/userannouncements',
+                    'seen' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
+
         // ADDING LOGS
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
@@ -167,12 +184,13 @@ class AnnouncementsController extends Controller
         return redirect('/adminannouncements?alert=2');
     }
 
-    public function announcementDelete(Request $request) {
+    public function announcementDelete(Request $request)
+    {
         $input = $request->input();
 
         DB::table('tbl_announcements')
-        ->where('id', $input['id'])
-        ->delete();
+            ->where('id', $input['id'])
+            ->delete();
 
         return redirect('/adminannouncements?alert=5');
     }
