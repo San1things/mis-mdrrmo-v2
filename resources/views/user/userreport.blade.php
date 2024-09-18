@@ -43,14 +43,14 @@
                         <label class="form-label fs-5" for="floatingInput">Barangay:</label>
                         <select class="form-select fs-3" name="barangay" aria-label="Default select example" required>
                             <option value="" hidden>Select Barangay...</option>
-                            <option value="sanjuan">San Juan</option>
-                            <option value="ccl">Calero-Caniogan-Lanang</option>
-                            <option value="lagundi">Lagundi</option>
-                            <option value="maybancal">Maybancal</option>
-                            <option value="sanguillermo">San Guillermo</option>
-                            <option value="sanjose">San Jose</option>
-                            <option value="sanpedro">San Pedro</option>
-                            <option value="bombongan">Bombongan</option>
+                            <option value="San Juan">San Juan</option>
+                            <option value="Calero-Caniogan-Lanang">Calero-Caniogan-Lanang</option>
+                            <option value="Lagundi">Lagundi</option>
+                            <option value="Maybancal">Maybancal</option>
+                            <option value="San Guillermo">San Guillermo</option>
+                            <option value="San Jose">San Jose</option>
+                            <option value="San Pedro">San Pedro</option>
+                            <option value="Bombongan">Bombongan</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -72,7 +72,7 @@
                     </button>
                 </div>
                 <center>
-                    <div class="form-check report-checkbox">
+                    <div class="form-check userreport-checkbox">
                         <input class="form-check-input fs-3" id="signeddisclaimer" name="signeddisclaimer" type="checkbox"
                             required>
                         <label class="form-check-label fs-4" for="flexCheckDefault">

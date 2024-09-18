@@ -70,7 +70,7 @@ class InventoryController extends Controller
     {
         $input = request()->input();
 
-        if (empty($input['itemname']) || empty($input['itemdescription']) || empty($input['itemcategory']) || empty($input['itemquantity'])) {
+        if (empty($input['itemname']) || empty($input['itemcategory']) || empty($input['itemquantity'])) {
             return redirect('/inventory?alert=1');
             die();
         }
@@ -112,7 +112,7 @@ class InventoryController extends Controller
     {
         $input = request()->input();
 
-        if (empty($input['itemname']) || empty($input['itemdescription']) || empty($input['itemcategory']) || empty($input['itemquantity'])) {
+        if (empty($input['itemname']) || empty($input['itemcategory']) || empty($input['itemquantity'])) {
             return redirect('/inventory?alert=1');
             die();
         }

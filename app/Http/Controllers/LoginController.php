@@ -20,12 +20,12 @@ class LoginController extends Controller
             2 => ['Session expired.', 'warning', 'Error!'],
             3 => ['You have no permission to access.', 'danger', 'Error!'],
             4 => ['You are now verified.', 'success', 'Succesful!'],
+            5 => ['Please dont leave all blanks empty.', 'error', 'Error!'],
         ];
         if (!empty(request()->input('alert'))) {
             $data['alert'] = request()->input('alert');
         }
 
-        // dd(session()->has('sessionkey'));
         if (session()->has('sessionkey')) {
             return redirect()->route('adminhomepage');
         }
@@ -36,6 +36,12 @@ class LoginController extends Controller
     public function loginProcess(Request $request)
     {
         $input = request()->input();
+
+        if(empty($input['email']) || empty($input['password'])){
+            return redirect('/login?alert=5');
+            die();
+        }
+
         $user = DB::table('tbl_users')
             ->where('email', $input['email'])
             ->where('password', md5($input['password']))
@@ -98,7 +104,7 @@ class LoginController extends Controller
         }
 
         return view('register', $data);
-    }
+}
 
     public function registerProcess(Request $request)
     {

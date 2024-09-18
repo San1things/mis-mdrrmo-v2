@@ -10,8 +10,8 @@
 
                 <a class="btn btn-primary px-4 py-3 createseminar-btn" data-bs-toggle="modal"
                     data-bs-target="#seminarsAddUpdateModal" href="#">
-                    <i class="bi bi-person-fill-add"></i>
-                    <span>Create Seminar</span>
+                    <i class="bi bi-file-earmark-arrow-down-fill"></i>
+                    <span>Export</span>
                 </a>
             </div>
         </div>

@@ -14,12 +14,6 @@
                 <h1>Messages</h1>
                 <p>Inbox. ({{ $messageCount }})</p>
             </div>
-            <div class="header-export pe-3">
-                <a class="btn btn-primary px-4 py-2 me-2" href="#">
-                    <i class="bi bi-file-earmark-arrow-down-fill"></i>
-                    <span>Export</span>
-                </a>
-            </div>
         </div>
 
         <div class="admin-content">

@@ -62,7 +62,7 @@
                     </li>
                     <li class="nav-item p-3 {{ $path == 'userreport' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/userreport"
-                            style="{{ $path == 'userannouncements' ? 'font-weight: bolder;' : '' }}">Report</a>
+                            style="{{ $path == 'userreport' ? 'font-weight: bolder;' : '' }}">Report</a>
                     </li>
                     <li class="nav-item p-3 {{ $path == 'userseminars' ? 'border-end border-start' : '' }}">
                         <a class="nav-link" href="/userseminars"

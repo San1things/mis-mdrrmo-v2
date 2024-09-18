@@ -1,6 +1,5 @@
 @extends('admin.components.adminlayout')
 @section('content')
-
     @php
         DB::table('tbl_reports')->update([
             'seen' => 1,
@@ -11,7 +10,7 @@
 
         <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark" style="position: relative">
             <div class="header-title p-2 flex-grow-1">
-                <h1>Reports</h1>
+                <h3>Reports</h3>
                 <p>All the sent reports are all here.({{ $reportsCount }})</p>
             </div>
             <div class="header-export">
@@ -37,8 +36,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($reports as $report)
-                            <tr>
+                        @foreach ($reports as $report)
+                            <tr class="{{ $report->handled == 1 ? 'table-success' : '' }}">
                                 <td>{{ Carbon\Carbon::create($report->created_at)->format('D, h:ia  M d, Y') }}</td>
                                 <td>{{ $report->name }}</td>
                                 <td>{{ $report->description }}</td>
@@ -48,11 +47,7 @@
 
                                 </td>
                             </tr>
-                        @empty
-                            <div>
-                                <h4 style="color: red">NO ITEMS FOUND!</h4>
-                            </div>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -73,9 +68,12 @@
                 attribution: '© OpenStreetMap'
             }).addTo(map);
 
-            @foreach ($reports as $report)
-                var marker = L.marker([{{ $report->latitude }}, {{ $report->longitude }}]).addTo(map)
-                    .bindPopup("{{ $report->name }} - {{ $report->contact }}")
+            @php
+                $mapreports = DB::table('tbl_reports')->where('handled', 0)->get()->toArray();
+            @endphp
+            @foreach ($mapreports as $mapreport)
+                var marker = L.marker([{{ $mapreport->latitude }}, {{ $mapreport->longitude }}]).addTo(map)
+                    .bindPopup("{{ $mapreport->name }} - {{ $mapreport->contact }}")
             @endforeach
 
         });

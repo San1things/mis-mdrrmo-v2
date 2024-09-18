@@ -24,6 +24,7 @@ class SeminarsController extends Controller
             1 => ['Successful! Seminar has been created.', 'success'],
             2 => ['Successful! Informations has been updated.', 'success'],
             3 => ['Error! Please fill out all the inputs!', 'danger'],
+            4 => ['Succesfull! Seminar has been started.', 'success'],
         ];
 
         if (!empty(request()->query('alert'))) {
@@ -31,7 +32,8 @@ class SeminarsController extends Controller
         }
 
         $seminars = DB::table('tbl_seminars')
-            ->where('status', 'upcoming');
+            ->where('status', 'upcoming')
+            ->orWhere('status', 'ongoing');
 
         $data['seminars'] = $seminars->orderByDesc('id')->paginate(7)->appends($request->all());
         $data['seminarCount'] = $seminars->count();
@@ -94,6 +96,75 @@ class SeminarsController extends Controller
                 'updated_at' => Carbon::now()
             ]);
         return redirect('/adminseminars?alert=2');
+    }
+
+    public function startSeminar(Request $request)
+    {
+        $input = $request->input();
+
+        DB::table('tbl_seminars')
+            ->where('id', $input['sid'])
+            ->update([
+                'status' => 'ongoing',
+                'updated_at' => Carbon::now()
+            ]);
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Started a seminar.',
+                'log_description' => "This user started a seminar on Seminar Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        return redirect('/adminseminars?alert=4');
+    }
+
+    public function endSeminar(Request $request)
+    {
+        $input = $request->input();
+
+        DB::table('tbl_seminars')
+            ->where('id', $input['sid'])
+            ->update([
+                'status' => 'finished',
+                'updated_at' => Carbon::now()
+            ]);
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Ended a seminar.',
+                'log_description' => "This user ended a seminar on Seminar Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        return redirect('/adminhistory?alert=1');
+    }
+
+    public function cancelSeminar(Request $request)
+    {
+        $input = $request->input();
+
+        DB::table('tbl_seminars')
+            ->where('id', $input['sid'])
+            ->update([
+                'status' => 'cancelled',
+                'updated_at' => Carbon::now()
+            ]);
+
+        $userinfo = $request->attributes->get('userinfo');
+        DB::table('tbl_logs')
+            ->insert([
+                'user_id' => $userinfo[0],
+                'log_title' => 'Cancelled a seminar.',
+                'log_description' => "This user cancelled a seminar on Seminar Page.",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        return redirect('/adminhistory?alert=2');
     }
 
     public function seminarCollapsedDiv(Request $request)
@@ -180,14 +251,21 @@ class SeminarsController extends Controller
     {
         $data = [];
 
+        $data['alerts'] = [
+            1 => ['Seminar has been ended. Check the history if someone is requesting a certificate.', 'primary'],
+            2 => ['Done. Seminar has been cancelled.', 'danger'],
+        ];
+
+        if(!empty($request->query('alert'))){
+            $data['alert'] = $request->query('alert');
+        }
+
         $seminars = DB::table('tbl_seminars')
-            ->where('status', 'ongoing')
-            ->orWhere('status', 'finished')
+            ->where('status', 'finished')
             ->orWhere('status', 'cancelled');
 
         $data['hseminarCount'] = DB::table('tbl_seminars')
-            ->where('status', 'ongoing')
-            ->orWhere('status', 'finished')
+            ->where('status', 'finished')
             ->orWhere('status', 'cancelled')
             ->count();
 
@@ -225,7 +303,7 @@ class SeminarsController extends Controller
         $data['attendeesCount'] = DB::table('tbl_attendees')
             ->where('seminar_id', $sid)->count();
 
-        $data['attendees'] = $attendees->orderByDesc('updated_at')->paginate(30)->appends($request->all());
+        $data['attendees'] = $attendees->get()->toArray();
 
         return view('admin.historycollapseddiv', $data);
     }

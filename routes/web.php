@@ -80,6 +80,9 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::get('/adminseminars', [SeminarsController::class, 'upcomingIndex'])->name('adminseminars');
     Route::post('/admincreateseminar', [SeminarsController::class, 'createSeminar'])->name('createseminar');
     Route::post('/adminupdateseminar', [SeminarsController::class, 'updateSeminar'])->name('adminupdateseminar');
+    Route::post('/adminstartseminar', [SeminarsController::class, 'startSeminar'])->name('adminstartseminar');
+    Route::post('/adminendseminar', [SeminarsController::class, 'endSeminar'])->name('adminendseminar');
+    Route::post('/admincancelseminar', [SeminarsController::class, 'cancelSeminar'])->name('admincancelseminar');
     Route::get('/seminarcollapseddiv', [SeminarsController::class, 'seminarCollapsedDiv'])->name('seminarcollapseddiv');
     Route::post('/adminremoveattendee', [SeminarsController::class, 'adminRemoveAttendee'])->name('adminremoveattendee');
     Route::get('/adminhistory', [SeminarsController::class, 'historyIndex'])->name('adminhistory');

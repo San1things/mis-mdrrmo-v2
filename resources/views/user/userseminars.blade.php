@@ -55,7 +55,7 @@
                             data-bs-toggle="collapse" data-bs-target="#collapsed-div{{ $seminar->id }}"
                             aria-expanded="false" aria-controls="collapsed-div">
                             <h4>{{ $seminar->title }} (Ongoing)</h4>
-                            <p>Started at: {{ Carbon\Carbon::create($seminar->starts_at)->format('M d, Y, h:ia') }}</p>
+                            <p>Started at: {{ Carbon\Carbon::create($seminar->updated_at)->format('M d, Y, h:ia') }}</p>
                         </div>
                     @else
                         <div class="seminar-collapse" data-bs-toggle="collapse"

@@ -4,7 +4,7 @@
         <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark">
             <div class="header-title p-2 flex-grow-1">
                 <h1>Announcements</h1>
-                <p>Announce what is a seminar, events or anything on public.</p>
+                <p>Announce what is the seminar, events or anything on public.</p>
             </div>
             <div class="header-export pe-3">
                 <a class="btn btn-primary px-4 py-3 addannouncement-btn" data-bs-toggle="modal"

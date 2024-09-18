@@ -82,7 +82,7 @@
                                 </tr>
                             @empty
                                 <center>
-                                    <h3>NO ATTENDEES FOUND!</h3>N
+                                    <h3>NO ATTENDEES FOUND!</h3>
                                 </center>
                             @endforelse
                         </tbody>

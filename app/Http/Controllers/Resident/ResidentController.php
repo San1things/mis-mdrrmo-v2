@@ -124,10 +124,11 @@ class ResidentController extends Controller
     {
         $data = [];
         $data['alerts'] = [
-            1 => ['Report has been sent! Please wait for a call or updates.', 'success']
+            1 => ['Report has been sent! Please wait for a call or updates.', 'success'],
+            2 => ['Error! Please pin point where you are so that we know where to get to you.', 'danger'],
+            3 => ['Error! Please put the required input.', 'danger'],
         ];
-
-        if(!empty($request->query('alert'))){
+        if (!empty($request->query('alert'))) {
             $data['alert'] = $request->query('alert');
         }
 
@@ -137,6 +138,16 @@ class ResidentController extends Controller
     public function userReportProcess(Request $request)
     {
         $input = $request->input();
+
+        if (empty($input['name']) || empty($input['contact']) || empty($input['barangay']) || empty($input['description']) || empty($input['signeddisclaimer'])) {
+            return redirect('/report?alert=3');
+            die();
+        }
+
+        if (empty($input['latitude']) || empty($input['longitude'])) {
+            return redirect('/report?alert=2');
+            die();
+        }
 
         DB::table('tbl_reports')
             ->insert([
@@ -300,7 +311,7 @@ class ResidentController extends Controller
                     'user_type' => 'org',
                     'title' => 'A resident request a certificate from our seminar.',
                     'description' => $userinfo[1] . ' ' . $userinfo[2] . ' requested a certificate from our seminar(' . $seminarinfo->title . ').',
-                    'link' => '/adminseminars',
+                    'link' => '/adminhistory',
                     'seen' => 0,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()

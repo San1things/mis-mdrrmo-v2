@@ -72,7 +72,7 @@ class PublicController extends Controller
                 ]);
         }
 
-    return redirect('/?alert=2');
+        return redirect('/?alert=2');
     }
 
     public function about()
@@ -209,36 +209,48 @@ class PublicController extends Controller
         return view('announcements', $data);
     }
 
-    public function report(Request $request){
+    public function report(Request $request)
+    {
         $data = [];
 
         $data['alerts'] = [
             1 => ['Successful! Your report has been sent. Please standby for calls and updates.', 'success'],
+            2 => ['Error! Please pin point where you are so that we know where to get to you.', 'danger'],
+            3 => ['Error! Please put the required input.', 'danger'],
         ];
-
-
-        if(!empty($request->query('alert'))){
+        if (!empty($request->query('alert'))) {
             $data['alert'] = $request->query('alert');
         }
 
         return view('report', $data);
     }
 
-    public function publicReportProcess(Request $request){
+    public function publicReportProcess(Request $request)
+    {
         $input = $request->input();
 
+        if(empty($input['name']) || empty($input['contact']) || empty($input['barangay']) || empty($input['description']) || empty($input['signeddisclaimer'])){
+            return redirect('/report?alert=3');
+            die();
+        }
+
+        if (empty($input['latitude']) || empty($input['longitude'])) {
+            return redirect('/report?alert=2');
+            die();
+        }
+
         DB::table('tbl_reports')
-        ->insert([
-            'name' => $input['name'],
-            'contact' => $input['contact'],
-            'barangay' => $input['barangay'],
-            'description' => $input['description'],
-            'latitude' => $input['latitude'],
-            'longitude' => $input['longitude'],
-            'signed_disclaimer' => 1,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+            ->insert([
+                'name' => $input['name'],
+                'contact' => $input['contact'],
+                'barangay' => $input['barangay'],
+                'description' => $input['description'],
+                'latitude' => $input['latitude'],
+                'longitude' => $input['longitude'],
+                'signed_disclaimer' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
 
         return redirect('/report?alert=1');
     }
