@@ -62,14 +62,14 @@ class SeminarsController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
-        // $subscribers = DB::table('tbl_subscriptions')
-        //     ->get();
+        $subscribers = DB::table('tbl_subscriptions')
+            ->get();
 
-        // foreach ($subscribers as $subscriber) {
-        //     $seminartitle = $input['announcementname'];
-        //     $seminarposted = Carbon::now('Asia/Manila')->format('h:ia, m/d/Y');
-        //     Mail::to($subscriber->email)->send(new SeminarMailer($seminartitle, $seminarposted));
-        // }
+        foreach ($subscribers as $subscriber) {
+            $seminartitle = $input['seminartitle'];
+            $seminarposted = Carbon::now('Asia/Manila')->format('h:ia, m/d/Y');
+            Mail::to($subscriber->email)->send(new SeminarMailer($seminartitle, $seminarposted));
+        }
 
         $residents = DB::table('tbl_users')
             ->where('usertype', 'resident')
@@ -88,7 +88,7 @@ class SeminarsController extends Controller
                     'updated_at' => Carbon::now()
                 ]);
 
-            $seminartitle = $input['announcementname'];
+            $seminartitle = $input['seminartitle'];
             $seminarposted = Carbon::now('Asia/Manila')->format('h:ia, m/d/Y');
             Mail::to($resident->email)->send(new SeminarMailer($seminartitle, $seminarposted));
         }

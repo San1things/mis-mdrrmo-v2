@@ -8,7 +8,7 @@
                 <p>All the items information is here.</p>
             </div>
             <div class="header-export">
-                <a class="btn btn-primary px-4 py-2" href="#">
+                <a class="btn btn-primary px-4 py-2" href="{{ route('generate-inventory-pdf', request()->query()) }}">
                     <i class="bi bi-file-earmark-arrow-down-fill"></i>
                     <span>Export</span>
                 </a>
@@ -107,12 +107,11 @@
                     </thead>
                     <tbody>
                         @forelse ($items as $item)
-                            <tr class="
-                                @if ($item->item_status == 'expired')
-                                table-danger
+                            <tr
+                                class="
+                                @if ($item->item_status == 'expired') table-danger
                                 @elseif ($item->item_quantity <= 10)
-                                table-warning
-                                @endif
+                                table-warning @endif
                             ">
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->item_name }}</td>

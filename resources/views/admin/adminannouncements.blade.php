@@ -155,7 +155,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary fs-3 btn-save" type="submit">Save changes</button>
+                        <button class="btn btn-primary fs-3 px-5 py-3 btn-save announcement-add-btn" type="submit">Save
+                            changes</button>
                     </div>
                 </form>
             </div>
@@ -175,7 +176,7 @@
                         <h6>Are you sure you want to delete this announcement?</h6>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger fs-3 btn-delete" type="submit">Delete</button>
+                        <button class="btn btn-danger fs-3 px-5 py-2 btn-delete" type="submit">Delete</button>
                     </div>
                 </form>
             </div>
@@ -212,6 +213,10 @@
                 let id = $(this).data('id')
                 $('#deletemodalForm').attr('action', '/admindeleteannouncement?id=' + id)
             })
+
+            $("#modalForm").on('submit', function() {
+                $(".announcement-add-btn").prop("disabled", true).text("Saving Announcement...");
+            });
         })
     </script>
 @endpush

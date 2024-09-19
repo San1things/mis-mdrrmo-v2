@@ -2,8 +2,7 @@
 @section('content')
 
     @php
-        DB::table('tbl_messages')
-        ->update([
+        DB::table('tbl_messages')->update([
             'seen' => 1,
         ]);
     @endphp
@@ -121,12 +120,14 @@
 
                         @if ($message->replied == 0)
                             <div class="reply-container position-relative mb-3" style="display: none">
-                                <form action="/adminmessagereply?id={{ $message->id }}" method="POST">
+                                <form id="san1-reply-form" action="/adminmessagereply?id={{ $message->id }}"
+                                    method="POST">
                                     @csrf
                                     <p style="color: gray">Reply: </p>
                                     <textarea class="form-control" id="" name="messagereply" style="width: 100%;font-size: 1.7rem;"
                                         placeholder="Write something..." required></textarea>
-                                    <button class="btn btn-success fs-3 px-5 py-3 mt-3 position-absolute end-0"
+                                    <button
+                                        class="btn btn-success fs-3 px-5 py-3 mt-3 position-absolute end-0 san1-send-reply"
                                         type="submit">
                                         <i class="bi bi-reply-fill"></i> Reply
                                     </button>
@@ -174,6 +175,10 @@
                     $(this).data('reply-show', 'false')
                 }
             })
+
+            $("#san1-reply-form").on('submit', function() {
+                $(".san1-send-reply").prop("disabled", true).text("Sending...");
+            });
         })
     </script>
 @endpush

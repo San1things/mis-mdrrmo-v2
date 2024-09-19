@@ -56,10 +56,12 @@ class UsersController extends Controller
             $name = $query['searchUser'];
             if (empty($query['usertype'])) {
                 $users->where('firstname', 'like', "%$name%")
-                    ->orWhere('lastname', 'like', "%$name%");
+                    ->orWhere('lastname', 'like', "%$name%")
+                    ->orWhere('email', 'like', "%$name%");
             } else {
                 $users->where('firstname', 'like', "%$name%")
                     ->orWhere('lastname', 'like', "%$name%")
+                    ->orWhere('email', 'like', "%$name%")
                     ->where('usertype', $query['usertype']);
             }
         };

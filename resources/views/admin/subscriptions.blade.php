@@ -7,7 +7,7 @@
                 <p>See all of our subscribers. ({{ $subCount }})</p>
             </div>
             <div class="header-export pe-3">
-                <a class="btn btn-primary px-4 py-2 me-2" href="#">
+                <a class="btn btn-primary px-4 py-2 me-2" href="{{ route('generate-subscription-pdf', request()->query()) }}">
                     <i class="bi bi-file-earmark-arrow-down-fill"></i>
                     <span>Export</span>
                 </a>

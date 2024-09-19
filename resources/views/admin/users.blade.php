@@ -7,7 +7,8 @@
                 <p>All the person handling the system.</p>
             </div>
             <div class="header-export pe-3">
-                <a class="btn btn-primary px-4 py-2 me-2" href="{{ route('generate-user-pdf', request()->query()) }}">
+                <a class="btn btn-primary px-4 py-2 me-2 printuser-btn"
+                    href="{{ route('generate-user-pdf', request()->query()) }}">
                     <i class="bi bi-file-earmark-arrow-down-fill"></i>
                     <span>Export</span>
                 </a>

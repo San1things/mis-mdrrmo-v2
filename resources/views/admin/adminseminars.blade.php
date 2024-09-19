@@ -103,7 +103,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary fs-3 px-5 btn-save" type="submit">Create Seminar</button>
+                        <button class="btn btn-primary fs-3 px-5 btn-save seminar-add-btn" type="submit">Create
+                            Seminar</button>
                     </div>
                 </form>
             </div>
@@ -188,6 +189,10 @@
                         child.data('state', 'hide')
                     }
                 })
+
+                $("#modalForm").on('submit', function() {
+                    $(".seminar-add-btn").prop("disabled", true).text("Saving...");
+                });
             })
         </script>
     @endpush

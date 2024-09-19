@@ -60,6 +60,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::post('/additem', [InventoryController::class, 'itemAdd'])->name('adminadditem');
     Route::post('/updateitem', [InventoryController::class, 'itemUpdate'])->name('adminupdateitem');
     Route::post('/deleteitem', [InventoryController::class, 'itemDelete'])->name('admindeleteitem');
+    Route::get('/generate-inventory-pdf', [PDFController::class, 'generateInventoryPdf'])->name('generate-inventory-pdf');
     // =======================
     //   Admin/Announcements
     // =======================
@@ -88,11 +89,13 @@ Route::group(['middleware' => 'loginhandler'], function () {
     Route::get('/adminhistory', [SeminarsController::class, 'historyIndex'])->name('adminhistory');
     Route::get('/historycollapseddiv', [SeminarsController::class, 'historyCollapsedDiv'])->name('historycollapseddiv');
     Route::post('/adminsendcertificate', [SeminarsController::class, 'sendCertificate'])->name('adminsendcertificate');
+    Route::get('/generate-shistory-pdf', [PDFController::class, 'generateSeminarHistoryPdf'])->name('generate-shistory-pdf');
     // =======================
     //   Admin/Subscriptions
     // =======================
     Route::get('/subscriptions', [StaticPageController::class, 'subscriptionsIndex'])->name('adminsubscription');
     Route::post('/adminunsubscribe', [StaticPageController::class, 'adminUnsubscribe'])->name('adminunsubscribe');
+    Route::get('/generate-subscription-pdf', [PDFController::class, 'generateSubscriptionPdf'])->name('generate-subscription-pdf');
     // =======================
     //     Admin/Messages
     // =======================
@@ -111,6 +114,7 @@ Route::group(['middleware' => 'loginhandler'], function () {
     //     Admin/Logs
     // =======================
     Route::get('/logs', [StaticPageController::class, 'logsIndex'])->name('logs');
+    Route::get('/generate-logs-pdf', [PDFController::class, 'generateLogsPdf'])->name('generate-logs-pdf');
     // =======================
     //     Admin/Profile
     // =======================

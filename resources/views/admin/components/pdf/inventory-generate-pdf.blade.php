@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Print Users - MRRMO Morong</title>
+    <title>Print Inventory - MDRRMO Morong</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"
@@ -27,36 +27,26 @@
         </div>
     </div>
     <div class="container-xl">
-        <h3>USER</h3>
+        <h3>Inventory</h3>
         <div class="table-responsive-lg">
             <table class="table table-bordered align-middle">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col-1">First Name</th>
-                        <th scope="col-1">Last Name</th>
-                        <th scope="col-1">Email</th>
-                        <th scope="col-1">Usertype</th>
-                        <th scope="col-1">Username</th>
-                        <th scope="col-1">Gender</th>
-                        <th scope="col-1">Birthday</th>
-                        <th scope="col-1">Contact #</th>
-                        <th scope="col-1">Team</th>
-                        <th scope="col-1">Created</th>
+                        <th style="width: 10%" scope="col-1">Item Name</th>
+                        <th style="width: 65%" scope="col-1">Description</th>
+                        <th style="width: 10%" scope="col-1">Category</th>
+                        <th style="width: 5%" scope="col-1">Quantity</th>
+                        <th style="width: 10%" scope="col-1">Date Added</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($items as $item)
                         <tr>
-                            <td>{{ $user->firstname }}</td>
-                            <td>{{ $user->lastname }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->usertype }}</td>
-                            <td>{{ $user->username }}</td>
-                            <td>{{ $user->gender }}</td>
-                            <td>{{ $user->bday }}</td>
-                            <td>0{{ $user->contact }}</td>
-                            <td>{{ $user->team }}</td>
-                            <td>{{ Carbon\Carbon::create($user->created_at)->format('h:i a M d, Y')  }}</td>
+                            <td>{{ $item->item_name }}</td>
+                            <td>{{ $item->item_description }}</td>
+                            <td>{{ $item->item_category }}</td>
+                            <td>{{ $item->item_quantity }}</td>
+                            <td>{{ Carbon\Carbon::create($item->created_at)->format('h:i a M d, Y') }}</td>
                         </tr>
                     @endforeach
                 </tbody>

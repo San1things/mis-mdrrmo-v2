@@ -119,14 +119,14 @@ class AnnouncementsController extends Controller
             Mail::to($user->email)->send(new AnnouncementMailer($announcement, $announcementtype, $announcementposted));
         }
 
-        // ===== UNCOMMENT IF GOODS NA SUBS =====
-        // $subscribers = DB::table('tbl_subscriptions')
-        //     ->get();
-        // foreach ($subscribers as $subscriber) {
-        //     $announcement = $input['announcementname'];
-        //     $announcementposted = Carbon::now('Asia/Manila')->format('h:ia, m/d/Y');
-        //     Mail::to($subscriber->email)->send(new AnnouncementMailer($announcement, $announcementposted));
-        // }
+        $subscribers = DB::table('tbl_subscriptions')
+            ->get();
+        foreach ($subscribers as $subscriber) {
+            $announcement = $input['announcementname'];
+            $announcementtype = $input['announcementtype'];
+            $announcementposted = Carbon::now('Asia/Manila')->format('h:ia, m/d/Y');
+            Mail::to($subscriber->email)->send(new AnnouncementMailer($announcement, $announcementtype, $announcementposted));
+        }
 
         $userinfo = $request->attributes->get('userinfo');
         DB::table('tbl_logs')
