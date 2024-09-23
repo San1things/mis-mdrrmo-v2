@@ -21,6 +21,7 @@ class StaticPageController extends Controller
     {
         $data = [];
         $query = $request->query();
+        $qstring = [];
 
         $data['alerts'] = [
             1 => ['Succesful! You unsubscribe a subscriber.', 'success']
@@ -30,12 +31,41 @@ class StaticPageController extends Controller
             $data['alert'] = $request->query('alert');
         }
 
+        $qstring['searchSubscriber'] = '';
         $subscribers = DB::table('tbl_subscriptions');
         if (!empty(request()->query('searchSubscriber'))) {
+            $qstring['searchSubscriber'] = $query['searchSubscriber'];
             $emailtyped = $query['searchSubscriber'];
             $subscribers->where('email', 'like', "%$emailtyped%");
         }
 
+        $qstring['last'] = '';
+        if (!empty($query['last'])) {
+            $qstring['last'] = $query['last'];
+            if ($query['last'] == 'week') {
+                $weekstart = Carbon::now()->subWeek();
+                $weekend = Carbon::now()->subDays(30);
+                $subscribers
+                    ->whereBetween('created_at', [$weekend, $weekstart]);
+            } else if ($query['last'] == 'month') {
+                $monthstart = Carbon::now()->subMonth();
+                $monthend = Carbon::now()->subMonths(6);
+                $subscribers
+                    ->whereBetween('created_at', [$monthend, $monthstart]);
+            } else if ($query['last'] == '6months') {
+                $sixmonthstart = Carbon::now()->subMonths(6);
+                $sixmonthend = Carbon::now()->subYear();
+                $subscribers
+                    ->whereBetween('created_at', [$sixmonthend, $sixmonthstart]);
+            } else if ($query['last'] == 'year') {
+                $yearstart = Carbon::now()->subYear();
+                $yearend = Carbon::now()->subyears(2);
+                $subscribers
+                    ->whereBetween('created_at', [$yearend, $yearstart]);
+            }
+        }
+
+        $data['qstring'] = $qstring;
         $data['subCount'] = DB::table('tbl_subscriptions')->count();
         $data['subscribers'] = $subscribers->orderByDesc('id')->paginate(15)->appends($request->all());
 
@@ -101,7 +131,8 @@ class StaticPageController extends Controller
         return redirect('/adminnotif?alert=1');
     }
 
-    public function adminReportsIndex(){
+    public function adminReportsIndex()
+    {
         $data = [];
 
         return view('admin.adminreports', $data);
@@ -110,18 +141,52 @@ class StaticPageController extends Controller
     public function logsIndex(Request $request)
     {
         $data = [];
+        $qstring = [];
+        $query = $request->query();
+
         $logs = DB::table('tbl_logs')
             ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_logs.user_id')
             ->select('tbl_logs.created_at as log_created_at', 'tbl_users.created_at as user_created_at', 'tbl_logs.*', 'tbl_users.*');
 
-        $nameAction = $request->input('searchLogs');
+        $qstring['searchLogs'] = '';
         if (!empty($request->query('searchLogs'))) {
-            $logs
-                ->where('tbl_users.firstname', 'like', "%$nameAction%")
-                ->orWhere('tbl_users.lastname', 'like', "%$nameAction%")
-                ->orWhere('tbl_logs.log_title', 'like', "%$nameAction%");
+            $qstring['searchLogs'] = $query['searchLogs'];
+            $nameAction = $request->input('searchLogs');
+
+            $logs->where(function ($query) use ($nameAction) {
+                $query->where('tbl_users.firstname', 'like', "%$nameAction%")
+                    ->orWhere('tbl_users.lastname', 'like', "%$nameAction%")
+                    ->orWhere('tbl_logs.log_title', 'like', "%$nameAction%");
+            });
         }
 
+        $qstring['last'] = '';
+        if (!empty($query['last'])) {
+            $qstring['last'] = $query['last'];
+            if ($query['last'] == 'week') {
+                $weekstart = Carbon::now()->subWeek();
+                $weekend = Carbon::now()->subDays(30);
+                $logs
+                    ->whereBetween('tbl_logs.created_at', [$weekend, $weekstart]);
+            } else if ($query['last'] == 'month') {
+                $monthstart = Carbon::now()->subMonth();
+                $monthend = Carbon::now()->subMonths(6);
+                $logs
+                    ->whereBetween('tbl_logs.created_at', [$monthend, $monthstart]);
+            } else if ($query['last'] == '6months') {
+                $sixmonthstart = Carbon::now()->subMonths(6);
+                $sixmonthend = Carbon::now()->subYear();
+                $logs
+                    ->whereBetween('tbl_logs.created_at', [$sixmonthend, $sixmonthstart]);
+            } else if ($query['last'] == 'year') {
+                $yearstart = Carbon::now()->subYear();
+                $yearend = Carbon::now()->subyears(2);
+                $logs
+                    ->whereBetween('tbl_logs.created_at', [$yearend, $yearstart]);
+            }
+        }
+
+        $data['qstring'] = $qstring;
         $data['logs'] = $logs->orderByDesc('tbl_logs.id')->paginate(30)->appends($request->all());
 
         return view('admin.logs', $data);

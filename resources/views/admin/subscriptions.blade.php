@@ -1,7 +1,7 @@
 @extends('admin.components.adminlayout')
 @section('content')
     <div class="container-xl mt-3">
-        <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark">
+        <div class="admin-header d-flex align-items-center mb-3 border-bottom border-dark position-relative">
             <div class="header-title p-2 flex-grow-1">
                 <h1>Subscriptions</h1>
                 <p>See all of our subscribers. ({{ $subCount }})</p>
@@ -11,6 +11,39 @@
                     <i class="bi bi-file-earmark-arrow-down-fill"></i>
                     <span>Export</span>
                 </a>
+
+                <div class="btn-group position-absolute bottom-0 end-0 pe-4 pb-2">
+                    <button class="btn btn-lite dropdown-toggle fs-3" data-bs-toggle="dropdown" type="button"
+                        aria-expanded="false">
+                        @if ($qstring['last'] == 'week')
+                            Last Week
+                        @elseif ($qstring['last'] == 'month')
+                            Last Month
+                        @elseif ($qstring['last'] == '6months')
+                            Last 6 Months
+                        @elseif ($qstring['last'] == 'year')
+                            Last Year
+                        @else
+                            Recent
+                        @endif
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"
+                                href="/subscriptions?searchSubscriber={{ $qstring['searchSubscriber'] }}">Recent</a></li>
+                        <li><a class="dropdown-item"
+                                href="/subscriptions?searchSubscriber={{ $qstring['searchSubscriber'] }}&last=week">Last
+                                Week</a></li>
+                        <li><a class="dropdown-item"
+                                href="/subscriptions?searchSubscriber={{ $qstring['searchSubscriber'] }}&last=month">Last
+                                Month</a></li>
+                        <li><a class="dropdown-item"
+                                href="/subscriptions?searchSubscriber={{ $qstring['searchSubscriber'] }}&last=6months">Last
+                                6 Months</a></li>
+                        <li><a class="dropdown-item"
+                                href="/subscriptions?searchSubscriber={{ $qstring['searchSubscriber'] }}&last=year">Last
+                                Year</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -28,7 +61,8 @@
             <form role="search" method="get">
                 <div class="input-group mb-3">
                     <input class="form-control fs-3" name="searchSubscriber" type="search" aria-label="Search"
-                        aria-describedby="searchbutton" placeholder="Search...">
+                        aria-describedby="searchbutton" placeholder="Search..."><input id="" name="last"
+                        type="text" value="{{ $qstring['last'] }}" hidden>
                     <button class="btn btn-outline-primary fs-3 px-5" id="searchbutton" type="submit">Search</button>
                     <a class="btn btn-outline-secondary fs-3 px-5" id="clearbutton" type="button"
                         href="/subscriptions?searchSubscriber=">Clear</a>

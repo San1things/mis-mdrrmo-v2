@@ -375,6 +375,7 @@ class SeminarsController extends Controller
     public function historyIndex(Request $request)
     {
         $data = [];
+        $query = $request->query();
 
         $data['alerts'] = [
             1 => ['Seminar has been ended. Check the history if someone is requesting a certificate.', 'primary'],
@@ -386,15 +387,38 @@ class SeminarsController extends Controller
         }
 
         $seminars = DB::table('tbl_seminars')
-            ->where('status', 'finished')
-            ->orWhere('status', 'cancelled');
+            ->whereIn('status', ['finished', 'cancelled']);
+
+        if (!empty($query['last'])) {
+            if ($query['last'] == 'week') {
+                $weekstart = Carbon::now()->subWeek();
+                $weekend = Carbon::now()->subDays(30);
+                $seminars
+                    ->whereBetween('updated_at', [$weekend, $weekstart]);
+            } else if ($query['last'] == 'month') {
+                $monthstart = Carbon::now()->subMonth();
+                $monthend = Carbon::now()->subMonths(6);
+                $seminars
+                    ->whereBetween('updated_at', [$monthend, $monthstart]);
+            } else if ($query['last'] == '6months') {
+                $sixmonthstart = Carbon::now()->subMonths(6);
+                $sixmonthend = Carbon::now()->subYear();
+                $seminars
+                    ->whereBetween('updated_at', [$sixmonthend, $sixmonthstart]);
+            } else if ($query['last'] == 'year') {
+                $yearstart = Carbon::now()->subYear();
+                $yearend = Carbon::now()->subyears(2);
+                $seminars
+                    ->whereBetween('updated_at', [$yearend, $yearstart]);
+            }
+        }
 
         $data['hseminarCount'] = DB::table('tbl_seminars')
             ->where('status', 'finished')
             ->orWhere('status', 'cancelled')
             ->count();
 
-        $data['historyseminars'] = $seminars->orderBy('updated_at')->paginate()->appends($request->all());
+        $data['historyseminars'] = $seminars->orderBy('updated_at')->paginate(15)->appends($request->all());
 
         return view('admin.adminhistory', $data);
     }
