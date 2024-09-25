@@ -80,7 +80,19 @@
                 @empty
                     <center>
                         <div class="no-notif-text" style="padding: 30vh 0; color: gray;">
-                            <h4>No History...</h4>
+                            <h4>
+                                @if (request()->query('last') == 'week')
+                                    No seminar last week...
+                                @elseif (request()->query('last') == 'month')
+                                    No seminar last month...
+                                @elseif (request()->query('last') == '6months')
+                                    No seminar last 6 months...
+                                @elseif (request()->query('last') == 'year')
+                                    No seminar last year...
+                                @else
+                                    No seminar...
+                                @endif
+                            </h4>
                         </div>
                     </center>
                 @endforelse
